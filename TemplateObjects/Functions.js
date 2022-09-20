@@ -1,12 +1,12 @@
-function changeTitle() {
+function changeTitle(name) {
     
 }
 
-function saveAsJSON() {
+function saveAsJSON(pres) {
 
 }
 
-function saveAsPDF() {
+function saveAsPDF(pres) {
 
 }
 
@@ -42,11 +42,11 @@ function deleteSlide() {
     
 }
 
-function copy() {
+function copySlide() {
     
 }
 
-function move() {
+function moveSlide() {
     
 }
 
@@ -59,5 +59,81 @@ function addItem() {
 }
 
 function changeSelectedItem() {
+    
+}
+
+function changeSize() {
+    
+}
+
+function moveItem() {
+    
+}
+
+function rotate() {
+    
+}
+
+function copyItem() {
+    
+}
+
+function paste() {
+    
+}
+
+function deleteItem() {
+    
+}
+
+function flipHorizontal() {
+    
+}
+
+function flipVertical() {
+    
+}
+
+function upLayer() {
+    
+}
+
+function downLayer() {
+    
+}
+
+function initItem() {
+    
+}
+
+function changeFontColor() {
+    
+}
+
+function changeFontFamily() {
+    
+}
+
+function changeFontSize() {
+    
+}
+
+function saveImage() {
+    
+}
+
+function fill() {
+    
+}
+
+function stroke() {
+    
+}
+
+function changeFillColor() {
+    
+}
+
+function changeStrokeColor() {
     
 }
