@@ -1,9 +1,6 @@
 function changeTitle(name) {
 
 }
-function changeTitle() {
-
-}
 
 function saveAsJSON(pres) {
 
