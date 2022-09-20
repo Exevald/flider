@@ -1,5 +1,8 @@
 function changeTitle(name) {
-    
+
+}
+function changeTitle() {
+
 }
 
 function saveAsJSON(pres) {
@@ -11,35 +14,35 @@ function saveAsPDF(pres) {
 }
 
 function open() {
-    
+
 }
 
 function watch() {
-    
+
 }
 
 function changeCurrentSlide() {
-    
+
 }
 
 function showHistory() {
-    
+
 }
 
 function undo() {
-    
+
 }
 
 function redo() {
-    
+
 }
 
 function createSlide() {
-    
+
 }
 
 function deleteSlide() {
-    
+
 }
 
 function copySlide() {
@@ -47,15 +50,23 @@ function copySlide() {
 }
 
 function moveSlide() {
+
+}
     
+function copy() {
+
+}
+
+function move() {
+
 }
 
 function changeBgColor() {
-    
+
 }
 
 function addItem() {
-    
+
 }
 
 function changeSelectedItem() {
