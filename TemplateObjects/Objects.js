@@ -1,42 +1,38 @@
-let Items = {
-    ItemType: ItemType,
+const itemType = new Map([
+    ['Figure', 1],
+    ['Img', 2],
+    ['TextArea', 3],
+]);
+
+
+const shapeType = new Map([
+    ['Rectangle', 1],
+    ['Arc', 2],
+    ['Triangle', 3],
+    ['Line', 4],
+    ['Star', 5],
+]);
+
+let items = {
+    ItemType: null,
     X: 0,
     Y: 0,
     Width: 100,
     Height: 100,
     Layer: 0,
-};  
-
-let Figure = {
-    ShapeType: shapes,
-    FillColor: 'black',
-    StrokeColor: 'black',
 };
 
-let TextArea = {
+let textArea = {
     fontFamily: null,
     fontSize: null,
     Color: "black",
     Value: null,
-};
-
-const ItemType = new Map([
-    ['Figure', true],
-    ['Img', false],
-    ['TextArea', false]
-]); 
-    
-
-const shapes = ['Rectangle', 'Arc', 'Triangle', 'Line', 'Star']
-
-let slide = {
-
 }
 
-let presentation = {
+let slide = {}
 
-}
+let presentation = {}
 
-let actions = {
+let actions = {}
 
-}
+export {itemType, shapeType, items, textArea, slide, presentation, actions}

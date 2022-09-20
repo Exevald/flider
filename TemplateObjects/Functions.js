@@ -1,3 +1,5 @@
+import {items, actions, slide, textArea, itemType, shapeType, presentation} from "Objects";
+
 function changeTitle(name) {
 
 }
