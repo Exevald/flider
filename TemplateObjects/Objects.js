@@ -1,4 +1,4 @@
-import { shapeType, itemType } from "Types";
+import {shapeType, itemType} from "Types";
 
 let figure = {
     type: shapeType,
@@ -9,31 +9,39 @@ let figure = {
 let textArea = {
     fontFamily: null,
     fontSize: null,
-    color: "black",
+    fontColor: "black",
     value: null,
 };
 
 let image = {
     src: null,
-}
+};
 
-let items = [{
+let item = [{
     type: itemType,
     x: 0,
     y: 0,
+    angle: 0,
     width: 100,
     height: 100,
     layer: 0,
 }];
 
-let slide = {
+let slide = [{
     items: [],
     bgColor: "white",
     selectedItems: []
-}
+}];
 
-let presentation = {}
+let actions = {
+    history: null,
+};
 
-let actions = {}
+let presentation = {
+    name: 'Новая презентация',
+    slides: [],
+    actions,
+    currentSlide: [],
+};
 
-export {items, textArea, slide, presentation, actions, figure, image}
+export {item, textArea, slide, presentation, actions, figure, image}

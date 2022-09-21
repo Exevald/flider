@@ -1,149 +1,121 @@
-import { items, actions, slide, textArea, image, figure, presentation } from "Objects";
+import {item, actions, slide, textArea, image, figure, presentation} from "Objects";
 
-function changeTitle(name) {
-
+function changeTitle(presentationName) {
+    presentation.name = presentationName;
 }
 
-function saveAsJSON(pres) {
-
+function saveAsJSON(presentation) {
 }
 
-function saveAsPDF(pres) {
-
+function saveAsPDF(presentation) {
 }
 
-function open() {
-
+function open(jsonFile) {
 }
 
-function watch() {
-
+function watch(presentation) {
 }
 
-function changeCurrentSlide() {
-
+function changeCurrentSlide(newSlideId) {
 }
 
 function showHistory() {
-
 }
 
 function undo() {
-
 }
 
 function redo() {
-
 }
 
 function createSlide() {
-
 }
 
-function deleteSlide() {
-
+function deleteSlide(slideId) {
 }
 
-function copySlide() {
-    
+function copySlide(slideId) {
 }
 
-function moveSlide() {
-
-}
-    
-function copy() {
-
+function moveSlide(slideId) {
 }
 
-function move() {
-
+function changeBgColor(slideId) {
 }
 
-function changeBgColor() {
-
+function addItem(itemType, x, y, angle, width, height, layer) {
+    item.type = itemType;
+    item.x = x;
+    item.y = y;
+    item.angle = angle;
+    item.width = width;
+    item.height = height;
+    item.layer = layer;
 }
 
-function addItem() {
-
+function changeSelectedItem(itemId) {
 }
 
-function changeSelectedItem() {
-    
+function changeSize(itemId, width, height) {
+    item.width = width;
+    item.height = height;
 }
 
-function changeSize() {
-    
+function moveItem(itemId, x, y) {
+    item.x = x;
+    item.y = y;
 }
 
-function moveItem() {
-    
+function rotate(itemId, angle) {
+    item.angle = angle;
 }
 
-function rotate() {
-    
-}
-
-function copyItem() {
-    
+function copyItem(itemId) {
 }
 
 function paste() {
-    
 }
 
-function deleteItem() {
-    
+function deleteItem(itemId) {
 }
 
-function flipHorizontal() {
-    
+function flipHorizontal(itemId) {
 }
 
-function flipVertical() {
-    
+function flipVertical(itemId) {
 }
 
 function upLayer() {
-    
 }
 
 function downLayer() {
-    
 }
 
-function initItem() {
-    
+function changeFontColor(itemId, color) {
+    textArea.fontColor = color
 }
 
-function changeFontColor() {
-    
+function changeFontFamily(itemId, fontFamily) {
+    textArea.fontFamily = fontFamily;
 }
 
-function changeFontFamily() {
-    
+function changeFontSize(itemId, fontSize) {
+    textArea.fontSize = fontSize;
 }
 
-function changeFontSize() {
-    
+function saveImage(itemId, src) {
 }
 
-function saveImage() {
-    
+function fill(itemId, fillColor) {
 }
 
-function fill() {
-    
+function stroke(itemId, strokeColor) {
 }
 
-function stroke() {
-    
+function changeFillColor(itemId, fillColor) {
+    figure.fillColor = fillColor;
 }
 
-function changeFillColor() {
-    
-}
-
-function changeStrokeColor() {
-    
+function changeStrokeColor(itemId, strokeColor) {
+    figure.strokeColor = strokeColor;
 }
