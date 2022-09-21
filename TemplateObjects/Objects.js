@@ -1,38 +1,39 @@
-const itemType = new Map([
-    ['Figure', 1],
-    ['Img', 2],
-    ['TextArea', 3],
-]);
+import { shapeType, itemType } from "Types";
 
-
-const shapeType = new Map([
-    ['Rectangle', 1],
-    ['Arc', 2],
-    ['Triangle', 3],
-    ['Line', 4],
-    ['Star', 5],
-]);
-
-let items = {
-    ItemType: null,
-    X: 0,
-    Y: 0,
-    Width: 100,
-    Height: 100,
-    Layer: 0,
+let figure = {
+    type: shapeType,
+    fillColor: 'black',
+    strokeColor: 'black',
 };
 
 let textArea = {
     fontFamily: null,
     fontSize: null,
-    Color: "black",
-    Value: null,
+    color: "black",
+    value: null,
+};
+
+let image = {
+    src: null,
 }
 
-let slide = {}
+let items = [{
+    type: itemType,
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100,
+    layer: 0,
+}];
+
+let slide = {
+    items: [],
+    bgColor: "white",
+    selectedItems: []
+}
 
 let presentation = {}
 
 let actions = {}
 
-export {itemType, shapeType, items, textArea, slide, presentation, actions}
+export {items, textArea, slide, presentation, actions, figure, image}
