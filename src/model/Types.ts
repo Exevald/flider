@@ -34,6 +34,7 @@ export type Slide = {
 }
 
 export type Item = {
+    type: ItemType,
     id: Id,
     x: number,
     y: number,
@@ -41,8 +42,11 @@ export type Item = {
     area: Area,
 }
 
+enum ItemTypeEnum {
+
+}
+
 export type ItemType = {
-    type: string,
     figure?: Figure,
     text?: TextArea,
     image?: Image
