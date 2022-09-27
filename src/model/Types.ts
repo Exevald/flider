@@ -42,23 +42,29 @@ export type Item = {
     area: Area,
 }
 
-enum ItemTypeEnum {
-
+export enum ItemType {
+    Figure,
+    TextArea,
+    Image,
 }
 
-export type ItemType = {
-    figure?: Figure,
-    text?: TextArea,
-    image?: Image
+enum Shape {
+    Rectangle,
+    Arc,
+    Triangle,
+    Line,
+    Star,
 }
 
 export type Figure = {
-    type: string,
+    type: ItemType.Figure,
+    shape: number,
     fillColor: string,
     strokeColor: string,
 }
 
 export type TextArea = {
+    type: ItemType.TextArea
     fontFamily: string,
     fontSize: number,
     fontColor: string,
@@ -66,5 +72,6 @@ export type TextArea = {
 }
 
 export type Image = {
+    type: ItemType.Image,
     src: string
 }
