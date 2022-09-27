@@ -19,16 +19,16 @@ function watch(presentation) {
 function changeCurrentSlide(newSlideId) {
 }
 
-function showHistory() {
+function showHistory(history) {
 }
 
-function undo() {
+function undo(history) {
 }
 
-function redo() {
+function redo(history) {
 }
 
-function createSlide() {
+function createSlide(slideId) {
 }
 
 function deleteSlide(slideId) {
@@ -73,7 +73,7 @@ function rotate(itemId, angle) {
 function copyItem(itemId) {
 }
 
-function paste() {
+function paste(itemId) {
 }
 
 function deleteItem(itemId) {
