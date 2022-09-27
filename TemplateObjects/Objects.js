@@ -1,5 +1,15 @@
 import {shapeType, itemType} from "Types";
 
+let Point = {
+    x: 0,
+    y: 0,
+}
+
+let Area = {
+    width: 100,
+    height: 100
+}
+
 let figure = {
     type: shapeType,
     fillColor: 'black',
@@ -7,25 +17,25 @@ let figure = {
 };
 
 let textArea = {
-    fontFamily: null,
-    fontSize: null,
+    fontFamily: "Arial",
+    fontSize: 16,
     fontColor: "black",
-    value: null,
+    value: "",
 };
 
 let image = {
     src: null,
 };
 
-let item = [{
+let item = {
     type: itemType,
-    x: 0,
-    y: 0,
+    x: Point.x,
+    y: Point.y,
     angle: 0,
-    width: 100,
-    height: 100,
+    width: Area.width,
+    height: Area.height,
     layer: 0,
-}];
+};
 
 let slide = [{
     items: [],
