@@ -1,5 +1,15 @@
 export type Id = number
 
+export type Point = {
+    x: number,
+    y: number,
+}
+
+export type Area = {
+    width: number,
+    height: number,
+}
+
 export type History = {
     history: Array<Presentation>,
 }
@@ -19,8 +29,7 @@ export type Slide = {
     id: Id,
     items: Array<Item>,
     selected: Array<Id>,
-    x: number,
-    y: number,
+    coordinate: Point,
     bgColor: string,
 }
 
@@ -29,8 +38,7 @@ export type Item = {
     x: number,
     y: number,
     element: ItemType,
-    width: number,
-    height: number,
+    area: Area,
 }
 
 export type ItemType = {
