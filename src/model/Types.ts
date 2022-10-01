@@ -5,11 +5,6 @@ export type Point = {
     y: number,
 }
 
-export type Area = {
-    width: number,
-    height: number,
-}
-
 export type History = {
     history: Array<Presentation>,
 }
@@ -34,12 +29,11 @@ export type Slide = {
 }
 
 export type Item = {
-    type: ItemType,
     id: Id,
-    x: number,
-    y: number,
+    coordinates: Point,
     element: ItemType,
-    area: Area,
+    width: number,
+    height: number,
 }
 
 export enum ItemType {
@@ -48,17 +42,14 @@ export enum ItemType {
     Image,
 }
 
-enum Shape {
+export enum ShapeType {
     Rectangle,
     Arc,
     Triangle,
-    Line,
-    Star,
 }
 
 export type Figure = {
-    type: ItemType.Figure,
-    shape: number,
+    shape: string,
     fillColor: string,
     strokeColor: string,
 }
