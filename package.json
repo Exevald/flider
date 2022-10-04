@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Exevald/flider#readme",
   "devDependencies": {
     "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "@types/node": "^18.8.1"
   }
 }
