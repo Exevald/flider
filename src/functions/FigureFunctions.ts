@@ -1,19 +1,17 @@
-import {Presentation, Id, Point, Figure, ItemType, ShapeType, Item} from "../model/Types";
+import {Area, Figure, Id, Item, ItemType, Point, Presentation, ShapeType} from "../model/Types";
 
 function addFigure
 (
     presentation: Presentation,
-    slideId: Id,
-    type: string,
+    type: ShapeType,
     coordinates: Point,
-    width: number,
-    height: number,
+    space: Area,
     fillColor: string = "000",
     strokeColor: string = "000"
 ): Presentation {
 
     const figure: Figure = {
-        shape: ShapeType[type],
+        shape: type,
         fillColor: fillColor,
         strokeColor: strokeColor,
     }
@@ -25,8 +23,10 @@ function addFigure
             y: coordinates.y,
         },
         element: ItemType.Figure,
-        width: width,
-        height: height,
+        space: {
+            width: space.width,
+            height: space.height,
+        }
     }
 
     return {
@@ -40,12 +40,11 @@ function createRectangle
     slideId: Id,
     type: string,
     coordinates: Point,
-    width: number,
-    height: number,
+    space: Area,
     fillColor: string = "000",
     strokeColor: string = "000"
 ) {
-    return addFigure(presentation, slideId, "Square", coordinates, width, height, fillColor, strokeColor)
+    return addFigure(presentation, ShapeType.Rectangle, coordinates, space, fillColor, strokeColor)
 }
 
 function createArc
@@ -54,12 +53,11 @@ function createArc
     slideId: Id,
     type: string,
     coordinates: Point,
-    width: number,
-    height: number,
+    space: Area,
     fillColor: string = "000",
     strokeColor: string = "000"
 ) {
-    return addFigure(presentation, slideId, "Arc", coordinates, width, height, fillColor, strokeColor)
+    return addFigure(presentation, ShapeType.Arc, coordinates, space, fillColor, strokeColor)
 }
 
 function createTriangle
@@ -68,10 +66,9 @@ function createTriangle
     slideId: Id,
     type: string,
     coordinates: Point,
-    width: number,
-    height: number,
+    space: Area,
     fillColor: string = "000",
     strokeColor: string = "000"
 ) {
-    return addFigure(presentation, slideId, "Triangle", coordinates, width, height, fillColor, strokeColor)
+    return addFigure(presentation, ShapeType.Triangle, coordinates, space, fillColor, strokeColor)
 }
