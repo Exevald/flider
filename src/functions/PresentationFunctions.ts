@@ -18,12 +18,12 @@ function saveAsPDF(Pr: Presentation) {
     // без понятия
 }
 
-function open(dest: string): Presentation {
-    // считал строку и сразу же распарсил в json
-    let jsonConfig: JSON = JSON.parse(fs.readFileSync(dest, "utf8"));
-    let Pr: Presentation = jsonConfig;
-    return Pr;
-}
+// function open(dest: string): Presentation {
+//     // считал строку и сразу же распарсил в json
+//     let jsonConfig: JSON = JSON.parse(fs.readFileSync(dest, "utf8"));
+//     let Pr: Presentation = jsonConfig;
+//     return Pr;
+// }
 
 function watch(Pr: Presentation) {
     // тут будет адская вёрстка
