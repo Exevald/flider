@@ -1,7 +1,6 @@
 // Включает сейвы, просмотр презентации;
 // действия со слайдами
-
-import {History, Presentation, Slide} from "../model/Types";
+import {Presentation} from "../core/model/Types";
 import * as fs from "fs";
 
 
