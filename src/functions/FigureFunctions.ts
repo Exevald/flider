@@ -1,4 +1,4 @@
-import {Area, Figure, Id, Item, ItemType, Point, Presentation, ShapeType} from "../model/Types";
+import {Area, Figure, Id, Item, ItemType, Point, Presentation, ShapeType} from "../core/model/Types";
 
 function addFigure
 (
