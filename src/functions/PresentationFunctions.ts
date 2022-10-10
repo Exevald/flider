@@ -1,7 +1,7 @@
 // Включает сейвы, просмотр презентации;
 // действия со слайдами
 
-import {Presentation, Slide } from "../model/Types";
+import {History, Presentation, Slide} from "../model/Types";
 import * as fs from "fs";
 
 
@@ -28,3 +28,14 @@ function saveAsPDF(Pr: Presentation) {
 function watch(Pr: Presentation) {
     // тут будет адская вёрстка
 }
+
+/*          сюда никому не заходить
+function undo(h: History): Presentation {
+    return h[-1]                            // не факт, что компилятор не заорёт
+}
+
+function redo(pr: Presentation, h: History): Presentation {
+    if (pr != h[-1]) {
+        return h[-1]
+    }
+}*/
