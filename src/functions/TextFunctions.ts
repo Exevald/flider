@@ -17,7 +17,7 @@ function AddText(
     }
 
     const item: Item = {
-        id: 0,
+        id: "0",
         coordinates: {
             x: coordinates.x,
             y: coordinates.y
