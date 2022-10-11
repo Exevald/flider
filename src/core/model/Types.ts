@@ -1,4 +1,4 @@
-export type Id = number
+export type Id = string;
 
 export type Point = {
     x: number,
@@ -26,7 +26,6 @@ export type Presentation = {
 export type Slide = {
     id: Id,
     items: Array<Item>,
-    selected: Array<Id>,
     bgColor: string,
 }
 
