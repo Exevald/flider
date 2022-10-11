@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-function UtiltiesRow() {
+function UtilityRow() {
     return(
         <div className="utilities-row">
             <a href="">File</a>
@@ -15,7 +15,7 @@ function UtiltiesRow() {
 function Header() {
     return (
         <div className="Header">
-            <UtiltiesRow />
+            <UtilityRow />
         </div>
     )
 }
@@ -27,6 +27,9 @@ function App() {
             <h1>
                 Flider
             </h1>
+            <div>
+                {Header()}
+            </div>
         </div>
     );
 }
