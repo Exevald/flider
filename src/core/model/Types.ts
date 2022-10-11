@@ -10,9 +10,7 @@ export type Area = {
     height: number,
 }
 
-export type History = {
-    history: Array<Presentation>,
-}
+export type History = Array<Presentation>;
 
 export type Actions = {
     history: History,
