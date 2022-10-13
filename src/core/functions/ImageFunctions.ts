@@ -1,19 +1,14 @@
-import {Area, Item, ItemType, Point, Presentation, TextArea} from "../core/model/Types";
+import {Area, Image, Item, ItemType, Point, Presentation} from "../../model/Types";
 
-function AddText(
+function AddImage(
     presentation: Presentation,
     coordinates: Point,
     space: Area,
-    fontFamily: string = "Arial",
-    fontSize: number = 14,
-    fontColor: string = "black",
+    src: string,
 ): Presentation {
 
-    const text: TextArea = {
-        fontFamily: fontFamily,
-        fontSize: fontSize,
-        fontColor: fontColor,
-        value: "",
+    const image: Image = {
+        src: src
     }
 
     const item: Item = {
@@ -22,7 +17,7 @@ function AddText(
             x: coordinates.x,
             y: coordinates.y
         },
-        element: ItemType.TextArea,
+        element: ItemType.Image,
         space: {
             width: space.width,
             height: space.height,

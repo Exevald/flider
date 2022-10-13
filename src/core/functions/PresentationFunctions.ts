@@ -1,6 +1,6 @@
 // Включает сейвы, просмотр презентации;
 // действия со слайдами
-import {History, Presentation, Slide} from "../core/model/Types";
+import {History, Presentation, Slide} from "../../model/Types";
 
 
 /**         очень важные константы          **/

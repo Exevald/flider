@@ -1,0 +1,43 @@
+:root {
+    --shinji: rgba(255, 255, 255, 1);
+    --ayanami-default: rgba(141, 190, 220, 1);
+    --ayanami-dark: rgba(64, 138, 182, 1);
+    --ayanami-20: rgba(48, 107, 141, 0.2);
+}
+
+.button {
+    min-width: 40px;
+    height: 40px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    background-color: var(--ayanami-default);
+    color: var(--shinji);
+
+    border: none;
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 11px 11px;
+}
+
+.text {
+    white-space: nowrap;
+}
+
+.button_default:hover {
+    cursor: pointer;
+    background-color: var(--ayanami-dark);
+}
+
+.button_default:focus {
+    background-color: var(--ayanami-default);
+    border: 3px solid var(--ayanami-20);
+}
+
+.button_default:disabled {
+    background-color: var(--ayanami-20);
+}
