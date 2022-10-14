@@ -1,4 +1,3 @@
-import "./TopPanel.module.css"
 import logoArea from "./LogoArea.svg"
 const PRESENTATION_NAME_MAX_LENGTH = 48;
 
@@ -54,7 +53,7 @@ const WatchBtn = () => {
 
 const TopPanel = ({/* надо параметры */}) => {
     return (
-        <div className={`top-panel`}>
+        <div className={"top-panel"}>
             <LogoArea/>
             <InputPresentationName/>
             <OpenBtn/>
