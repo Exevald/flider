@@ -1,0 +1,8 @@
+.toolbar {
+    width: 100%;
+    height: 46px;
+    border-bottom: 1px solid var(--kaoru-default);
+    display: flex;
+    align-items: center;
+
+}

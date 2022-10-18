@@ -4,8 +4,6 @@
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 15px;
-    background-color: var(--ayanami-default);
-    color: var(--shinji);
 
     border: none;
     border-radius: 9px;
@@ -23,10 +21,6 @@
 
 .icon_area_right {
     padding-left: 10px;
-}
-
-.icon_area_center {
-    /*padding-left: 10px;*/
 }
 
 .text_default {
@@ -76,6 +70,8 @@
 }
 
 .button_watch {
+    background-color: var(--ayanami-default);
+    color: var(--shinji);
     margin-left: 2.2vw;
 }
 
@@ -85,14 +81,61 @@
 }
 
 .button_add {
-    max-width: 36px;
+    width: 36px;
     height: 36px;
     background-color: var(--shinji);
     border: 1px solid var(--kaoru-60);
     color: var(--gendo-default);
+    margin-left: 35px;
 }
 
 .button_add:hover {
     background-color: var(--kaoru-20);
     border: none;
+}
+
+.icon_button {
+    width: 32px;
+    height: 32px;
+    border: none;
+}
+
+.button_undo {
+    background: no-repeat url("./ButtonIcons/UndoIcon.svg");
+}
+
+.button_redo {
+    background: no-repeat url("./ButtonIcons/RedoIcon.svg");
+}
+
+.button_figure {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url("./ButtonIcons/FigureIcon.svg");
+}
+
+.button_image {
+    background: no-repeat url("./ButtonIcons/ImageIcon.svg");
+}
+
+.button_text_area {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url("./ButtonIcons/TextAreaIcon.svg");
+}
+
+.button_line {
+    width: 30px;
+    height: 16px;
+    background: no-repeat url("./ButtonIcons/LineIcon.svg");
+}
+
+.button_select_area {
+    background: center no-repeat url("./ButtonIcons/SelectAreaIcon.svg");
+}
+
+.button_select_arrow {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url("ButtonIcons/SelectArrowIcon.svg");
 }

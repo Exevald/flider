@@ -3,7 +3,7 @@
     height: 78px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--kaoru-60);
+    border-bottom: 1px solid var(--kaoru-default);
 }
 
 .logoArea {

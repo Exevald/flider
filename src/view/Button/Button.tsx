@@ -1,7 +1,7 @@
 import styles from "./Button.module.css";
 
 interface ButtonProps {
-    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add',
+    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line',
     iconStyle: 'left' | 'right' | 'center' | 'none'
     iconSrc?: string,
     text?: string,
@@ -87,7 +87,7 @@ const Button = ({
                     className={`${styles.button} ${buttonStyle}`}
                     onClick={onClick}
                 >
-                    <div className={styles.icon_area_center}>
+                    <div>
                         <img src={iconSrc} alt={"buttonIcon"}></img>
                     </div>
                 </button>
@@ -95,4 +95,54 @@ const Button = ({
     }
 }
 
-export {Button}
+const ButtonIcon = ({
+                        viewStyle,
+                        onClick,
+                    }: ButtonProps) => {
+    let buttonStyle;
+
+    switch (viewStyle) {
+        case "undo": {
+            buttonStyle = styles.button_undo;
+            break;
+        }
+        case "redo": {
+            buttonStyle = styles.button_redo;
+            break;
+        }
+        case "selectArea": {
+            buttonStyle = styles.button_select_area;
+            break;
+        }
+        case "selectArrow": {
+            buttonStyle = styles.button_select_arrow;
+            break;
+        }
+        case "textArea": {
+            buttonStyle = styles.button_text_area;
+            break;
+        }
+        case "image": {
+            buttonStyle = styles.button_image;
+            break;
+        }
+        case "figure": {
+            buttonStyle = styles.button_figure;
+            break;
+        }
+        case "line": {
+            buttonStyle = styles.button_line;
+            break;
+        }
+    }
+    return (
+        <button
+            type="button"
+            className={`${styles.icon_button} ${buttonStyle}`}
+            onClick={onClick}
+        >
+        </button>
+    )
+}
+
+export {Button, ButtonIcon}
