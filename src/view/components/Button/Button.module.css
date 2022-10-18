@@ -25,6 +25,10 @@
     padding-left: 10px;
 }
 
+.icon_area_center {
+    /*padding-left: 10px;*/
+}
+
 .text_default {
     white-space: nowrap;
 }
@@ -78,4 +82,17 @@
 .button_watch:hover {
     cursor: pointer;
     background-color: var(--ayanami-dark);
+}
+
+.button_add {
+    max-width: 36px;
+    height: 36px;
+    background-color: var(--shinji);
+    border: 1px solid var(--kaoru-60);
+    color: var(--gendo-default);
+}
+
+.button_add:hover {
+    background-color: var(--kaoru-20);
+    border: none;
 }

@@ -1,8 +1,8 @@
 import styles from "./Button.module.css";
 
 interface ButtonProps {
-    viewStyle: 'default' | 'open' | 'save' | 'watch',
-    iconStyle: 'left' | 'right' | 'none'
+    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add',
+    iconStyle: 'left' | 'right' | 'center' | 'none'
     iconSrc?: string,
     text?: string,
     onClick: () => void,
@@ -27,6 +27,11 @@ const Button = ({
         }
         case "watch": {
             buttonStyle = styles.button_watch;
+            break;
+        }
+        case "add": {
+            buttonStyle = styles.button_add;
+            break;
         }
     }
     switch (iconStyle) {
@@ -75,6 +80,18 @@ const Button = ({
                 </button>
             )
         }
+        case "center":
+            return (
+                <button
+                    type="button"
+                    className={`${styles.button} ${buttonStyle}`}
+                    onClick={onClick}
+                >
+                    <div className={styles.icon_area_center}>
+                        <img src={iconSrc} alt={"buttonIcon"}></img>
+                    </div>
+                </button>
+            )
     }
 }
 
