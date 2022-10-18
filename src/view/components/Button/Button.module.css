@@ -17,6 +17,14 @@
     padding: 11px 11px;
 }
 
+.icon_area_left {
+    padding-right: 10px;
+}
+
+.icon_area_right {
+    padding-left: 10px;
+}
+
 .text_default {
     white-space: nowrap;
 }
@@ -36,47 +44,38 @@
     background-color: var(--ayanami-20);
 }
 
-.button_open_button {
-    min-width: 40px;
-    height: 40px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
+.button_open {
     background-color: var(--shinji);
     color: var(--gendo-default);
-
     border: 1px solid var(--kaoru-60);
-    border-radius: 9px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 11px 11px;
-    margin-left: 40px;
+    margin-left: 2.2vw;
 }
 
-.button_save_button {
-    min-width: 40px;
-    height: 40px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
+.button_save {
     background-color: var(--shinji);
     color: var(--gendo-default);
-
     border: 1px solid var(--kaoru-60);
-    border-radius: 9px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 11px 11px;
-    margin-left: 210px;
+    margin-left: 50vw;
 }
 
-.icon_text {
-    white-space: nowrap;
-    margin-right: 10px;
+
+.button_open:hover {
+    cursor: pointer;
+    border-color: var(--kaoru-default);
+    color: var(--gendo-default);
+}
+
+.button_save:hover {
+    cursor: pointer;
+    border-color: var(--kaoru-default);
+    color: var(--gendo-default);
+}
+
+.button_watch {
+    margin-left: 2.2vw;
+}
+
+.button_watch:hover {
+    cursor: pointer;
+    background-color: var(--ayanami-dark);
 }
