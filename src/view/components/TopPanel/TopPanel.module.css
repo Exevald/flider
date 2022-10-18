@@ -1,20 +1,11 @@
-.top-panel {
-    display: flex;
+.topPanel {
     width: 100%;
-    min-width: 1366px;
     height: 78px;
+    display: flex;
+    padding-top: 19px;
 }
 
-.inputPresentationName {
-    width: 217px;
-    color: gray;
-    border-radius: 5px;
-}
-.openBtn {
-    width: 40px;
-    border-radius: 9px;
-}
-
-.watchBtn {
-    color: aqua;
+.logoArea {
+    margin-left: 19px;
+    cursor: pointer;
 }

@@ -1,0 +1,49 @@
+.input_default {
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--kaoru-60);
+
+    border: 1px solid var(--kaoru-60);
+    border-radius: 5px;
+
+    min-width: 150px;
+    height: 35px;
+
+}
+
+.input_default:hover {
+    cursor: pointer;
+}
+
+.input_default:focus {
+    border: 2px solid var(--ayanami-dark);
+    color: var(--gendo-default);
+    outline: none;
+}
+
+.input_top_panel {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--kaoru-60);
+
+    border: 1px solid var(--kaoru-60);
+    border-radius: 5px;
+
+    min-width: 150px;
+    height: 35px;
+
+    margin-left: 40px;
+}
+
+.input_top_panel:hover {
+    cursor: pointer;
+}
+
+.input_top_panel:focus {
+    border: 2px solid var(--ayanami-dark);
+    color: var(--gendo-default);
+    outline: none;
+}

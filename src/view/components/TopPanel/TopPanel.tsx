@@ -1,64 +1,27 @@
 import logoArea from "./LogoArea.svg"
-const PRESENTATION_NAME_MAX_LENGTH = 48;
+import styles from "./TopPanel.module.css"
+
+import {TextArea, TopPanelTextArea} from "../TextArea/TextArea";
+import {Button, TopPanelOpenButton, TopPanelSaveButton} from "../Button/Button";
 
 const LogoArea = () => {
-    return(
-        <div>
-            <img
-                src={logoArea}
-                alt={"Main Logo"}/>
-        </div>
-    )
-}
-
-const InputPresentationName = () => {
-    return(
-        <div>
-            <p>
-                <input name={"PrName"}
-                      className={"inputPresentationName"}
-                      maxLength={PRESENTATION_NAME_MAX_LENGTH}
-                      placeholder={"Презентация без названия"}
-                      accept={".json"}
-                />
-            </p>
-        </div>
-    )
-}
-
-const OpenBtn = () => {
-    return(
-        <div className={"openBtn"}>
-            <p>Открыть</p>
-        </div>
-    )
-}
-
-const SaveBtn = () => {
-    return(
-        <div className={"saveBtn"}>
-            <p>Сохранить</p>
-
-        </div>
-    )
-}
-
-const WatchBtn = () => {
-    return(
-        <div className={"watchBtn"}>
-            <p>Смотреть</p>
-        </div>
-    )
-}
-
-const TopPanel = ({/* надо параметры */}) => {
     return (
-        <div className={"top-panel"}>
+        <div>
+            <img className={styles.logoArea}
+                 src={logoArea}
+                 alt={"Main Logo"}
+            />
+        </div>
+    )
+}
+
+const TopPanel = ({}) => {
+    return (
+        <div className={styles.topPanel}>
             <LogoArea/>
-            <InputPresentationName/>
-            <OpenBtn/>
-            <SaveBtn/>
-            <WatchBtn/>
+            <TopPanelTextArea placeholder={"Имя презентации"}></TopPanelTextArea>
+            <TopPanelOpenButton viewStyle={"default"} onClick={() => {}} text={"Открыть"}></TopPanelOpenButton>
+            <TopPanelSaveButton viewStyle={"default"} onClick={() => {}} text={"Сохранить"}></TopPanelSaveButton>
         </div>
     )
 }
