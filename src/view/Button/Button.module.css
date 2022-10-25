@@ -98,19 +98,21 @@
     width: 32px;
     height: 32px;
     border: none;
+    cursor: pointer;
+    margin-left: 35px;
 }
 
 .button_undo {
-    background: no-repeat url("./ButtonIcons/UndoIcon.svg");
+    background: center no-repeat url("./ButtonIcons/UndoIcon.svg");
+    margin-left: 50px;
 }
 
 .button_redo {
     background: no-repeat url("./ButtonIcons/RedoIcon.svg");
+    margin-left: 20px;
 }
 
 .button_figure {
-    width: 16px;
-    height: 16px;
     background: no-repeat url("./ButtonIcons/FigureIcon.svg");
 }
 
@@ -119,23 +121,17 @@
 }
 
 .button_text_area {
-    width: 16px;
-    height: 16px;
     background: no-repeat url("./ButtonIcons/TextAreaIcon.svg");
 }
 
 .button_line {
-    width: 30px;
-    height: 16px;
     background: no-repeat url("./ButtonIcons/LineIcon.svg");
 }
 
 .button_select_area {
-    background: center no-repeat url("./ButtonIcons/SelectAreaIcon.svg");
+    background: no-repeat url("./ButtonIcons/SelectAreaIcon.svg");
 }
 
 .button_select_arrow {
-    width: 16px;
-    height: 16px;
     background: no-repeat url("ButtonIcons/SelectArrowIcon.svg");
 }
