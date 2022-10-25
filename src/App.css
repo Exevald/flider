@@ -11,4 +11,7 @@
   --asuka-default: rgba(225, 63, 42, 1);
   --asuka-dark: rgba(168, 37, 20, 1);
   --grey-shark: rgba(217, 217, 217, 1);
+  --misato-default: rgba(172, 135, 210, 1);
+  --misato-dark: rgba(130, 82, 180, 1);
+  --misato-60: rgba(172, 135, 210, 0.6);
 }
