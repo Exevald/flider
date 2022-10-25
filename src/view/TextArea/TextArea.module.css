@@ -11,10 +11,8 @@
     min-width: 150px;
     height: 35px;
 
-}
-
-.input_default::placeholder {
     padding-left: 10px;
+
 }
 
 .input_default:hover {
