@@ -3,6 +3,8 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    background-color: var(--ayanami-20);
+
 }
 .slide {
     max-width: 1280px;
@@ -11,4 +13,6 @@
     height: 100%;
     background: var(--shinji);
     border: 1px solid var(--kaoru-60);
+
+    filter: drop-shadow(4px 4px 4px var(--grey-shark));
 }
