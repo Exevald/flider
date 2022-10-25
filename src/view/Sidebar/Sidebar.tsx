@@ -1,6 +1,11 @@
 import styles from "./Sidebar.module.css"
 
-const Sidebar = () => {
+interface SlidePreview {
+    id?: number,
+    preview?: string,
+}
+
+const Sidebar = (slidePreview: SlidePreview) => {
     return (
         <div className={styles.sidebar}>
         </div>
