@@ -3,14 +3,14 @@ import './App.css';
 
 import TopPanel from "./view/TopPanel/TopPanel";
 import {Toolbar} from "./view/Toolbar/Toolbar";
-import {Sidebar} from "./view/Sidebar/Sidebar";
+import {WorkSpace} from "./view/WorkSpace/WorkSpace";
 
 function App() {
     return (
         <div className="App">
             <TopPanel></TopPanel>
             <Toolbar></Toolbar>
-            <Sidebar></Sidebar>
+            <WorkSpace></WorkSpace>
         </div>
     );
 }
