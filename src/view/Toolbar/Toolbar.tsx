@@ -16,6 +16,7 @@ const Toolbar = () => {
             <ButtonIcon viewStyle={"image"} iconStyle={"center"} onClick={() => {}}></ButtonIcon>
             <ButtonIcon viewStyle={"figure"} iconStyle={"center"} onClick={() => {}}></ButtonIcon>
             <ButtonIcon viewStyle={"line"} iconStyle={"center"} onClick={() => {}}></ButtonIcon>
+            <ButtonIcon viewStyle={"palette"} iconStyle={"center"} onClick={() => {}}></ButtonIcon>
         </div>
     )
 }

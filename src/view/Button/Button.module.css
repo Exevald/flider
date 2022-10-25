@@ -135,3 +135,7 @@
 .button_select_arrow {
     background: no-repeat url("ButtonIcons/SelectArrowIcon.svg");
 }
+
+.button_palette {
+    background: no-repeat url("ButtonIcons/PaletteIcon.svg");
+}

@@ -1,7 +1,7 @@
 import styles from "./Button.module.css";
 
 interface ButtonProps {
-    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line',
+    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line' | 'palette',
     iconStyle: 'left' | 'right' | 'center' | 'none'
     iconSrc?: string,
     text?: string,
@@ -132,6 +132,10 @@ const ButtonIcon = ({
         }
         case "line": {
             buttonStyle = styles.button_line;
+            break;
+        }
+        case "palette": {
+            buttonStyle = styles.button_palette;
             break;
         }
     }
