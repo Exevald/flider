@@ -102,6 +102,11 @@
     margin-left: 35px;
 }
 
+.icon_button:hover {
+    background-color: var(--kaoru-20);
+    border-radius: 3px;
+}
+
 .button_undo {
     background: center no-repeat url("./ButtonIcons/UndoIcon.svg");
     margin-left: 50px;
@@ -138,4 +143,16 @@
 
 .button_palette {
     background: no-repeat url("ButtonIcons/PaletteIcon.svg");
+}
+
+.button_create_slide {
+    width: 36px;
+    height: 36px;
+    background: no-repeat url("ButtonIcons/CreateSlideIcon.svg");
+}
+
+.button_create_slide:hover {
+    width: 36px;
+    height: 36px;
+    background: no-repeat url("ButtonIcons/CreateSlideHoverIcon.svg");
 }

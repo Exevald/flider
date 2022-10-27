@@ -1,8 +1,8 @@
 import styles from "./Button.module.css";
 
 interface ButtonProps {
-    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line' | 'palette',
-    iconStyle: 'left' | 'right' | 'center' | 'none'
+    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide',
+    iconStyle?: 'left' | 'right' | 'center' | 'none'
     iconSrc?: string,
     text?: string,
     onClick: () => void,
@@ -16,6 +16,7 @@ const Button = ({
                     onClick
                 }: ButtonProps) => {
     let buttonStyle = styles.button_default;
+
     switch (viewStyle) {
         case "save": {
             buttonStyle = styles.button_save;
@@ -34,65 +35,28 @@ const Button = ({
             break;
         }
     }
-    switch (iconStyle) {
-        case "none": {
-            return (
-                <button
-                    type="button"
-                    className={`${styles.button} ${buttonStyle}`}
-                    onClick={onClick}
-                >
-                    <div className={styles.text_default}>
-                        {text}
-                    </div>
-                </button>
-            )
-        }
-        case "left": {
-            return (
-                <button
-                    type="button"
-                    className={`${styles.button} ${buttonStyle}`}
-                    onClick={onClick}
-                >
-                    <div className={styles.icon_area_left}>
-                        <img src={iconSrc} alt={"buttonIcon"}></img>
-                    </div>
-                    <div className={styles.text_default}>
-                        {text}
-                    </div>
-                </button>
-            )
-        }
-        case "right": {
-            return (
-                <button
-                    type="button"
-                    className={`${styles.button} ${buttonStyle}`}
-                    onClick={onClick}
-                >
-                    <div className={styles.text_default}>
-                        {text}
-                    </div>
-                    <div className={styles.icon_area_right}>
-                        <img src={iconSrc} alt={"buttonIcon"}></img>
-                    </div>
-                </button>
-            )
-        }
-        case "center":
-            return (
-                <button
-                    type="button"
-                    className={`${styles.button} ${buttonStyle}`}
-                    onClick={onClick}
-                >
-                    <div>
-                        <img src={iconSrc} alt={"buttonIcon"}></img>
-                    </div>
-                </button>
-            )
-    }
+    return (
+        <button
+            type="button"
+            className={`${styles.button} ${buttonStyle}`}
+            onClick={onClick}
+        >
+            {iconStyle === "left" &&
+                <div className={styles.icon_area_left}>
+                    <img src={iconSrc} alt={"buttonIcon"}></img>
+                </div>
+            }
+            <div className={styles.text_default}>
+                {text}
+            </div>
+            {iconStyle === "right" &&
+                <div className={styles.icon_area_right}>
+                    <img src={iconSrc} alt={"buttonIcon"}></img>
+                </div>
+            }
+        </button>
+    )
+
 }
 
 const ButtonIcon = ({
@@ -138,6 +102,11 @@ const ButtonIcon = ({
             buttonStyle = styles.button_palette;
             break;
         }
+        case "createSlide": {
+            buttonStyle = styles.button_create_slide;
+            break;
+        }
+
     }
     return (
         <button
