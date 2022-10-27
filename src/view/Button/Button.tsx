@@ -15,23 +15,23 @@ const Button = ({
                     text = '',
                     onClick
                 }: ButtonProps) => {
-    let buttonStyle = styles.button_default;
+    let buttonStyle = styles.buttonDefault;
 
     switch (viewStyle) {
         case "save": {
-            buttonStyle = styles.button_save;
+            buttonStyle = styles.buttonSave;
             break;
         }
         case "open": {
-            buttonStyle = styles.button_open;
+            buttonStyle = styles.buttonOpen;
             break;
         }
         case "watch": {
-            buttonStyle = styles.button_watch;
+            buttonStyle = styles.buttonWatch;
             break;
         }
         case "add": {
-            buttonStyle = styles.button_add;
+            buttonStyle = styles.buttonAdd;
             break;
         }
     }
@@ -42,15 +42,15 @@ const Button = ({
             onClick={onClick}
         >
             {iconStyle === "left" &&
-                <div className={styles.icon_area_left}>
+                <div className={styles.iconAreaLeft}>
                     <img src={iconSrc} alt={"buttonIcon"}></img>
                 </div>
             }
-            <div className={styles.text_default}>
+            <div className={styles.textDefault}>
                 {text}
             </div>
             {iconStyle === "right" &&
-                <div className={styles.icon_area_right}>
+                <div className={styles.iconAreaRight}>
                     <img src={iconSrc} alt={"buttonIcon"}></img>
                 </div>
             }
@@ -67,43 +67,43 @@ const ButtonIcon = ({
 
     switch (viewStyle) {
         case "undo": {
-            buttonStyle = styles.button_undo;
+            buttonStyle = styles.buttonUndo;
             break;
         }
         case "redo": {
-            buttonStyle = styles.button_redo;
+            buttonStyle = styles.buttonRedo;
             break;
         }
         case "selectArea": {
-            buttonStyle = styles.button_select_area;
+            buttonStyle = styles.buttonSelectArea;
             break;
         }
         case "selectArrow": {
-            buttonStyle = styles.button_select_arrow;
+            buttonStyle = styles.buttonSelectArrow;
             break;
         }
         case "textArea": {
-            buttonStyle = styles.button_text_area;
+            buttonStyle = styles.buttonTextArea;
             break;
         }
         case "image": {
-            buttonStyle = styles.button_image;
+            buttonStyle = styles.buttonImage;
             break;
         }
         case "figure": {
-            buttonStyle = styles.button_figure;
+            buttonStyle = styles.buttonFigure;
             break;
         }
         case "line": {
-            buttonStyle = styles.button_line;
+            buttonStyle = styles.buttonLine;
             break;
         }
         case "palette": {
-            buttonStyle = styles.button_palette;
+            buttonStyle = styles.buttonPalette;
             break;
         }
         case "createSlide": {
-            buttonStyle = styles.button_create_slide;
+            buttonStyle = styles.buttonCreateSlide;
             break;
         }
 
@@ -111,7 +111,7 @@ const ButtonIcon = ({
     return (
         <button
             type="button"
-            className={`${styles.icon_button} ${buttonStyle}`}
+            className={`${styles.iconButton} ${buttonStyle}`}
             onClick={onClick}
         >
         </button>

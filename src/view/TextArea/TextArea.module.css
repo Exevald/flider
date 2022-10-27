@@ -1,4 +1,4 @@
-.input_default {
+.inputDefault {
 
     font-family: 'Inter', sans-serif;
     font-weight: 500;
@@ -15,25 +15,25 @@
 
 }
 
-.input_default:hover {
+.inputDefault:hover {
     cursor: pointer;
 }
 
-.input_default:focus {
+.inputDefault:focus {
     border: 2px solid var(--ayanami-dark);
     color: var(--gendo-default);
     outline: none;
 }
 
-.input_top_panel {
+.inputTopPanel {
     margin-left: 2.2vw;
 }
 
-.input_top_panel:hover {
+.inputTopPanel:hover {
     cursor: pointer;
 }
 
-.input_top_panel:focus {
+.inputTopPanel:focus {
     border: 2px solid var(--ayanami-default);
     color: var(--gendo-default);
     outline: none;

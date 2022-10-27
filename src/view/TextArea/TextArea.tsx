@@ -13,13 +13,13 @@ const TextArea = ({
                   }: TextAreaProps) => {
     let textAreaStyle = styles.button_default;
     switch (viewStyle) {
-        case "presentationName": {textAreaStyle = styles.input_top_panel; break}
+        case "presentationName": {textAreaStyle = styles.inputTopPanel; break}
     }
     return (
         <input type="text"
                value={value}
                placeholder={placeholder}
-               className={`${styles.input_default} ${textAreaStyle}`}
+               className={`${styles.inputDefault} ${textAreaStyle}`}
         >
         </input>
     )

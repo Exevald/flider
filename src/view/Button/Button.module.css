@@ -15,41 +15,41 @@
     padding: 11px 11px;
 }
 
-.icon_area_left {
+.iconAreaLeft {
     padding-right: 10px;
 }
 
-.icon_area_right {
+.iconAreaRight {
     padding-left: 10px;
 }
 
-.text_default {
+.textDefault {
     white-space: nowrap;
 }
 
-.button_default:hover {
+.buttonDefault:hover {
     cursor: pointer;
     background-color: var(--ayanami-dark);
 }
 
-.button_default:focus {
+.buttonDefault:focus {
     background-color: var(--ayanami-default);
     border: 3px solid var(--ayanami-20);
     outline: none;
 }
 
-.button_default:disabled {
+.buttonDefault:disabled {
     background-color: var(--ayanami-20);
 }
 
-.button_open {
+.buttonOpen {
     background-color: var(--shinji);
     color: var(--gendo-default);
     border: 1px solid var(--kaoru-60);
     margin-left: 2.2vw;
 }
 
-.button_save {
+.buttonSave {
     background-color: var(--shinji);
     color: var(--gendo-default);
     border: 1px solid var(--kaoru-60);
@@ -57,30 +57,30 @@
 }
 
 
-.button_open:hover {
+.buttonOpen:hover {
     cursor: pointer;
     border-color: var(--kaoru-default);
     color: var(--gendo-default);
 }
 
-.button_save:hover {
+.buttonSave:hover {
     cursor: pointer;
     border-color: var(--kaoru-default);
     color: var(--gendo-default);
 }
 
-.button_watch {
+.buttonWatch {
     background-color: var(--ayanami-default);
     color: var(--shinji);
     margin-left: 2.2vw;
 }
 
-.button_watch:hover {
+.buttonWatch:hover {
     cursor: pointer;
     background-color: var(--ayanami-dark);
 }
 
-.button_add {
+.buttonAdd {
     width: 36px;
     height: 36px;
     background-color: var(--shinji);
@@ -89,12 +89,12 @@
     margin-left: 35px;
 }
 
-.button_add:hover {
+.buttonAdd:hover {
     background-color: var(--kaoru-20);
     border: none;
 }
 
-.icon_button {
+.iconButton {
     width: 32px;
     height: 32px;
     border: none;
@@ -102,56 +102,56 @@
     margin-left: 35px;
 }
 
-.icon_button:hover {
+.iconButton:hover {
     background-color: var(--kaoru-20);
-    border-radius: 3px;
+    border-radius: 8px;
 }
 
-.button_undo {
+.buttonUndo {
     background: center no-repeat url("./ButtonIcons/UndoIcon.svg");
     margin-left: 50px;
 }
 
-.button_redo {
+.buttonRedo {
     background: no-repeat url("./ButtonIcons/RedoIcon.svg");
     margin-left: 20px;
 }
 
-.button_figure {
+.buttonFigure {
     background: no-repeat url("./ButtonIcons/FigureIcon.svg");
 }
 
-.button_image {
+.buttonImage {
     background: no-repeat url("./ButtonIcons/ImageIcon.svg");
 }
 
-.button_text_area {
+.buttonTextArea {
     background: no-repeat url("./ButtonIcons/TextAreaIcon.svg");
 }
 
-.button_line {
+.buttonLine {
     background: no-repeat url("./ButtonIcons/LineIcon.svg");
 }
 
-.button_select_area {
+.buttonSelectArea {
     background: no-repeat url("./ButtonIcons/SelectAreaIcon.svg");
 }
 
-.button_select_arrow {
+.buttonSelectArrow {
     background: no-repeat url("ButtonIcons/SelectArrowIcon.svg");
 }
 
-.button_palette {
+.buttonPalette {
     background: no-repeat url("ButtonIcons/PaletteIcon.svg");
 }
 
-.button_create_slide {
+.buttonCreateSlide {
     width: 36px;
     height: 36px;
     background: no-repeat url("ButtonIcons/CreateSlideIcon.svg");
 }
 
-.button_create_slide:hover {
+.buttonCreateSlide:hover {
     width: 36px;
     height: 36px;
     background: no-repeat url("ButtonIcons/CreateSlideHoverIcon.svg");
