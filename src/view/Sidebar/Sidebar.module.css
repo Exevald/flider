@@ -2,11 +2,41 @@
     height: 86.7vh;
     width: 17vw;
     border-right: 1px solid var(--kaoru-default);
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
 }
 
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
 
-/*      slide preview       */
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--ayanami-default);
+}
+
+.sidebarRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.slideIndex {
+    margin-left: 15px;
+    margin-top: 26px;
+    font-size: 13px;
+    color: var(--gendo-default);
+}
 
 .slidePreview {
-    
+    width: 180px;
+    height: 111px;
+    border: 1px solid var(--grey-shark);
+    background-color: var(--shinji);
+    border-radius: 9px;
+    margin-top: 25px;
+    margin-left: 20px;
+}
+
+.slidePreview:hover {
+    border: 1px solid var(--kaoru-default);
 }
