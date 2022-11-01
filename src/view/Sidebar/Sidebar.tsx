@@ -16,7 +16,7 @@ const SlidePreview = ({
     return (
         <div className={styles.sidebarRow}>
             <p className={styles.slideIndex}>{id}</p>
-            <div className={styles.slidePreview}></div>
+            <div className={styles.slidePreview}>{preview}</div>
         </div>
     )
 }
