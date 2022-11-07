@@ -1,66 +1,69 @@
-export type Id = string;
+type Id = string;
 
-export type Point = {
+type Point = {
     x: number,
     y: number,
 }
 
-export type Area = {
+type Area = {
     width: number,
     height: number,
 }
 
-export type History = Array<Presentation>;
+type History = Array<Presentation>;
 
-export type Actions = {
+type Actions = {
     history: History,
 }
 
-export type Presentation = {
+type Presentation = {
     slides: Array<Slide>,
     title: string,
     selected: Array<Id>,
     actions: Actions,
 }
 
-export type Slide = {
+type Slide = {
     id: Id,
     items: Array<Item>,
     bgColor: string,
 }
 
-export type Item = {
+type Item = {
     id: Id,
     coordinates: Point,
     element: ItemType,
     space: Area
 }
 
-export enum ItemType {
+enum ItemType {
     Figure,
     TextArea,
     Image,
 }
 
-export enum ShapeType {
+enum ShapeType {
     Rectangle,
     Arc,
     Triangle,
 }
 
-export type Figure = {
+type Figure = {
     shape: ShapeType,
     fillColor: string,
     strokeColor: string,
 }
 
-export type TextArea = {
+type TextArea = {
     fontFamily: string,
     fontSize: number,
     fontColor: string,
     value: string,
 }
 
-export type Image = {
+type Image = {
     src: string
 }
+
+export type {Image, TextArea, Figure, Item, Slide, Presentation, Actions, History, Area, Point, Id};
+export {ShapeType, ItemType};

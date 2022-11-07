@@ -5,7 +5,7 @@ import styles from "./WorkSpace.module.css";
 const WorkSpace = () => {
     return (
         <div className={styles.workspace}>
-            <Sidebar countOfSlides={7}></Sidebar>
+            <Sidebar countOfSlides={12}></Sidebar>
             <SlideArea></SlideArea>
         </div>
     )

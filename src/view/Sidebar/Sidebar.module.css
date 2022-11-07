@@ -13,11 +13,13 @@
 
 .sidebar::-webkit-scrollbar-thumb {
     background-color: var(--ayanami-default);
+    border-radius: 2px;
 }
 
 .sidebarRow {
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 .slideIndex {
@@ -25,6 +27,7 @@
     margin-top: 26px;
     font-size: 13px;
     color: var(--gendo-default);
+    position: absolute;
 }
 
 .slidePreview {
@@ -34,7 +37,7 @@
     background-color: var(--shinji);
     border-radius: 9px;
     margin-top: 25px;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 .slidePreview:hover {
