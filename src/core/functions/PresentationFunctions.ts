@@ -11,12 +11,14 @@ export const DEFAULT_SLIDE_CONFIG: Slide = {
     bgColor: "white",
 }
 
-
+/*
 export function createPresentation(): Presentation {
     let pr: Presentation;
-    pr = DEFAULT_SLIDE_CONFIG;
+    pr.slides = [DEFAULT_SLIDE_CONFIG];
+    pr.title = "Unnamed";
+    pr.
     return pr;
-}
+} */
 
 
 export function changeTitle(Pr: Presentation, title: string): Presentation {
