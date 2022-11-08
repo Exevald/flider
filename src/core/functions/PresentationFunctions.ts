@@ -1,21 +1,12 @@
 // Включает сейвы, просмотр презентации;
 // действия со слайдами
 import {History, Presentation, Slide} from "../../model/Types";
-import {DEFAULT_SLIDE_CONFIG} from "./SlideFunctions";
 
+import {DEFAULT_SLIDE_CONFIG} from "./UtilityFunctions";
+import {DEFAULT_PRESENTATION_CONFIG} from "./UtilityFunctions";
 
 /**         очень важные константы          **/
 const MAX_HISTORY_SIZE = 30;
-
-const DEFAULT_PRESENTATION_CONFIG = {
-    slides: [DEFAULT_SLIDE_CONFIG],
-    title: 'Unnamed',
-    selected: [],
-    actions: {
-        history: [],
-    },
-}
-
 
 function changeTitle(Pr: Presentation, title: string): Presentation {
     Pr.title = title;
@@ -42,8 +33,6 @@ function watch(Pr: Presentation) {
     // тут будет адская вёрстка
 }
 
-
-
     /**         ДЕЙСТВИЯ С ИСТОРИЕЙ         **/
 function addStateToHistory(h:History, pr: Presentation): History {
     // добавляет состояние презентации и контролит количество, чтобы не подпалить оперативу
@@ -65,5 +54,4 @@ function redo(h: History): Presentation | undefined {
     return h[-1];
 }
 
-export {DEFAULT_PRESENTATION_CONFIG}
 export {addStateToHistory, undo, redo}
