@@ -2,7 +2,6 @@
 // действия со слайдами
 import {History, Presentation, Slide} from "../../model/Types";
 
-
 /**         очень важные константы          **/
 export const MAX_HISTORY_SIZE = 30;
 export const DEFAULT_SLIDE_CONFIG: Slide = {
@@ -11,21 +10,10 @@ export const DEFAULT_SLIDE_CONFIG: Slide = {
     bgColor: "white",
 }
 
-/*
-export function createPresentation(): Presentation {
-    let pr: Presentation;
-    pr.slides = [DEFAULT_SLIDE_CONFIG];
-    pr.title = "Unnamed";
-    pr.
-    return pr;
-} */
-
-
 export function changeTitle(Pr: Presentation, title: string): Presentation {
     Pr.title = title;
     return Pr
 }
-
 
     /**         СОХРАНЕНИЯ        **/
 export function saveAsJSON(Pr: Presentation): string {
@@ -47,11 +35,6 @@ export function watch(Pr: Presentation) {
     // тут будет адская вёрстка
 }
 
-    /**         ДЕЙСТВИЯ СО СЛАЙДАМИ         **/
-export function createSlide(pr: Presentation): Presentation {
-    pr.slides.push(DEFAULT_SLIDE_CONFIG);
-    return pr;
-}
 
 
     /**         ДЕЙСТВИЯ С ИСТОРИЕЙ         **/

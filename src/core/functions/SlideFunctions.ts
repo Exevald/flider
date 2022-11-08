@@ -4,8 +4,6 @@ function createSlide(
     presentation: Presentation,
 ): Presentation {
 
-    const newSlides = [...presentation.slides];
-
     const slide: Slide = {
         id: "0",
         items: [],
@@ -17,3 +15,5 @@ function createSlide(
     }
 
 }
+
+export {createSlide};
