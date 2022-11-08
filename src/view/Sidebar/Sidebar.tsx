@@ -7,7 +7,7 @@ interface SlidePreviewProps {
 }
 
 interface SidebarProps {
-    slides: Array<Slide>,
+    slides?: Array<Slide>,
     countOfSlides: number,
 }
 
