@@ -2,7 +2,7 @@
 // действия со слайдами
 import {History, Presentation} from "../../model/Types";
 
-import {DEFAULT_SLIDE_CONFIG, DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE} from "./UtilityFunctions";
+import {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE} from "./UtilityFunctions";
 
 /**         очень важные константы          **/
 
