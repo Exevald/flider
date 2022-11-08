@@ -57,4 +57,4 @@ function redo(h: History): Presentation | undefined {
     return h[-1];
 }
 
-export {addStateToHistory, undo, redo}
+export {addStateToHistory, undo, redo, createPresentation}
