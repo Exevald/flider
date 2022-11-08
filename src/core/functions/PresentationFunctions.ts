@@ -1,26 +1,33 @@
 // Включает сейвы, просмотр презентации;
 // действия со слайдами
 import {History, Presentation, Slide} from "../../model/Types";
+import {DEFAULT_SLIDE_CONFIG} from "./SlideFunctions";
+
 
 /**         очень важные константы          **/
-export const MAX_HISTORY_SIZE = 30;
-export const DEFAULT_SLIDE_CONFIG: Slide = {
-    id: "0",
-    items: [],
-    bgColor: "white",
+const MAX_HISTORY_SIZE = 30;
+
+const DEFAULT_PRESENTATION_CONFIG = {
+    slides: [DEFAULT_SLIDE_CONFIG],
+    title: 'Unnamed',
+    selected: [],
+    actions: {
+        history: [],
+    },
 }
 
-export function changeTitle(Pr: Presentation, title: string): Presentation {
+
+function changeTitle(Pr: Presentation, title: string): Presentation {
     Pr.title = title;
     return Pr
 }
 
     /**         СОХРАНЕНИЯ        **/
-export function saveAsJSON(Pr: Presentation): string {
+function saveAsJSON(Pr: Presentation): string {
     return JSON.stringify(Pr);
 }
 
-export function saveAsPDF(Pr: Presentation) {
+function saveAsPDF(Pr: Presentation) {
     // без понятия
 }
 
@@ -31,14 +38,14 @@ export function open(dest: string): Presentation {
     return jsonConfig;
 }*/
 
-export function watch(Pr: Presentation) {
+function watch(Pr: Presentation) {
     // тут будет адская вёрстка
 }
 
 
 
     /**         ДЕЙСТВИЯ С ИСТОРИЕЙ         **/
-export function addStateToHistory(h:History, pr: Presentation): History {
+function addStateToHistory(h:History, pr: Presentation): History {
     // добавляет состояние презентации и контролит количество, чтобы не подпалить оперативу
     if(h.length > MAX_HISTORY_SIZE) {
         // убирает элемент из начала и закинывает в конец
@@ -51,9 +58,12 @@ export function addStateToHistory(h:History, pr: Presentation): History {
 }
 /*      отменяет и возвращает, провека типов будет на уровне выше
 *       ещё надо переставлять собитыя истории при добавлении события в центр */
-export function undo(h: History): Presentation | undefined {
+function undo(h: History): Presentation | undefined {
     return h[h.length - 2];
 }
-export function redo(h: History): Presentation | undefined {
+function redo(h: History): Presentation | undefined {
     return h[-1];
 }
+
+export {DEFAULT_PRESENTATION_CONFIG}
+export {addStateToHistory, undo, redo}
