@@ -2,10 +2,9 @@
 // действия со слайдами
 import {History, Presentation} from "../../model/Types";
 
-import {DEFAULT_PRESENTATION_CONFIG} from "./UtilityFunctions";
+import {DEFAULT_SLIDE_CONFIG, DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE} from "./UtilityFunctions";
 
 /**         очень важные константы          **/
-const MAX_HISTORY_SIZE = 30;
 
 
 function createPresentation(): Presentation {
@@ -52,12 +51,10 @@ function addStateToHistory(h:History, pr: Presentation): History {
 /*      отменяет и возвращает, провека типов будет на уровне выше
 *       ещё надо переставлять собитыя истории при добавлении события в центр */
 function undo(h: History): Presentation | undefined {
-    console.log("undo");
     return h[h.length - 2];
 }
 function redo(h: History): Presentation | undefined {
-    console.log("redo");
     return h[-1];
 }
 
-export {createPresentation, watch, changeTitle, addStateToHistory, undo, redo}
+export {addStateToHistory, undo, redo}

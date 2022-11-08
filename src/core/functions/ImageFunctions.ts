@@ -1,4 +1,5 @@
 import {Area, Image, Item, ItemType, Point, Presentation} from "../../model/Types";
+import {getRandomId} from "./UtilityFunctions";
 
 function AddImage(
     presentation: Presentation,
@@ -12,7 +13,7 @@ function AddImage(
     }
 
     const item: Item = {
-        id: "0",
+        id: getRandomId(),
         coordinates: {
             x: coordinates.x,
             y: coordinates.y
