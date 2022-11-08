@@ -1,12 +1,16 @@
 // Включает сейвы, просмотр презентации;
 // действия со слайдами
-import {History, Presentation, Slide} from "../../model/Types";
+import {History, Presentation} from "../../model/Types";
 
-import {DEFAULT_SLIDE_CONFIG} from "./UtilityFunctions";
 import {DEFAULT_PRESENTATION_CONFIG} from "./UtilityFunctions";
 
 /**         очень важные константы          **/
 const MAX_HISTORY_SIZE = 30;
+
+
+function createPresentation(): Presentation {
+    return DEFAULT_PRESENTATION_CONFIG;
+}
 
 function changeTitle(Pr: Presentation, title: string): Presentation {
     Pr.title = title;
@@ -48,10 +52,12 @@ function addStateToHistory(h:History, pr: Presentation): History {
 /*      отменяет и возвращает, провека типов будет на уровне выше
 *       ещё надо переставлять собитыя истории при добавлении события в центр */
 function undo(h: History): Presentation | undefined {
+    console.log("undo");
     return h[h.length - 2];
 }
 function redo(h: History): Presentation | undefined {
+    console.log("redo");
     return h[-1];
 }
 
-export {addStateToHistory, undo, redo}
+export {createPresentation, watch, changeTitle, addStateToHistory, undo, redo}
