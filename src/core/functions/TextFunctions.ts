@@ -1,4 +1,5 @@
 import {Area, Item, ItemType, Point, Presentation, TextArea} from "../../model/Types";
+import {getRandomId} from "./UtilityFunctions";
 
 function AddText(
     presentation: Presentation,
@@ -17,7 +18,7 @@ function AddText(
     }
 
     const item: Item = {
-        id: "0",
+        id: getRandomId(),
         coordinates: {
             x: coordinates.x,
             y: coordinates.y

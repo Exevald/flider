@@ -1,4 +1,5 @@
 import styles from "./Sidebar.module.css"
+import {Slide} from "../../model/Types";
 
 interface SlidePreviewProps {
     id?: number,
@@ -6,6 +7,7 @@ interface SlidePreviewProps {
 }
 
 interface SidebarProps {
+    slides?: Array<Slide>,
     countOfSlides: number,
 }
 

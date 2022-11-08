@@ -1,21 +1,11 @@
-import {Presentation, Slide} from "../../model/Types";
-
-/*          Константы           */
-const DEFAULT_SLIDE_CONFIG: Slide = {
-    id: "0",
-    items: [],
-    bgColor: "white",
-}
+import {Presentation} from "../../model/Types";
+import {DEFAULT_SLIDE_CONFIG} from "./UtilityFunctions";
 
 function createSlide(
     presentation: Presentation,
 ): Presentation {
 
-    const slide: Slide = {
-        id: "0",
-        items: [],
-        bgColor: "white"
-    }
+    presentation.slides.push(DEFAULT_SLIDE_CONFIG);
 
     console.log("create slide");
 
@@ -25,5 +15,4 @@ function createSlide(
 
 }
 
-export {DEFAULT_SLIDE_CONFIG}
 export {createSlide};
