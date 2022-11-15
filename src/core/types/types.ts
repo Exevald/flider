@@ -10,23 +10,28 @@ type Area = {
     height: number,
 }
 
-type History = Array<Presentation>;
+type History = {
+    undoStack: Array<Presentation>,
+    redoStack: Array<Presentation>,
+}
 
-type Actions = {
+type Editor = {
+    presentation: Presentation,
     history: History,
+    statePreview: boolean,
 }
 
 type Presentation = {
     slides: Array<Slide>,
     title: string,
-    selected: Array<Id>,
-    actions: Actions,
+    selectedSlidesIds: Array<Id>,
 }
 
 type Slide = {
     id: Id,
     items: Array<Item>,
     bgColor: string,
+    selectedItemsIds: Array<Id>,
 }
 
 type Item = {
@@ -65,5 +70,5 @@ type Image = {
     src: string
 }
 
-export type {Image, TextArea, Figure, Item, Slide, Presentation, Actions, History, Area, Point, Id};
+export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};
 export {ShapeType, ItemType};

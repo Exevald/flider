@@ -1,5 +1,6 @@
 import styles from "./Sidebar.module.css"
-import {Slide} from "../../model/Types";
+import {Editor, Slide} from "../../core/types/types";
+import {connect} from "react-redux";
 
 interface SlidePreviewProps {
     id?: number,
@@ -9,6 +10,7 @@ interface SlidePreviewProps {
 interface SidebarProps {
     slides?: Array<Slide>,
     countOfSlides: number,
+    currentSlideIds?: Array<string>,
 }
 
 const SlidePreview = ({

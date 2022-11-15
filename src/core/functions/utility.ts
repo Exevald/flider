@@ -1,18 +1,16 @@
-import {Id, Presentation, Slide} from "../../model/Types";
+import {Id, Presentation, Slide} from "../types/types";
 
 const DEFAULT_SLIDE_CONFIG: Slide = {
     id: getRandomId(),
     items: [],
     bgColor: "white",
+    selectedItemsIds: ["0"]
 };
 
 const DEFAULT_PRESENTATION_CONFIG: Presentation = {
     slides: [DEFAULT_SLIDE_CONFIG],
     title: 'Unnamed',
-    selected: [],
-    actions: {
-        history: [],
-    },
+    selectedSlidesIds: [],
 };
 
 const MAX_HISTORY_SIZE = 30;
