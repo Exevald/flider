@@ -51,7 +51,7 @@ function switchSlideReducer(presentation: Presentation, slideId: string): Presen
 
 function presentationReducer(state: Presentation, action: ActionType): Presentation {
     switch (action.type) {
-        case 'CHANGE_TITLE':
+        case 'SET_TITLE':
             return action.newTitle !== undefined ? changeTitleReducer(state, action.newTitle) : deepClone(state) as Presentation;
         case 'CREATE_SLIDE':
             return createSlideReducer(state);

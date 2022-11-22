@@ -5,10 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {store} from "./model/store";
 import {Provider} from "react-redux";
+import {addHotKeys} from "./model/store";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
+addHotKeys();
 
 root.render(
     <React.StrictMode>

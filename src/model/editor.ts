@@ -27,15 +27,33 @@ function undoReducer(editor: Editor): Editor {
             presentation: newPresentation
         }
     }
-    return(newEditor)
+    return (newEditor)
+}
+
+function redoReducer(editor: Editor): Editor {
+    const newEditor = deepClone(editor) as Editor;
+    if (newEditor.history.redoStack.length !== 0) {
+        const newHistory = deepClone(newEditor.history) as History;
+        const newPresentation: Presentation = newHistory.redoStack.pop()!;
+        newHistory.undoStack.push(newEditor.presentation);
+        return {
+            ...newEditor,
+            history: newHistory,
+            presentation: newPresentation
+        }
+    }
+    return newEditor
 }
 
 function editorReducer(state: Editor, action: ActionType): Editor {
     switch (action.type) {
         case 'UNDO':
             return undoReducer(state)
+        case 'REDO':
+            return redoReducer(state)
         default:
             return deepClone(state) as Editor
     }
 }
+
 export {editorReducer, addActionToHistoryReducer}
