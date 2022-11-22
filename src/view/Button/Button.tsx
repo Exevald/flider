@@ -1,4 +1,5 @@
 import styles from "./Button.module.css";
+import {connect} from "react-redux";
 
 interface ButtonProps {
     viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide',

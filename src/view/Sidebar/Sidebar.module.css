@@ -40,6 +40,13 @@
     margin-left: 40px;
 }
 
+.slidePreview.slidePreviewSelected,
+.slidePreview.slidePreviewSelected:hover {
+    border: 3px solid var(--ayanami-default);
+}
+
+
+
 .slidePreview:hover {
     border: 1px solid var(--kaoru-default);
 }

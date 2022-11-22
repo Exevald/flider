@@ -5,7 +5,7 @@ import { legacy_createStore as createStore} from 'redux'
 
 let initialState: Editor = {
     presentation: {
-        title: "",
+        title: "Имя презентации",
         slides: [
             {
                 id: "0",
@@ -71,7 +71,7 @@ function mainReducer(state: Editor = initialState, action: ActionType) {
 
 let store = createStore(mainReducer, initialState)
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatcher = typeof store.dispatch
 
 export {initialState, store}
 export type {ActionType}

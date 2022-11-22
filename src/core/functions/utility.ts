@@ -1,14 +1,12 @@
 import {Id, Presentation, Slide} from "../types/types";
 
-const DEFAULT_SLIDE_CONFIG: Slide = {
-    id: getRandomId(),
-    items: [],
-    bgColor: "white",
-    selectedItemsIds: ["0"]
-};
-
 const DEFAULT_PRESENTATION_CONFIG: Presentation = {
-    slides: [DEFAULT_SLIDE_CONFIG],
+    slides: [{
+        id: getRandomId(),
+        items: [],
+        bgColor: "white",
+        selectedItemsIds: []
+    }],
     title: 'Unnamed',
     selectedSlidesIds: [],
 };
@@ -26,5 +24,5 @@ function getRandomId(): Id {
     return id;
 }
 
-export {DEFAULT_SLIDE_CONFIG, DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE};
+export {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE};
 export {getRandomId};

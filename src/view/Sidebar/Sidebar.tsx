@@ -1,34 +1,56 @@
 import styles from "./Sidebar.module.css"
 import {Editor, Slide} from "../../core/types/types";
-import {connect} from "react-redux";
+import {AppDispatcher} from "../../model/store";
+import {connect, ConnectedProps} from "react-redux";
+
+import {switchSlide} from "../../model/actionCreators";
 
 interface SlidePreviewProps {
-    id?: number,
+    id: string,
     preview?: string,
+    isSelected?: boolean,
+    switchSlide: () => void,
 }
 
-interface SidebarProps {
-    slides?: Array<Slide>,
-    countOfSlides: number,
-    currentSlideIds?: Array<string>,
+
+function mapDispatchToProps(dispatcher: AppDispatcher) {
+    return {
+        switchSlide: (slideId: string) => dispatcher(switchSlide(slideId)),
+    }
 }
 
-const SlidePreview = ({
-                          id,
-                          preview
-                      }: SlidePreviewProps) => {
+function mapStateToProps(state: Editor) {
+    return {
+        slides: state.presentation.slides,
+        countOfSlides: state.presentation.slides.length,
+        selectedSlideIds: state.presentation.selectedSlidesIds
+    }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps)
+type SidebarProps = ConnectedProps<typeof connector>
+
+const SlidePreview = (props: SlidePreviewProps) => {
+    let borderStyle = ''
+    if (props.isSelected) {
+        borderStyle = styles.slidePreviewSelected;
+
+    }
+    const slideId = parseInt(props.id) + 1;
     return (
-        <div className={styles.sidebarRow}>
-            <p className={styles.slideIndex}>{id}</p>
-            <div className={styles.slidePreview}>{preview}</div>
+        <div className={styles.sidebarRow} onClick={props.switchSlide}>
+            <p className={styles.slideIndex}>{slideId}</p>
+            <div className={`${styles.slidePreview} ${borderStyle}`}>{props.preview}</div>
         </div>
     )
 }
 
 const Sidebar = (props: SidebarProps) => {
     let slides = [];
-    for (let i = 1; i <= props.countOfSlides; i++) {
-        slides.push(<SlidePreview id={i}></SlidePreview>)
+    for (let i = 0; i < props.slides?.length; i++) {
+        let slide = props.slides[i];
+        const isSelected = props.selectedSlideIds.includes(slide.id);
+        slides.push(<SlidePreview id={String(i)} isSelected={isSelected} switchSlide={() => props.switchSlide(slide.id)}></SlidePreview>)
     }
     return (
         <div className={styles.sidebar}>
@@ -37,4 +59,4 @@ const Sidebar = (props: SidebarProps) => {
     )
 }
 
-export {Sidebar}
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
