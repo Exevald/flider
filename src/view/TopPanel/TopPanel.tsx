@@ -5,8 +5,13 @@ import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg"
 
 import {TextArea} from "../TextArea/TextArea";
 import {Button} from "../Button/Button";
+import {SaveActionsDropDown} from "../DropDown/DropDown";
+
 import {Editor} from "../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
+import {AppDispatcher} from "../../model/store";
+import {setTitle} from "../../model/actionCreators";
+
 
 const LogoArea = () => {
     return (
@@ -25,21 +30,40 @@ function mapStateToProps(state: Editor) {
     }
 }
 
-const connector = connect(mapStateToProps)
+function mapDispatchToProps(dispatcher: AppDispatcher) {
+    return {
+        changeTitle: (title: string) => dispatcher(setTitle(title))
+    }
+}
+
+function showDropDown() {
+    const dropDown = document.getElementById("dropDown");
+    if (dropDown !== null) {
+        dropDown.classList.toggle("show");
+    }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps)
 type TopPanelProps = ConnectedProps<typeof connector>
 
 const TopPanel = (props: TopPanelProps) => {
     return (
         <div className={styles.topPanel}>
             <LogoArea/>
-            <TextArea viewStyle={"presentationName"} placeholder={props.title}></TextArea>
+            <TextArea
+                viewStyle={"presentationName"}
+                placeholder={props.title}
+            />
             <Button viewStyle={"open"} onClick={() => {
-            }} text={"Открыть"} iconStyle={"none"}></Button>
-            <Button viewStyle={"save"} onClick={() => {
-            }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}></Button>
+            }} text={"Открыть"} iconStyle={"none"}/>
+            <div className={styles.dropDownArea}>
+                <Button viewStyle={"save"} onClick={() => {
+                }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
+                {/*<SaveActionsDropDown></SaveActionsDropDown>*/}
+            </div>
             <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon} onClick={() => {
-            }}></Button>
+            }}/>
         </div>
     )
 }
-export default connect(mapStateToProps)(TopPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(TopPanel)

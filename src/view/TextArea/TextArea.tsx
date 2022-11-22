@@ -4,16 +4,20 @@ interface TextAreaProps {
     viewStyle: 'default' | 'presentationName'
     placeholder?: string,
     value?: string,
+    onKeyUp?: (value: string) => void,
 }
 
 const TextArea = ({
                       viewStyle,
                       placeholder = "",
-                      value
+                      value,
                   }: TextAreaProps) => {
     let textAreaStyle = styles.button_default;
     switch (viewStyle) {
-        case "presentationName": {textAreaStyle = styles.inputTopPanel; break}
+        case "presentationName": {
+            textAreaStyle = styles.inputTopPanel;
+            break
+        }
     }
     return (
         <input type="text"
