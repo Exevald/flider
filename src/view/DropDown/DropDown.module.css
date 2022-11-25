@@ -1,4 +1,8 @@
 .dropDown {
+    display: none; /* поправляется при нажатии на копку */
+    position: absolute;
+    top: 6%;
+    left: 80%;
     max-width: 150px;
 }
 
@@ -13,7 +17,14 @@
     border-radius: 10px;
 }
 
+.separator {
+    width: 100%;
+    height: 1px;
+    background-color: var(--kaoru-60);
+}
+
 .dropDownContent a {
+    padding: 5px;
     display: flex;
     color: var(--gendo-default);
     height: 40px;

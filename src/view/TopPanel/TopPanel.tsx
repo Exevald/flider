@@ -37,9 +37,11 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
 }
 
 function showDropDown() {
-    const dropDown = document.getElementById("dropDown");
+    const dropDown = document.getElementById('dropDown');
     if (dropDown !== null) {
-        dropDown.classList.toggle("show");
+        if (dropDown.style.display === 'block')
+            dropDown.style.display = 'none';
+        else dropDown.style.display = 'block';
     }
 }
 
@@ -57,9 +59,10 @@ const TopPanel = (props: TopPanelProps) => {
             <Button viewStyle={"open"} onClick={() => {
             }} text={"Открыть"} iconStyle={"none"}/>
             <div className={styles.dropDownArea}>
-                <Button viewStyle={"save"} onClick={() => {
-                }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
-                {/*<SaveActionsDropDown></SaveActionsDropDown>*/}
+                <Button viewStyle={"save"} onClick={
+                    () => {showDropDown()}
+                } text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
+                <SaveActionsDropDown></SaveActionsDropDown>
             </div>
             <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon} onClick={() => {
             }}/>
