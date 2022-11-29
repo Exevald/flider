@@ -31,11 +31,40 @@ function deleteSlidesReducer(presentation: Presentation): Presentation {
     const newSlides = deepClone(newPresentation.slides) as Array<Slide>;
     newPresentation.selectedSlidesIds.forEach(idToDelete => {
         if (newSlides.length >= 2) {
-            newSlides.splice(newSlides.findIndex(slide => slide.id === idToDelete), 1)
+            const slidesToDelete = newSlides.findIndex(slide => slide.id === idToDelete);
+            newSlides.splice(slidesToDelete, 1)
         }
     })
     return {
-        ...newPresentation
+        ...newPresentation,
+        slides: newSlides,
+        selectedSlidesIds: [newSlides[0].id],
+    }
+}
+
+function selectSlideReducer(presentation: Presentation, slideId: string) {
+    const newPresentation = deepClone(presentation) as Presentation;
+    const newSelectedSlidesIds = presentation.selectedSlidesIds.concat(slideId);
+    return {
+        ...newPresentation,
+        selectedSlidesIds: newSelectedSlidesIds
+    }
+}
+
+function selectManySlidesReducer(presentation: Presentation, slideId: string) {
+    const newPresentation = deepClone(presentation) as Presentation;
+    const newSelectedSlidesIds = presentation.selectedSlidesIds.concat();
+    let firstIndex = newPresentation.slides.findIndex(slide => slide.id === newSelectedSlidesIds[newSelectedSlidesIds.length - 1])
+    let indexSelected = newPresentation.slides.findIndex(slide => slide.id === slideId)
+    if (indexSelected < firstIndex) {
+        [firstIndex, indexSelected] = [indexSelected - 1, firstIndex - 1];
+    }
+    for (let i = firstIndex + 1; i <= indexSelected; i++) {
+        newSelectedSlidesIds.push(newPresentation.slides[i].id)
+    }
+    return {
+        ...newPresentation,
+        selectedSlidesIds: newSelectedSlidesIds
     }
 }
 
@@ -55,6 +84,12 @@ function presentationReducer(state: Presentation, action: ActionType): Presentat
             return action.newTitle !== undefined ? changeTitleReducer(state, action.newTitle) : deepClone(state) as Presentation;
         case 'CREATE_SLIDE':
             return createSlideReducer(state);
+        case 'DELETE_SLIDE':
+            return deleteSlidesReducer(state);
+        case 'SELECT_SLIDE':
+            return action.slideId !== undefined ? selectSlideReducer(state, action.slideId) : deepClone(state) as Presentation;
+        case 'SELECT_MANY_SLIDES':
+            return action.slideId !== undefined ? selectManySlidesReducer(state, action.slideId) : deepClone(state) as Presentation;
         case 'SWITCH_SLIDE':
             return action.slideId !== undefined ? switchSlideReducer(state, action.slideId) : deepClone(state) as Presentation;
         default:

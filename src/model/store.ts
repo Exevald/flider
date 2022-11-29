@@ -2,7 +2,7 @@ import {Editor} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {editorReducer, addActionToHistoryReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
-import {redo, undo} from "./actionCreators";
+import {deleteSlides, redo, undo} from "./actionCreators";
 
 let initialState: Editor = {
     presentation: {
@@ -65,15 +65,20 @@ type ActionType = {
 
 function addHotKeys() {
     window.addEventListener("keydown", (event) => {
-        const undoHotKey = (event.ctrlKey) && (event.code === "KeyZ")
-        const redoHotKey = (event.ctrlKey) && (event.code === "KeyY")
-        const copyHotKey = (event.ctrlKey) && (event.code === "KeyC")
-        const pasteHotKey = (event.ctrlKey) && (event.code === "KeyV")
+        const undoHotKey = (event.ctrlKey) && (event.code === "KeyZ");
+        const redoHotKey = (event.ctrlKey) && (event.code === "KeyY");
+        const copyHotKey = (event.ctrlKey) && (event.code === "KeyC");
+        const pasteHotKey = (event.ctrlKey) && (event.code === "KeyV");
+        const deleteKey = (event.code === "Delete");
+
         if (undoHotKey) {
             store.dispatch(undo())
         }
         if (redoHotKey) {
             store.dispatch(redo())
+        }
+        if (deleteKey) {
+            store.dispatch(deleteSlides())
         }
     })
 }
@@ -84,7 +89,7 @@ function mainReducer(state: Editor = initialState, action: ActionType) {
     const addActionInHistory: boolean = (actionUndo) && (actionRedo)
     const newState: Editor = editorReducer(state, action);
     if (addActionInHistory) {
-        newState.history = addActionToHistoryReducer(state)
+        newState.history = addActionToHistoryReducer(state);
     }
     newState.presentation = presentationReducer(newState.presentation, action);
     return newState
