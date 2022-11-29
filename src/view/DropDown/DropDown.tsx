@@ -1,10 +1,4 @@
 import styles from "./DropDown.module.css"
-import type * as CSS from 'csstype';
-
-/*
-*  Необходимо вынести стиль, чтобы реакт не изменил название стиля при компиляции,
-*  чтобы не было коллизии стилей
-* */
 
 const SaveActionsDropDown = () => {
     return (
