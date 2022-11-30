@@ -24,6 +24,13 @@ function selectSlide(slideId: string) {
     }
 }
 
+function deselectSlide(slideId: string) {
+    return {
+        type: 'DESELECT_SLIDE',
+        slideId,
+    }
+}
+
 function selectManySlides(slideId: string) {
     return {
         type: 'SELECT_MANY_SLIDES',
@@ -50,4 +57,4 @@ function setTitle(title: string) {
     }
 }
 
-export {createSlide, switchSlide, undo, redo, setTitle, deleteSlides, selectSlide, selectManySlides}
+export {createSlide, switchSlide, undo, redo, setTitle, deleteSlides, selectSlide, selectManySlides, deselectSlide}

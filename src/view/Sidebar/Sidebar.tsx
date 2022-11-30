@@ -3,7 +3,7 @@ import {Editor} from "../../core/types/types";
 import {AppDispatcher} from "../../model/store";
 import {connect, ConnectedProps} from "react-redux";
 
-import {selectManySlides, selectSlide, switchSlide} from "../../model/actionCreators";
+import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../model/actionCreators";
 
 interface SlidePreviewProps {
     id: string,
@@ -11,6 +11,7 @@ interface SlidePreviewProps {
     isSelected?: boolean,
     switchSlide: () => void,
     selectOneSlide: () => void,
+    deselectSlide: () => void,
     selectManySlides: () => void,
 }
 
@@ -20,6 +21,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         switchSlide: (slideId: string) => dispatcher(switchSlide(slideId)),
         selectOneSlide: (slideId: string) => dispatcher(selectSlide(slideId)),
         selectManySlides: (slideId: string) => dispatcher(selectManySlides(slideId)),
+        deselectSlide: (slideId: string) => dispatcher(deselectSlide(slideId)),
     }
 }
 
@@ -44,7 +46,11 @@ const SlidePreview = (props: SlidePreviewProps) => {
     return (
         <div className={styles.sidebarRow} onClick={(event) => {
             if (event.ctrlKey) {
-                props.selectOneSlide()
+                if (!props.isSelected) {
+                    props.selectOneSlide()
+                } else {
+                    props.deselectSlide()
+                }
             } else if (event.shiftKey) {
                 props.selectManySlides()
             } else {
@@ -69,6 +75,7 @@ const Sidebar = (props: SidebarProps) => {
                 switchSlide={() => props.switchSlide(slide.id)}
                 selectOneSlide={() => props.selectOneSlide(slide.id)}
                 selectManySlides={() => props.selectManySlides(slide.id)}
+                deselectSlide={() => props.deselectSlide(slide.id)}
             />
         )
     }

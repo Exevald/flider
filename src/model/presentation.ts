@@ -2,6 +2,7 @@ import {Presentation, Slide} from "../core/types/types";
 import {ActionType} from "./store";
 import {deepClone} from "../core/functions/deepClone";
 import {getRandomId} from "../core/functions/utility";
+import {startTransition} from "react";
 
 function changeTitleReducer(presentation: Presentation, title: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;
@@ -42,7 +43,7 @@ function deleteSlidesReducer(presentation: Presentation): Presentation {
     }
 }
 
-function selectSlideReducer(presentation: Presentation, slideId: string) {
+function selectSlideReducer(presentation: Presentation, slideId: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;
     const newSelectedSlidesIds = presentation.selectedSlidesIds.concat(slideId);
     return {
@@ -51,7 +52,18 @@ function selectSlideReducer(presentation: Presentation, slideId: string) {
     }
 }
 
-function selectManySlidesReducer(presentation: Presentation, slideId: string) {
+function deselectReducer(presentation: Presentation, slideId: string) {
+    const newPresentation = deepClone(presentation) as Presentation;
+    const deselectItem = presentation.selectedSlidesIds.indexOf(slideId);
+    const newSelectedSlidesIds = presentation.selectedSlidesIds.concat();
+    newSelectedSlidesIds.splice(deselectItem, 1);
+    return {
+        ...newPresentation,
+        selectedSlidesIds: newSelectedSlidesIds
+    }
+}
+
+function selectManySlidesReducer(presentation: Presentation, slideId: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;
     const newSelectedSlidesIds = presentation.selectedSlidesIds.concat();
     let firstIndex = newPresentation.slides.findIndex(slide => slide.id === newSelectedSlidesIds[newSelectedSlidesIds.length - 1])
@@ -88,6 +100,8 @@ function presentationReducer(state: Presentation, action: ActionType): Presentat
             return deleteSlidesReducer(state);
         case 'SELECT_SLIDE':
             return action.slideId !== undefined ? selectSlideReducer(state, action.slideId) : deepClone(state) as Presentation;
+        case 'DESELECT_SLIDE':
+            return action.slideId !== undefined ? deselectReducer(state, action.slideId) : deepClone(state) as Presentation;
         case 'SELECT_MANY_SLIDES':
             return action.slideId !== undefined ? selectManySlidesReducer(state, action.slideId) : deepClone(state) as Presentation;
         case 'SWITCH_SLIDE':
