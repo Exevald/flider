@@ -7,10 +7,10 @@ import {TextArea} from "../TextArea/TextArea";
 import {Button} from "../Button/Button";
 import {SaveActionsDropDown} from "../DropDown/DropDown";
 
-import {Editor} from "../../core/types/types";
+import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
-import {AppDispatcher} from "../../model/store";
-import {setTitle} from "../../model/actionCreators";
+import {AppDispatcher} from "../../../model/store";
+import {setTitle} from "../../../model/actionCreators";
 
 
 const LogoArea = () => {

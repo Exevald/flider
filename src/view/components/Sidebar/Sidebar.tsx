@@ -1,9 +1,9 @@
 import styles from "./Sidebar.module.css"
-import {Editor} from "../../core/types/types";
-import {AppDispatcher} from "../../model/store";
+import {Editor} from "../../../core/types/types";
+import {AppDispatcher} from "../../../model/store";
 import {connect, ConnectedProps} from "react-redux";
 
-import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../model/actionCreators";
+import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../../model/actionCreators";
 
 interface SlidePreviewProps {
     id: string,

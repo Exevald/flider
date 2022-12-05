@@ -1,0 +1,29 @@
+.mainMenuPageWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.menuContainer {
+    width: 574px;
+    height: 542px;
+    border: 3px solid var(--misato-dark);
+    background-color: var(--shinji);
+}
+
+.titleWrapper {
+    margin-top: 31px;
+}
+
+.createPresentationButtonWrapper {
+    margin-top: 59px;
+}
+
+.openPresentationButtonWrapper {
+    margin-top: 19px;
+}
+
+.logoImageWrapper {
+    margin-top: 97px;
+}

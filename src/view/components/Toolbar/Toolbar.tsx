@@ -1,9 +1,9 @@
 import styles from "./Toolbar.module.css"
 
 import {ButtonIcon} from "../Button/Button";
-import {AppDispatcher} from "../../model/store";
-import {createSlide, undo, redo} from "../../model/actionCreators";
-import {Editor} from "../../core/types/types";
+import {AppDispatcher} from "../../../model/store";
+import {createSlide, undo, redo} from "../../../model/actionCreators";
+import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 
 

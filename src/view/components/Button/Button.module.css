@@ -108,33 +108,33 @@
 }
 
 .buttonUndo {
-    background: center no-repeat url("./ButtonIcons/UndoIcon.svg");
+    background: center no-repeat url("ButtonIcons/UndoIcon.svg");
     margin-left: 50px;
 }
 
 .buttonRedo {
-    background: no-repeat url("./ButtonIcons/RedoIcon.svg");
+    background: no-repeat url("ButtonIcons/RedoIcon.svg");
     margin-left: 20px;
 }
 
 .buttonFigure {
-    background: no-repeat url("./ButtonIcons/FigureIcon.svg");
+    background: no-repeat url("ButtonIcons/FigureIcon.svg");
 }
 
 .buttonImage {
-    background: no-repeat url("./ButtonIcons/ImageIcon.svg");
+    background: no-repeat url("ButtonIcons/ImageIcon.svg");
 }
 
 .buttonTextArea {
-    background: no-repeat url("./ButtonIcons/TextAreaIcon.svg");
+    background: no-repeat url("ButtonIcons/TextAreaIcon.svg");
 }
 
 .buttonLine {
-    background: no-repeat url("./ButtonIcons/LineIcon.svg");
+    background: no-repeat url("ButtonIcons/LineIcon.svg");
 }
 
 .buttonSelectArea {
-    background: no-repeat url("./ButtonIcons/SelectAreaIcon.svg");
+    background: no-repeat url("ButtonIcons/SelectAreaIcon.svg");
 }
 
 .buttonSelectArrow {
