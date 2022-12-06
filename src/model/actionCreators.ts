@@ -1,3 +1,9 @@
+function createPresentation() {
+    return {
+        type: 'CREATE_PRESENTATION'
+    }
+}
+
 function createSlide() {
     return {
         type: 'CREATE_SLIDE'
@@ -57,4 +63,4 @@ function setTitle(title: string) {
     }
 }
 
-export {createSlide, switchSlide, undo, redo, setTitle, deleteSlides, selectSlide, selectManySlides, deselectSlide}
+export {createSlide, switchSlide, undo, redo, setTitle, deleteSlides, selectSlide, selectManySlides, deselectSlide, createPresentation}

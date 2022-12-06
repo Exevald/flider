@@ -10,16 +10,18 @@ import {SaveActionsDropDown} from "../DropDown/DropDown";
 import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
+import {Link} from "react-router-dom";
 import {setTitle} from "../../../model/actionCreators";
-
 
 const LogoArea = () => {
     return (
         <div>
-            <img className={styles.logoArea}
-                 src={logoArea}
-                 alt={"Main Logo"}
-            />
+            <Link to={"/"}>
+                <img className={styles.logoArea}
+                     src={logoArea}
+                     alt={"Main Logo"}
+                />
+            </Link>
         </div>
     )
 }
@@ -60,7 +62,9 @@ const TopPanel = (props: TopPanelProps) => {
             }} text={"Открыть"} iconStyle={"none"}/>
             <div className={styles.dropDownArea}>
                 <Button viewStyle={"save"} onClick={
-                    () => {showDropDown()}
+                    () => {
+                        showDropDown()
+                    }
                 } text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
                 <SaveActionsDropDown></SaveActionsDropDown>
             </div>
