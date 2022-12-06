@@ -7,7 +7,7 @@ import {addHotKeys} from "./model/store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {PresentationPage} from "./view/pages/PresentationPage/PresentationPage";
-import {MainMenu} from "./view/pages/MainMenu/MainMenu";
+import MainMenu from "./view/pages/MainMenu/MainMenu";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement

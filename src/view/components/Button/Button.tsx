@@ -1,4 +1,5 @@
 import styles from "./Button.module.css";
+import {Link} from "react-router-dom";
 
 interface ButtonProps {
     viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide',
@@ -6,6 +7,11 @@ interface ButtonProps {
     iconSrc?: string,
     text?: string,
     onClick: () => void,
+    to?: string,
+}
+
+const linkStyle = {
+    color: 'white',
 }
 
 const Button = ({
@@ -13,7 +19,8 @@ const Button = ({
                     iconStyle,
                     iconSrc,
                     text = '',
-                    onClick
+                    onClick,
+                    to,
                 }: ButtonProps) => {
     let buttonStyle = styles.buttonDefault;
 
@@ -46,8 +53,10 @@ const Button = ({
                     <img src={iconSrc} alt={"buttonIcon"}></img>
                 </div>
             }
-            <div className={styles.textDefault}>
-                {text}
+            <div className={styles.text_default}>
+                {
+                    to !== undefined ? <Link to={to} style={linkStyle}>{text}</Link> : <>{text}</>
+                }
             </div>
             {iconStyle === "right" &&
                 <div className={styles.iconAreaRight}>

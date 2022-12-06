@@ -27,6 +27,11 @@
     white-space: nowrap;
 }
 
+.buttonDefault {
+    background-color: var(--ayanami-default);
+    color: var(--shinji);
+}
+
 .buttonDefault:hover {
     cursor: pointer;
     background-color: var(--ayanami-dark);

@@ -1,5 +1,5 @@
-import {Editor, History, Presentation, Slide, Item} from "../core/types/types";
-import {ActionType} from "./store";
+import {Editor, History, Presentation} from "../core/types/types";
+import {ActionType, initialState} from "./store";
 import {deepClone} from "../core/functions/deepClone";
 
 function addActionToHistoryReducer(editor: Editor): History {
@@ -13,6 +13,12 @@ function addActionToHistoryReducer(editor: Editor): History {
     }
     newHistory.undoStack.push(presentation);
     return newHistory;
+}
+
+function createPresentationReducer(): Editor {
+    return {
+        ...(initialState)
+    }
 }
 
 function undoReducer(editor: Editor): Editor {
@@ -47,6 +53,8 @@ function redoReducer(editor: Editor): Editor {
 
 function editorReducer(state: Editor, action: ActionType): Editor {
     switch (action.type) {
+        case 'CREATE_PRESENTATION':
+            return createPresentationReducer()
         case 'UNDO':
             return undoReducer(state)
         case 'REDO':

@@ -1,6 +1,6 @@
 import {Editor} from "../core/types/types";
 import {presentationReducer} from "./presentation";
-import {editorReducer, addActionToHistoryReducer} from "./editor";
+import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
 import {deleteSlides, redo, undo} from "./actionCreators";
 
@@ -86,7 +86,9 @@ function addHotKeys() {
 function mainReducer(state: Editor = initialState, action: ActionType) {
     const actionUndo = action.type !== 'UNDO';
     const actionRedo = action.type !== 'REDO';
-    const addActionInHistory: boolean = (actionUndo) && (actionRedo)
+    const actionCreatePresentation = action.type !== 'CREATE_PRESENTATION'
+
+    const addActionInHistory: boolean = (actionUndo) && (actionRedo) && (actionCreatePresentation)
     const newState: Editor = editorReducer(state, action);
     if (addActionInHistory) {
         newState.history = addActionToHistoryReducer(state);
@@ -99,5 +101,5 @@ const store = createStore(mainReducer, initialState)
 
 export type AppDispatcher = typeof store.dispatch
 
-export {store, addHotKeys}
+export {store, addHotKeys, initialState}
 export type {ActionType}
