@@ -5,7 +5,7 @@ import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg"
 
 import {TextArea} from "../TextArea/TextArea";
 import {Button} from "../Button/Button";
-import {SaveActionsDropDown} from "../DropDown/DropDown";
+import {DropDown, showDropDownById} from "../DropDown/DropDown";
 
 import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
@@ -36,14 +36,6 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     }
 }
 
-function showDropDown() {
-    const dropDown = document.getElementById('dropDown');
-    if (dropDown !== null) {
-        if (dropDown.style.display === 'block')
-            dropDown.style.display = 'none';
-        else dropDown.style.display = 'block';
-    }
-}
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type TopPanelProps = ConnectedProps<typeof connector>
@@ -60,9 +52,9 @@ const TopPanel = (props: TopPanelProps) => {
             }} text={"Открыть"} iconStyle={"none"}/>
             <div className={styles.dropDownArea}>
                 <Button viewStyle={"save"} onClick={
-                    () => {showDropDown()}
+                    () => {showDropDownById('saveActionDropDown')}
                 } text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
-                <SaveActionsDropDown></SaveActionsDropDown>
+                <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
             </div>
             <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon} onClick={() => {
             }}/>
