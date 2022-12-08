@@ -5,6 +5,7 @@ import {AppDispatcher} from "../../../model/store";
 import {createSlide, undo, redo} from "../../../model/actionCreators";
 import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
+import {DropDown, showDropDownById} from "../DropDown/DropDown";
 
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
@@ -43,7 +44,9 @@ const Toolbar = (props: ToolbarProps) => {
             <ButtonIcon viewStyle={"line"} onClick={() => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"palette"} onClick={() => {
+                showDropDownById('ColorPicker')
             }}></ButtonIcon>
+            <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
         </div>
     )
 }

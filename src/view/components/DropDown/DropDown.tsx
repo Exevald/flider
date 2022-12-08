@@ -15,17 +15,54 @@ function showDropDownById(id: string): void {
 }
 
 const DropDown = ({id, viewStyle}: DropDownProps) => {
-    let dropDownStyle = 'createSlide';
     if (viewStyle !==  null) {
-        dropDownStyle = viewStyle
+        switch (viewStyle) {
+            case "palette":
+                return (
+                    <div id={id} className={styles.dropDown + " " + styles.palette}>
+                        <div className={styles.dropDownContent}>
+                            <p>Основные цвета</p>
+                            <div className={styles.separator}></div>
+                            <div className={styles.paletteContent}>
+                                <button className={styles.paletteColor} style={{backgroundColor: "white"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "whitesmoke"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "gray"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "darkgray"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "black"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "yellow"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "orange"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "darkorange"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "red"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "darkred"}}
+                                        onClick={() => {}}></button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            case "saveAction":
+                return (
+                    <div id={id} className={styles.dropDown + " " + styles.saveAction}>
+                        <div className={styles.dropDownContent}>
+                            <a href={""}>Сохранить PDF</a>
+                            <div className={styles.separator}></div>
+                            <a href={""}>Сохранить JSON</a>
+                        </div>
+                    </div>
+                )
+        }
     }
     return (
-        <div id={id} className={styles.dropDown + " " + styles.saveAction}>
-            <div className={styles.dropDownContent}>
-                <a href={""}>Сохранить PDF</a>
-                <div className={styles.separator}></div>
-                <a href={""}>Сохранить JSON</a>
-            </div>
+        <div id={id} className={styles.dropDown}>
+            <p>Введено название рендеринга, которого нет</p>
         </div>
     )
 }
