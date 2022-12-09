@@ -10,6 +10,10 @@ const DEFAULT_PRESENTATION_CONFIG: Presentation = {
     title: 'Unnamed',
     selectedSlidesIds: [],
 };
+const COLOR_PICKER_COLORS = [
+    "white", "whitesmoke", "gray", "darkgray", "black",
+    "yellow", "orange", "darkorange", "red", "darkred"
+];
 
 const MAX_HISTORY_SIZE = 30;
 
@@ -24,5 +28,5 @@ function getRandomId(): Id {
     return id;
 }
 
-export {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE};
+export {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE, COLOR_PICKER_COLORS};
 export {getRandomId};
