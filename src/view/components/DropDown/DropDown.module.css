@@ -2,23 +2,49 @@
     display: none;
     position: absolute;
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    z-index: 1;
 }
 .dropDownShow {
     display: block;
 }
 
+/* все типы */
 .saveAction {
     top: 6%;
     left: 80%;
     max-width: 150px;
-    font-size: 16px;
 }
 
+.palette {
+    top: 13%;
+    left: 32%;
+    max-width: 222px;
+    max-height: 500px;
+}
+.paletteContent {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    border-radius: 10px;
+}
+.paletteColor {
+    margin: 5px;
+    border: 2px solid var(--kaoru-20);
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+}
+
+.paletteColor:hover {
+    cursor: pointer;
+}
+
+/* контент внутри */
 .dropDownContent {
     background-color: var(--shinji);
-    max-width: 150px;
     overflow: auto;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--kaoru-60);
@@ -30,7 +56,7 @@
     height: 1px;
     background-color: var(--kaoru-60);
 }
-.dropDownContent a {
+.dropDownContent a, p {
     padding: 5px;
     display: flex;
     color: var(--gendo-default);

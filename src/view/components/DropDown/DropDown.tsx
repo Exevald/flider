@@ -1,15 +1,11 @@
 import styles from "./DropDown.module.css"
-import {Editor} from "../../../core/types/types";
-import {AppDispatcher} from "../../../model/store";
-import {savePresentation} from "../../../model/actionCreators";
-import {connect} from "react-redux";
-import {ConnectedProps} from "react-redux/es/exports";
 
-interface DropDownCustomProps {
+interface DropDownProps {
     id: string,
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image'
         | 'figure' | 'line' | 'palette' | 'saveAction',
 }
+
 
 function showDropDownById(id: string): void {
     const dropDown = document.getElementById(id);
@@ -18,35 +14,57 @@ function showDropDownById(id: string): void {
     }
 }
 
-function mapStateToProps(state: Editor) {
-    return {
-    }
-}
-
-function mapDispatchToProps(dispatcher: AppDispatcher) {
-    return {
-        savePresentation: dispatcher(savePresentation())
-    }
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps)
-type DropDownInitialProps = ConnectedProps<typeof connector>
-
-const DropDown = ({id, viewStyle}: DropDownCustomProps, props: DropDownInitialProps) => {
-    let dropDownStyle = 'createSlide';
+const DropDown = ({id, viewStyle}: DropDownProps) => {
     if (viewStyle !==  null) {
-        dropDownStyle = viewStyle
+        switch (viewStyle) {
+            case "palette":
+                return (
+                    <div id={id} className={styles.dropDown + " " + styles.palette}>
+                        <div className={styles.dropDownContent}>
+                            <p>Основные цвета</p>
+                            <div className={styles.separator}></div>
+                            <div className={styles.paletteContent}>
+                                <button className={styles.paletteColor} style={{backgroundColor: "white"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "whitesmoke"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "gray"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "darkgray"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "black"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "yellow"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "orange"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "darkorange"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "red"}}
+                                        onClick={() => {}}></button>
+                                <button className={styles.paletteColor} style={{backgroundColor: "darkred"}}
+                                        onClick={() => {}}></button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            case "saveAction":
+                return (
+                    <div id={id} className={styles.dropDown + " " + styles.saveAction}>
+                        <div className={styles.dropDownContent}>
+                            <a href={""}>Сохранить PDF</a>
+                            <div className={styles.separator}></div>
+                            <a href={""}>Сохранить JSON</a>
+                        </div>
+                    </div>
+                )
+        }
     }
     return (
-        <div id={id} className={`${styles.dropDown} ${dropDownStyle} ${styles.saveAction}`}>
-            <div className={styles.dropDownContent}>
-                <a>Сохранить PDF</a>
-                <div className={styles.separator}></div>
-                <a onClick={() => `props.savePresentation`}>Сохранить JSON</a>
-            </div>
+        <div id={id} className={styles.dropDown}>
+            <p>Введено название рендеринга, которого нет</p>
         </div>
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
-export {showDropDownById}
+export {DropDown, showDropDownById}
