@@ -37,8 +37,9 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"textArea"} onClick={() => {
             }}></ButtonIcon>
-            <ButtonIcon viewStyle={"image"} onClick={() => {
+            <ButtonIcon viewStyle={"image"} onClick={() => {showDropDownById('ImageSelector')
             }}></ButtonIcon>
+            <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
             <ButtonIcon viewStyle={"figure"} onClick={() => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"line"} onClick={() => {
