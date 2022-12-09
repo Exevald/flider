@@ -5,7 +5,8 @@ import {AppDispatcher} from "../../../model/store";
 import {createSlide, undo, redo} from "../../../model/actionCreators";
 import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
-import {DropDown, showDropDownById} from "../DropDown/DropDown";
+import {showDropDownById} from "../DropDown/DropDown";
+import DropDown from "../DropDown/DropDown";
 
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
@@ -28,25 +29,17 @@ type ToolbarProps = ConnectedProps<typeof connector>
 const Toolbar = (props: ToolbarProps) => {
     return (
         <div className={styles.toolbar}>
-            <ButtonIcon viewStyle={"createSlide"} onClick={() => props.createSlide()}></ButtonIcon>
-            <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}></ButtonIcon>
-            <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}></ButtonIcon>
-            <ButtonIcon viewStyle={"selectArea"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"textArea"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"image"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"figure"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"line"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"palette"} onClick={() => {
-                showDropDownById('ColorPicker')
-            }}></ButtonIcon>
-            <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
+            <ButtonIcon viewStyle={"createSlide"} onClick={() => props.createSlide()}/>
+            <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}/>
+            <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}/>
+            <ButtonIcon viewStyle={"selectArea"} onClick={() => {}}/>
+            <ButtonIcon viewStyle={"selectArrow"} onClick={() => {}}/>
+            <ButtonIcon viewStyle={"textArea"} onClick={() => {}}/>
+            <ButtonIcon viewStyle={"image"} onClick={() => {}}/>
+            <ButtonIcon viewStyle={"figure"} onClick={() => {}}/>
+            <ButtonIcon viewStyle={"line"} onClick={() => {}}/>
+            <ButtonIcon viewStyle={"palette"} onClick={() => {showDropDownById('ColorPicker')}}/>
+            <DropDown id={'ColorPicker'} viewStyle={'palette'}/>
         </div>
     )
 }
