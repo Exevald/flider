@@ -63,6 +63,10 @@ type ActionType = {
     newEditor?: Editor
 }
 
+function openPresentationReducer(editor: Editor, newEditor: Editor): Editor {
+    return (newEditor)
+}
+
 function addHotKeys() {
     window.addEventListener("keydown", (event) => {
         const undoHotKey = (event.ctrlKey) && (event.code === "KeyZ");
@@ -84,6 +88,7 @@ function addHotKeys() {
 }
 
 function mainReducer(state: Editor = initialState, action: ActionType) {
+    const savePresentation = action.type !== 'SAVE_PRESENTATION'
     const actionUndo = action.type !== 'UNDO';
     const actionRedo = action.type !== 'REDO';
     const actionCreatePresentation = action.type !== 'CREATE_PRESENTATION'

@@ -39,6 +39,7 @@
     text-decoration: none;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
 }
 .dropDown a:hover {
