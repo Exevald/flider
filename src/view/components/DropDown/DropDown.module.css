@@ -47,6 +47,7 @@
 }
 
 
+
 .imageSelector {
     top: 13%;
     left: 24%;
@@ -59,46 +60,11 @@
 }
 
 
-.stocks {
-    height: 30px;
-    line-height: 30px;
-}
-
-
 /* контент внутри */
 .dropDownContent {
     background-color: var(--shinji);
     overflow: auto;
     z-index: 1;
-}
-.palette {
-    top: 13%;
-    left: 32%;
-    max-width: 197px;
-    max-height: 500px;
-}
-.paletteContent {
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    flex-flow: row wrap;
-    border-radius: 10px;
-}
-.paletteColor {
-    margin: 5px;
-    border: 2px solid var(--kaoru-20);
-    width: 25px;
-    height: 25px;
-    border-radius: 15px;
-}
-
-
-.paletteColor:hover {
-    cursor: pointer;
-    border-color: var(--kaoru-80)
-}
-.paletteColor:active {
-    border-color: black
 }
 
 
@@ -144,12 +110,11 @@
     color: var(--gendo-default);
     height: 25px;
     text-decoration: none;
-    align-items: center;
     justify-content: center;
 }
 .dropDownContent a {
     cursor: pointer;
 }
-.dropDown > a:hover {
+.dropDownContent > a:hover {
     background-color: var(--ayanami-20);
 }

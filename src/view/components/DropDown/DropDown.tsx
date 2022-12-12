@@ -44,6 +44,7 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                             <a onClick={() => {showDropDownById('Stocks')}}>Выбрать из популярных фотостоков</a>
                             <DropDown id={'Stocks'} viewStyle={"stocks"}></DropDown>
                             <div className={styles.separator}></div>
+                            <input type={"file"}/>
                             <a href={""}>Загрузить с компьютера</a>
                         </div>
                     </div>
