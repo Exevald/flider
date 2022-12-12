@@ -47,30 +47,9 @@
 }
 
 
-
 .imageSelector {
     top: 13%;
-    left: 24%;
-    max-width: 300px;
-}
-.imageSelector p {
-    font-weight: bold;
-    font-size: 18px;
-    padding: 8px;
-}
-
-
-/* контент внутри */
-.dropDownContent {
-    background-color: var(--shinji);
-    overflow: auto;
-    z-index: 1;
-}
-
-
-.imageSelector {
-    top: 13%;
-    left: 24%;
+    left: 22%;
     max-width: 300px;
     height: auto;
 }
