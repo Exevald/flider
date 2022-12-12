@@ -25,13 +25,12 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                         <div className={styles.dropDownContent} style={{border: "none"}}>
                             <div className={styles.separator}></div>
                             <ul className={styles.stocks}>
-                                <li>Shutterstock</li>
-                                <li>Getty Images</li>
-                                <li>Adobe Stock</li>
-                                <li>Dreamstime</li>
-                                <li>Depositphotos</li>
-                                <li>123RF</li>
-                                <li>Фотодженика</li>
+                                <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
+                                <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
+                                <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
+                                <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
+                                <li><a href={"https://ru.123rf.com"}>123RF</a></li>
+                                <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
                             </ul>
                         </div>
                     </div>
