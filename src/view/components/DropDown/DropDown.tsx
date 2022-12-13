@@ -1,28 +1,13 @@
 import styles from "./DropDown.module.css"
-import {connect} from "react-redux";
-import {ConnectedProps} from "react-redux/es/exports";
-import {Editor} from "../../../core/types/types";
-import {AppDispatcher} from "../../../model/store";
-import {savePresentation} from "../../../model/actionCreators";
+import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
 
-interface DropDownCustomProps {
+interface DropDownProps {
     id: string,
-    viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image'
-        | 'figure' | 'line' | 'palette' | 'saveAction',
+    viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
+        | 'figure' | 'line' | 'palette' | 'saveAction' | 'stocks',
 }
 
-function mapStateToProps(state: Editor) {
-    return {}
-}
 
-function mapDispatchToProps(dispatcher: AppDispatcher) {
-    return {
-        savePresentation: dispatcher(savePresentation())
-    }
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps)
-type DropDownInitialProps = ConnectedProps<typeof connector>
 
 function showDropDownById(id: string): void {
     const dropDown = document.getElementById(id);
@@ -31,20 +16,50 @@ function showDropDownById(id: string): void {
     }
 }
 
-const DropDown = ({id, viewStyle}: DropDownCustomProps, props: DropDownInitialProps) => {
-    const colors = ["white", "whitesmoke", "gray", "darkgray", "black", "yellow", "orange", "darkorange", "red", "darkred"];
-    let colorsList = [];
-    for (let i = 0; i < colors.length; i++) {
-        colorsList.push(
-            <button className={styles.paletteColor} style={{backgroundColor: colors[i]}} onClick={() => {
-            }}></button>
-        )
-    }
-    if (viewStyle !== null) {
+const DropDown = ({id, viewStyle}: DropDownProps) => {
+    if (viewStyle !==  null) {
         switch (viewStyle) {
-            case "palette":
+            case "stocks":
                 return (
-                    <div id={id} className={styles.dropDown + " " + styles.palette}>
+                    <div id={id} className={styles.dropDown} style={{position: "static"}}>
+                        <div className={styles.dropDownContent} style={{border: "none"}}>
+                            <div className={styles.separator}></div>
+                            <ul className={styles.stocks}>
+                                <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
+                                <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
+                                <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
+                                <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
+                                <li><a href={"https://ru.123rf.com"}>123RF</a></li>
+                                <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                )
+            case "imageSelector":
+                return(
+                    <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
+                        <div className={styles.dropDownContent}>
+                            <p>Выберите вариант:</p>
+                            <div className={styles.separator}></div>
+                            <a onClick={() => {showDropDownById('Stocks')}}>Выбрать из популярных фотостоков</a>
+                            <DropDown id={'Stocks'} viewStyle={"stocks"}></DropDown>
+                            <div className={styles.separator}></div>
+                            <input type={"file"}/>
+                            <a href={""}>Загрузить с компьютера</a>
+                        </div>
+                    </div>
+                )
+            case "palette":
+                let colorsList = [];
+                for (let i = 0; i < COLOR_PICKER_COLORS.length; i++) {
+                    colorsList.push(
+                        <button className={styles.paletteColor} style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
+                                onClick={() => {
+                        }}></button>
+                    )
+                }
+                return (
+                    <div id={id} className={`${styles.dropDown} ${styles.palette}`}>
                         <div className={styles.dropDownContent}>
                             <p>Основные цвета</p>
                             <div className={styles.separator}></div>
@@ -56,11 +71,11 @@ const DropDown = ({id, viewStyle}: DropDownCustomProps, props: DropDownInitialPr
                 )
             case "saveAction":
                 return (
-                    <div id={id} className={styles.dropDown + " " + styles.saveAction}>
+                    <div id={id} className={`${styles.dropDown} ${styles.saveAction}`}>
                         <div className={styles.dropDownContent}>
-                            <a>Сохранить PDF</a>
+                            <a href={""}>Сохранить PDF</a>
                             <div className={styles.separator}></div>
-                            <a onClick={() => props.savePresentation}>Сохранить JSON</a>
+                            <a href={""}>Сохранить JSON</a>
                         </div>
                     </div>
                 )
@@ -73,5 +88,4 @@ const DropDown = ({id, viewStyle}: DropDownCustomProps, props: DropDownInitialPr
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
-export {showDropDownById}
+export {DropDown, showDropDownById}
