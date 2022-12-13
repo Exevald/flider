@@ -4,7 +4,7 @@ import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
 interface DropDownProps {
     id: string,
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
-        | 'figure' | 'line' | 'palette' | 'saveAction' | 'stocks',
+        | 'figure' | 'line' | 'palette' | 'saveAction',
 }
 
 
@@ -19,33 +19,32 @@ function showDropDownById(id: string): void {
 const DropDown = ({id, viewStyle}: DropDownProps) => {
     if (viewStyle !==  null) {
         switch (viewStyle) {
-            case "stocks":
-                return (
-                    <div id={id} className={styles.dropDown} style={{position: "static"}}>
-                        <div className={styles.dropDownContent} style={{border: "none"}}>
-                            <div className={styles.separator}></div>
-                            <ul className={styles.stocks}>
-                                <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
-                                <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
-                                <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
-                                <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
-                                <li><a href={"https://ru.123rf.com"}>123RF</a></li>
-                                <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                )
             case "imageSelector":
                 return(
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
                         <div className={styles.dropDownContent}>
-                            <p>Выберите вариант:</p>
+                            <p className={styles.dropDownContent__header}>Выберите вариант:</p>
                             <div className={styles.separator}></div>
-                            <a onClick={() => {showDropDownById('Stocks')}}>Выбрать из популярных фотостоков</a>
-                            <DropDown id={'Stocks'} viewStyle={"stocks"}></DropDown>
+                            <p onClick={() => {showDropDownById('Stocks')}}>Выбрать из популярных фотостоков</p>
+                            <div id={"Stocks"} className={styles.dropDown} style={{position: "static"}}>
+                                <div className={styles.dropDownContent} style={{border: "none"}}>
+                                    <div className={styles.separator}></div>
+                                    <ul className={styles.stocks}>
+                                        <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
+                                        <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
+                                        <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
+                                        <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
+                                        <li><a href={"https://ru.123rf.com"}>123RF</a></li>
+                                        <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div className={styles.separator}></div>
-                            <input type={"file"}/>
-                            <a href={""}>Загрузить с компьютера</a>
+                            <form method={"get"}>
+                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage" />
+                                <label htmlFor={"uploadImage"}><p>Выбрать с компьютера</p></label>
+                            </form>
+
                         </div>
                     </div>
                 )
