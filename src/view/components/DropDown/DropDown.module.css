@@ -65,6 +65,7 @@
     list-style-type: circle;
 }
 .stocks li {
+    text-align: left;
     padding: 7px 10px 7px 10px;
     color: var(--gendo-default);
 }
@@ -77,6 +78,7 @@
     flex-direction: column;
     border: 1px solid var(--kaoru-60);
     border-radius: 10px;
+    text-align: center;
 }
 .separator {
     width: 100%;
@@ -85,11 +87,9 @@
 }
 .dropDownContent > a, p {
     padding: 5px;
-    display: flex;
     color: var(--gendo-default);
     height: 25px;
     text-decoration: none;
-    justify-content: center;
 }
 .dropDownContent a {
     cursor: pointer;
