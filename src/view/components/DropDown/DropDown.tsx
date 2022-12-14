@@ -1,13 +1,37 @@
 import styles from "./DropDown.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
+import {Editor} from "../../../core/types/types";
+import {AppDispatcher} from "../../../model/store";
+import {savePresentation} from "../../../model/actionCreators";
+import {connect, ConnectedProps} from "react-redux";
 
-interface DropDownProps {
+interface DropDownCustomProps {
     id: string,
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
         | 'figure' | 'line' | 'palette' | 'saveAction' | 'stocks',
 }
 
+type DropDownActionType = 'saveJSON' | 'savePDF'
 
+function mapStateToProps(state: Editor) {
+    return {}
+}
+
+function mapDispatchToProps(dispatcher: AppDispatcher) {
+    return {
+        action: (actionType: DropDownActionType) => {
+            switch (actionType) {
+                case 'saveJSON':
+                    dispatcher(savePresentation())
+            }
+        }
+    }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type DropDownInitialProps = ConnectedProps<typeof connector>
+
+type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 
 function showDropDownById(id: string): void {
     const dropDown = document.getElementById(id);
@@ -16,8 +40,8 @@ function showDropDownById(id: string): void {
     }
 }
 
-const DropDown = ({id, viewStyle}: DropDownProps) => {
-    if (viewStyle !==  null) {
+const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
+    if (viewStyle !== null) {
         switch (viewStyle) {
             case "stocks":
                 return (
@@ -36,13 +60,15 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                     </div>
                 )
             case "imageSelector":
-                return(
+                return (
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
                         <div className={styles.dropDownContent}>
                             <p>Выберите вариант:</p>
                             <div className={styles.separator}></div>
-                            <a onClick={() => {showDropDownById('Stocks')}}>Выбрать из популярных фотостоков</a>
-                            <DropDown id={'Stocks'} viewStyle={"stocks"}></DropDown>
+                            <a onClick={() => {
+                                showDropDownById('Stocks')
+                            }}>Выбрать из популярных фотостоков</a>
+                            {/*<DropDown id={'Stocks'} viewStyle={"stocks"}></DropDown>*/}
                             <div className={styles.separator}></div>
                             <input type={"file"}/>
                             <a href={""}>Загрузить с компьютера</a>
@@ -55,7 +81,7 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                     colorsList.push(
                         <button className={styles.paletteColor} style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
                                 onClick={() => {
-                        }}></button>
+                                }}></button>
                     )
                 }
                 return (
@@ -75,7 +101,7 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                         <div className={styles.dropDownContent}>
                             <a href={""}>Сохранить PDF</a>
                             <div className={styles.separator}></div>
-                            <a href={""}>Сохранить JSON</a>
+                            <a onClick={() => action('saveJSON')}>Сохранить JSON</a>
                         </div>
                     </div>
                 )
@@ -88,4 +114,5 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
     )
 }
 
-export {DropDown, showDropDownById}
+export {showDropDownById}
+export default connect(mapStateToProps, mapDispatchToProps)(DropDown)

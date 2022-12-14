@@ -1,3 +1,5 @@
+import {Editor} from "../core/types/types";
+
 function createPresentation() {
     return {
         type: 'CREATE_PRESENTATION'
@@ -7,6 +9,13 @@ function createPresentation() {
 function savePresentation() {
     return {
         type: 'SAVE_PRESENTATION'
+    }
+}
+
+function openPresentation(newEditor: Editor) {
+    return {
+        type: 'OPEN_PRESENTATION',
+        newEditor
     }
 }
 
@@ -69,4 +78,17 @@ function setTitle(title: string) {
     }
 }
 
-export {createSlide, switchSlide, undo, redo, setTitle, deleteSlides, selectSlide, selectManySlides, deselectSlide, createPresentation, savePresentation}
+export {
+    createSlide,
+    switchSlide,
+    undo,
+    redo,
+    setTitle,
+    deleteSlides,
+    selectSlide,
+    selectManySlides,
+    deselectSlide,
+    createPresentation,
+    savePresentation,
+    openPresentation
+}

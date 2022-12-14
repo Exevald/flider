@@ -5,7 +5,8 @@ import {AppDispatcher} from "../../../model/store";
 import {createSlide, undo, redo} from "../../../model/actionCreators";
 import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
-import {DropDown, showDropDownById} from "../DropDown/DropDown";
+import {showDropDownById} from "../DropDown/DropDown";
+import DropDown from "../DropDown/DropDown";
 
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {

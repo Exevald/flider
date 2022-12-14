@@ -3,6 +3,8 @@ import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
 import {deleteSlides, redo, undo} from "./actionCreators";
+import {deepClone} from "../core/functions/deepClone";
+import {openPresentation} from "./actionCreators";
 
 let initialState: Editor = {
     presentation: {
@@ -63,8 +65,26 @@ type ActionType = {
     newEditor?: Editor
 }
 
-function openPresentationReducer(editor: Editor, newEditor: Editor): Editor {
-    return (newEditor)
+function loadPresentation() {
+    const inputFile = document.createElement('input')
+    inputFile.type = 'file';
+    inputFile.style.display = 'none';
+    inputFile.accept = 'application/json';
+    inputFile.onchange = () => {
+        if (inputFile.files) {
+            const fileEditor = inputFile.files[0];
+            const reader = new FileReader();
+            reader.readAsText(fileEditor);
+            reader.onload = () => {
+                if (typeof reader.result === 'string') {
+                    const newEditor = deepClone(JSON.parse(reader.result)) as Editor;
+                    store.dispatch(openPresentation(newEditor));
+                }
+            };
+        }
+    }
+    inputFile.click();
+    inputFile.remove();
 }
 
 function addHotKeys() {
@@ -92,8 +112,9 @@ function mainReducer(state: Editor = initialState, action: ActionType) {
     const actionUndo = action.type !== 'UNDO';
     const actionRedo = action.type !== 'REDO';
     const actionCreatePresentation = action.type !== 'CREATE_PRESENTATION'
+    const openPresentation = action.type !== 'OPEN_PRESENTATION'
 
-    const addActionInHistory: boolean = (actionUndo) && (actionRedo) && (actionCreatePresentation)
+    const addActionInHistory: boolean = (actionUndo) && (actionRedo) && (actionCreatePresentation) && (savePresentation) && (openPresentation)
     const newState: Editor = editorReducer(state, action);
     if (addActionInHistory) {
         newState.history = addActionToHistoryReducer(state);
@@ -106,5 +127,5 @@ const store = createStore(mainReducer, initialState)
 
 export type AppDispatcher = typeof store.dispatch
 
-export {store, addHotKeys, initialState}
+export {store, addHotKeys, initialState, loadPresentation}
 export type {ActionType}

@@ -14,6 +14,8 @@ import {AppDispatcher} from "../../../model/store";
 import {setTitle} from "../../../model/actionCreators";
 import {Link} from "react-router-dom";
 
+import {loadPresentation} from "../../../model/store";
+
 const LogoArea = () => {
     return (
         <div>
@@ -35,7 +37,8 @@ function mapStateToProps(state: Editor) {
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
-        changeTitle: (title: string) => dispatcher(setTitle(title))
+        changeTitle: (title: string) => dispatcher(setTitle(title)),
+        openPresentation: () => loadPresentation(),
     }
 }
 
@@ -56,8 +59,7 @@ const TopPanel = (props: TopPanelProps) => {
                     }
                 }}
             />
-            <Button viewStyle={"open"} onClick={() => {
-            }} text={"Открыть"} iconStyle={"none"}/>
+            <Button viewStyle={"open"} onClick={() => props.openPresentation()} text={"Открыть"} iconStyle={"none"}/>
             <div className={styles.dropDownArea}>
                 <Button viewStyle={"save"} onClick={
                     () => {

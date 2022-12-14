@@ -5,7 +5,7 @@ import {Button} from "../../components/Button/Button";
 import {createPresentation} from "../../../model/actionCreators";
 import {connect} from "react-redux";
 import {Editor} from "../../../core/types/types";
-import {AppDispatcher} from "../../../model/store";
+import {AppDispatcher, loadPresentation} from "../../../model/store";
 import {ConnectedProps} from "react-redux/es/exports";
 
 function mapStateToProps(state: Editor) {
@@ -17,6 +17,7 @@ function mapStateToProps(state: Editor) {
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         createPresentation: dispatcher(createPresentation()),
+        openPresentation: () => loadPresentation(),
     }
 }
 
@@ -33,8 +34,7 @@ const MainMenu = (props: MainMenuProps) => {
                 <Button viewStyle={"default"} onClick={() => props.createPresentation} text={"Создать презентацию"} to={"/presentation"}></Button>
             </div>
             <div className={styles.openPresentationButtonWrapper}>
-                <Button viewStyle={"default"} onClick={() => {
-                }} text={"Открыть презентацию"}></Button>
+                <Button viewStyle={"default"} onClick={() => props.openPresentation()} text={"Открыть презентацию"} to={"/presentation"}></Button>
             </div>
             <div className={styles.logoImageWrapper}>
                 <img src={logoImage} alt={"logoImage"}></img>
