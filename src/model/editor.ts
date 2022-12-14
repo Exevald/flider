@@ -21,6 +21,27 @@ function createPresentationReducer(): Editor {
     }
 }
 
+function savePresentationReducer(editor: Editor): Editor {
+    const newEditor = deepClone(editor) as Editor;
+    const stringEditor = JSON.stringify(newEditor);
+    const fileEditor = new Blob(
+        [stringEditor], {
+            type: 'application/json',
+        }
+    )
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(fileEditor)
+    link.download = `${newEditor.presentation.title}.json`;
+    link.style.display = 'none';
+    link.click();
+    link.remove();
+    return newEditor
+}
+
+function openPresentationReducer(editor: Editor, newEditor: Editor): Editor {
+    return (newEditor)
+}
+
 function undoReducer(editor: Editor): Editor {
     const newEditor = deepClone(editor) as Editor;
     if (newEditor.history.undoStack.length !== 0) {
@@ -55,6 +76,10 @@ function editorReducer(state: Editor, action: ActionType): Editor {
     switch (action.type) {
         case 'CREATE_PRESENTATION':
             return createPresentationReducer()
+        case 'SAVE_PRESENTATION':
+            return savePresentationReducer(state)
+        case 'OPEN_PRESENTATION':
+            return action.newEditor !== undefined ? openPresentationReducer(state, action.newEditor) : deepClone(state) as Editor
         case 'UNDO':
             return undoReducer(state)
         case 'REDO':
