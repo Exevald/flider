@@ -23,12 +23,11 @@ let initialState: Editor = {
         undoStack: [],
         redoStack: []
     },
-    statePreview: false
 }
 
 type ActionType = {
     type: string,
-    newTitle?: string,
+    title?: string,
     slideId?: string,
     orderShift?: number,
     background?: string,

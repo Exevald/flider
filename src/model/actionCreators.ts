@@ -73,8 +73,8 @@ function redo() {
 
 function setTitle(title: string) {
     return {
-        type: 'SET_TITLE',
-        title
+        type: 'CHANGE_TITLE',
+        title,
     }
 }
 
@@ -90,5 +90,5 @@ export {
     deselectSlide,
     createPresentation,
     savePresentation,
-    openPresentation
+    openPresentation,
 }

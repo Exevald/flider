@@ -1,25 +1,18 @@
 import styles from "./TextArea.module.css"
+import {connect} from "react-redux";
 
 interface TextAreaProps {
-    viewStyle: 'default' | 'presentationName'
     placeholder?: string,
     value?: string,
     onKeyUp: (value: string) => void,
 }
 
 const TextArea = ({
-                      viewStyle,
                       placeholder = "",
                       value,
                       onKeyUp,
                   }: TextAreaProps) => {
     let textAreaStyle = styles.button_default;
-    switch (viewStyle) {
-        case "presentationName": {
-            textAreaStyle = styles.inputTopPanel;
-            break
-        }
-    }
     return (
         <input type="text"
                value={value}
@@ -36,4 +29,4 @@ const TextArea = ({
 }
 
 
-export {TextArea}
+export default connect()(TextArea)

@@ -3,7 +3,7 @@ import styles from "./TopPanel.module.css"
 import WatchIcon from "../Button/ButtonIcons/WatchIcon.svg"
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg"
 
-import {TextArea} from "../TextArea/TextArea";
+import TextArea from "../TextArea/TextArea";
 import {Button} from "../Button/Button";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
@@ -14,7 +14,7 @@ import {AppDispatcher} from "../../../model/store";
 import {setTitle} from "../../../model/actionCreators";
 import {Link} from "react-router-dom";
 
-import {loadPresentation} from "../../../model/store";
+import {useState} from "react";
 
 const LogoArea = () => {
     return (
@@ -37,8 +37,7 @@ function mapStateToProps(state: Editor) {
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
-        changeTitle: (title: string) => dispatcher(setTitle(title)),
-        openPresentation: () => loadPresentation(),
+        changeTitle: (newTitle: string) => dispatcher(setTitle(newTitle)),
     }
 }
 
@@ -47,19 +46,27 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type TopPanelProps = ConnectedProps<typeof connector>
 
 const TopPanel = (props: TopPanelProps) => {
+    const [rename, setRename] = useState(false);
+
     return (
         <div className={styles.topPanel}>
             <LogoArea/>
-            <TextArea
-                viewStyle={"presentationName"}
-                placeholder={"Название презентации"}
-                onKeyUp={(value: string) => {
-                    if (value !== '') {
-                        props.changeTitle(value)
-                    }
-                }}
-            />
-            <Button viewStyle={"open"} onClick={() => props.openPresentation()} text={"Открыть"} iconStyle={"none"}/>
+            <div className={styles.renameContainer}>
+                {
+                    rename ?
+                        <TextArea
+                            placeholder={"Название презентации"}
+                            onKeyUp={(value: string) => {
+                                if (value !== '') {
+                                    props.changeTitle(value)
+                                }
+                                setRename(false)
+                            }}
+                        />
+                        : <p className={styles.name}>{props.title}</p>
+                }
+            </div>
+            <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
             <div className={styles.dropDownArea}>
                 <Button viewStyle={"save"} onClick={
                     () => {

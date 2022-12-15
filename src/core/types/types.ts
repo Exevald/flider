@@ -18,7 +18,6 @@ type History = {
 type Editor = {
     presentation: Presentation,
     history: History,
-    statePreview: boolean,
 }
 
 type Presentation = {
