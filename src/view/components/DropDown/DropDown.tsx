@@ -7,12 +7,35 @@ interface DropDownProps {
         | 'figure' | 'line' | 'palette' | 'saveAction',
 }
 
+// долгий ящик
+function minimizeDropDown() {
+    const root = document.getElementById('root');
+    const saveAction = document.getElementById('saveActionDropDown');
+    const colorPicker = document.getElementById('ColorPicker');
+    const stocks = document.getElementById('Stocks');
+
+    if (root !== null && saveAction !== null && colorPicker !== null && stocks !== null) {
+        root.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape') {
+                saveAction.classList.remove(styles.dropDownShow);
+                colorPicker.classList.remove(styles.dropDownShow);
+                stocks.classList.remove(styles.dropDownShow);
+            }
+        })
+    }
+}
 
 
 function showDropDownById(id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
-        dropDown.classList.toggle(styles.dropDownShow)
+        dropDown.classList.toggle(styles.dropDownShow);
+        if (id === 'ImageSelector') {
+            const stocks = document.getElementById('Stocks');
+            if (stocks !== null) {
+                stocks.classList.remove(styles.dropDownShow)
+            }
+        }
     }
 }
 
@@ -60,7 +83,7 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.palette}`}>
                         <div className={styles.dropDownContent}>
-                            <p>Основные цвета</p>
+                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные цвета</p>
                             <div className={styles.separator}></div>
                             <div className={styles.paletteContent}>
                                 {colorsList}
@@ -87,4 +110,4 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
     )
 }
 
-export {DropDown, showDropDownById}
+export {DropDown, showDropDownById, minimizeDropDown}
