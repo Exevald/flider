@@ -13,11 +13,18 @@
 
 .name {
     font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 65px;
-    font-size: 40px;
-    color: #343434;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--gendo-default);
+    border: 2px solid var(--ayanami-default);
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.renameContainer {
+    overflow: hidden;
+    margin-left: 1.5vw;
 }
 
 .dropDownArea {
