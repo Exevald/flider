@@ -2,6 +2,7 @@ import logoArea from "./LogoArea.svg"
 import styles from "./TopPanel.module.css"
 import WatchIcon from "../Button/ButtonIcons/WatchIcon.svg"
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg"
+import iconStyles from  "./../Button/Button.module.css"
 
 import TextArea from "../TextArea/TextArea";
 import {Button} from "../Button/Button";
