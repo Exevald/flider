@@ -19,6 +19,12 @@ function openPresentation(newEditor: Editor) {
     }
 }
 
+function changeSlideShowStatus() {
+    return {
+        type: 'CHANGE_SLIDE_SHOW_STATUS'
+    }
+}
+
 function createSlide() {
     return {
         type: 'CREATE_SLIDE'
