@@ -2,7 +2,8 @@ import styles from "./Button.module.css";
 import {Link} from "react-router-dom";
 
 interface ButtonProps {
-    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide',
+    viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow'
+        | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide' | 'filler',
     iconStyle?: 'left' | 'right' | 'center' | 'none'
     iconSrc?: string,
     text?: string,
@@ -113,6 +114,10 @@ const ButtonIcon = ({
         }
         case "createSlide": {
             buttonStyle = styles.buttonCreateSlide;
+            break;
+        }
+        case "filler": {
+            buttonStyle = styles.fillIcon;
             break;
         }
 
