@@ -14,6 +14,9 @@
     position: relative;
     padding: 11px 11px;
 }
+.button:active {
+    background-color: var(--kaoru-60);
+}
 
 .iconAreaLeft {
     padding-right: 10px;
@@ -111,6 +114,9 @@
     background-color: var(--kaoru-20);
     border-radius: 8px;
 }
+.iconButton:active {
+    background-color: var(--kaoru-60);
+}
 
 .buttonUndo {
     background: center no-repeat url("ButtonIcons/UndoIcon.svg");
@@ -160,4 +166,9 @@
     width: 36px;
     height: 36px;
     background: no-repeat url("ButtonIcons/CreateSlideHoverIcon.svg");
+}
+.fillIcon {
+    width: 32px;
+    height: 32px;
+    background: no-repeat url("ButtonIcons/FillIcon.svg");
 }

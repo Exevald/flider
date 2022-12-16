@@ -1,4 +1,5 @@
 import styles from "./Toolbar.module.css"
+import iconsStyles from "./../Button/Button.module.css"
 
 import {ButtonIcon} from "../Button/Button";
 import {AppDispatcher} from "../../../model/store";
@@ -38,7 +39,8 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"textArea"} onClick={() => {
             }}></ButtonIcon>
-            <ButtonIcon viewStyle={"image"} onClick={() => {showDropDownById('ImageSelector')
+            <ButtonIcon viewStyle={"image"} onClick={() => {
+                const selector = document.getElementsByTagName('')
             }}></ButtonIcon>
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
             <ButtonIcon viewStyle={"figure"} onClick={() => {
@@ -46,9 +48,15 @@ const Toolbar = (props: ToolbarProps) => {
             <ButtonIcon viewStyle={"line"} onClick={() => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"palette"} onClick={() => {
-                showDropDownById('ColorPicker')
+                const palette = document.getElementsByClassName(iconsStyles.buttonPalette)[0] as HTMLElement;
+                if (palette !== null) {
+                    showDropDownById(palette, 'ColorPicker')
+                }
             }}></ButtonIcon>
             <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
+            <ButtonIcon viewStyle={"filler"} onClick={() => {
+
+            }}></ButtonIcon>
         </div>
     )
 }

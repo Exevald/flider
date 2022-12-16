@@ -68,11 +68,12 @@ const TopPanel = (props: TopPanelProps) => {
             </div>
             <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
             <div className={styles.dropDownArea}>
-                <Button viewStyle={"save"} onClick={
-                    () => {
-                        showDropDownById('saveActionDropDown')
+                <Button viewStyle={"save"} onClick={() => {
+                    const saveAction = document.getElementsByClassName(iconStyles.buttonSave)[0] as HTMLElement;
+                    if (saveAction !== null) {
+                        showDropDownById(saveAction,'saveActionDropDown');
                     }
-                } text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
+                }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
                 <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
             </div>
             <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon} onClick={() => {

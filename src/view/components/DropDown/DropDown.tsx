@@ -4,13 +4,31 @@ import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
+import React from "react";
 
 interface DropDownCustomProps {
     id: string,
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
-        | 'figure' | 'line' | 'palette' | 'saveAction' | 'stocks',
+        | 'figure' | 'line' | 'palette' | 'saveAction',
 }
 
+// долгий ящик
+function minimizeDropDown() {
+    const root = document.getElementById('root');
+    const saveAction = document.getElementById('saveActionDropDown');
+    const colorPicker = document.getElementById('ColorPicker');
+    const stocks = document.getElementById('Stocks');
+
+    if (root !== null && saveAction !== null && colorPicker !== null && stocks !== null) {
+        root.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape') {
+                saveAction.classList.remove(styles.dropDownShow);
+                colorPicker.classList.remove(styles.dropDownShow);
+                stocks.classList.remove(styles.dropDownShow);
+            }
+        })
+    }
+}
 type DropDownActionType = 'saveJSON' | 'savePDF'
 
 function mapStateToProps(state: Editor) {
@@ -33,45 +51,59 @@ type DropDownInitialProps = ConnectedProps<typeof connector>
 
 type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 
-function showDropDownById(id: string): void {
+function showDropDownById(parent: HTMLElement,id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
-        dropDown.classList.toggle(styles.dropDownShow)
+        dropDown.classList.toggle(styles.dropDownShow);
+
+        let parentTop = parent.offsetTop;
+        let parentLeft = parent.offsetLeft;
+
+        if (parentTop !== null && parentLeft !== null) {
+            id === 'saveActionDropDown' ? parentTop += 40 : parentTop += 32;
+            dropDown.style.top = parentTop + 'px';
+            dropDown.style.left = parentLeft + 'px';
+        }
+        if (id === 'ImageSelector') {
+            const stocks = document.getElementById('Stocks');
+            if (stocks !== null) {
+                stocks.classList.remove(styles.dropDownShow)
+            }
+        }
     }
 }
 
 const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
-            case "stocks":
-                return (
-                    <div id={id} className={styles.dropDown} style={{position: "static"}}>
-                        <div className={styles.dropDownContent} style={{border: "none"}}>
-                            <div className={styles.separator}></div>
-                            <ul className={styles.stocks}>
-                                <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
-                                <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
-                                <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
-                                <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
-                                <li><a href={"https://ru.123rf.com"}>123RF</a></li>
-                                <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                )
             case "imageSelector":
-                return (
+                return(
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
                         <div className={styles.dropDownContent}>
-                            <p>Выберите вариант:</p>
+                            <p className={styles.dropDownContent__header}>Выберите вариант:</p>
                             <div className={styles.separator}></div>
-                            <a onClick={() => {
-                                showDropDownById('Stocks')
-                            }}>Выбрать из популярных фотостоков</a>
-                            {/*<DropDown id={'Stocks'} viewStyle={"stocks"}></DropDown>*/}
+                            <p onClick={() => {
+                                //showDropDownById('Stocks')
+                            }}>Выбрать из популярных фотостоков</p>
+                            <div id={"Stocks"} className={styles.dropDown} style={{position: "static"}}>
+                                <div className={styles.dropDownContent} style={{border: "none"}}>
+                                    <div className={styles.separator}></div>
+                                    <ul className={styles.stocks}>
+                                        <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
+                                        <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
+                                        <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
+                                        <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
+                                        <li><a href={"https://ru.123rf.com"}>123RF</a></li>
+                                        <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div className={styles.separator}></div>
-                            <input type={"file"}/>
-                            <a href={""}>Загрузить с компьютера</a>
+                            <form method={"get"}>
+                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage" />
+                                <label htmlFor={"uploadImage"}><p>Выбрать с компьютера</p></label>
+                            </form>
+
                         </div>
                     </div>
                 )
@@ -87,7 +119,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.palette}`}>
                         <div className={styles.dropDownContent}>
-                            <p>Основные цвета</p>
+                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные цвета</p>
                             <div className={styles.separator}></div>
                             <div className={styles.paletteContent}>
                                 {colorsList}
@@ -114,5 +146,5 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     )
 }
 
-export {showDropDownById}
 export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
+export {showDropDownById, minimizeDropDown}

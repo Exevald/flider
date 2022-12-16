@@ -11,14 +11,10 @@
 
 /* все типы */
 .saveAction {
-    top: 6%;
-    left: 80%;
     max-width: 150px;
 }
 
 .palette {
-    top: 13%;
-    left: 32%;
     max-width: 197px;
     max-height: 500px;
 }
@@ -43,7 +39,7 @@
     border-color: var(--kaoru-80)
 }
 .paletteColor:active {
-    border-color: black
+    border-color: var(--kaoru-60)
 }
 
 
@@ -53,11 +49,6 @@
     max-width: 300px;
     height: auto;
 }
-.imageSelector p {
-    font-weight: bold;
-    font-size: 18px;
-    padding: 8px;
-}
 
 
 .stocks {
@@ -65,6 +56,7 @@
     list-style-type: circle;
 }
 .stocks li {
+    text-align: left;
     padding: 7px 10px 7px 10px;
     color: var(--gendo-default);
 }
@@ -77,6 +69,17 @@
     flex-direction: column;
     border: 1px solid var(--kaoru-60);
     border-radius: 10px;
+    text-align: center;
+}
+.dropDownContent__header {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px;
+    cursor: auto;
+}
+.dropDownContent__header:hover {
+    background-color: var(--shinji);
+    border-radius: 10px 10px 0 0;
 }
 .separator {
     width: 100%;
@@ -85,15 +88,19 @@
 }
 .dropDownContent > a, p {
     padding: 5px;
-    display: flex;
     color: var(--gendo-default);
     height: 25px;
     text-decoration: none;
-    justify-content: center;
 }
-.dropDownContent a {
+.dropDownContent a, p {
     cursor: pointer;
 }
-.dropDownContent > a:hover {
+.dropDownContent > a:hover, p:hover {
     background-color: var(--ayanami-20);
+}
+.dropDownContent a:first-child, p:first-child {
+    border-radius: 10px 10px 0 0;
+}
+.dropDownContent a:last-child, p:last-child {
+    border-radius: 0  0 10px 10px;
 }
