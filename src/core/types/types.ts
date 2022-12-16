@@ -18,6 +18,7 @@ type History = {
 type Editor = {
     presentation: Presentation,
     history: History,
+    slideShowStatus: boolean,
 }
 
 type Presentation = {

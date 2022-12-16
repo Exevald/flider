@@ -21,6 +21,14 @@ function createPresentationReducer(): Editor {
     }
 }
 
+function changeSlideShowStatusReducer(editor: Editor): Editor {
+    const newEditor = deepClone(editor) as Editor;
+    return {
+        ...newEditor,
+        slideShowStatus: !editor.slideShowStatus
+    }
+}
+
 function savePresentationReducer(editor: Editor): Editor {
     const newEditor = deepClone(editor) as Editor;
     const stringEditor = JSON.stringify(newEditor);
@@ -80,6 +88,8 @@ function editorReducer(state: Editor, action: ActionType): Editor {
             return savePresentationReducer(state)
         case 'OPEN_PRESENTATION':
             return action.newEditor !== undefined ? openPresentationReducer(state, action.newEditor) : deepClone(state) as Editor
+        case 'CHANGE_SLIDE_SHOW_STATUS':
+            return changeSlideShowStatusReducer(state)
         case 'UNDO':
             return undoReducer(state)
         case 'REDO':

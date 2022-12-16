@@ -23,6 +23,7 @@ let initialState: Editor = {
         undoStack: [],
         redoStack: []
     },
+    slideShowStatus: false
 }
 
 type ActionType = {
