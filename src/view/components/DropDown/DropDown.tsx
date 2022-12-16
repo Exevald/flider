@@ -1,5 +1,6 @@
 import styles from "./DropDown.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
+import React from "react";
 
 interface DropDownProps {
     id: string,
@@ -26,10 +27,19 @@ function minimizeDropDown() {
 }
 
 
-function showDropDownById(id: string): void {
+function showDropDownById(parent: HTMLElement,id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
         dropDown.classList.toggle(styles.dropDownShow);
+
+        let parentTop = parent.offsetTop;
+        let parentLeft = parent.offsetLeft;
+
+        if (parentTop !== null && parentLeft !== null) {
+            id === 'saveActionDropDown' ? parentTop += 40 : parentTop += 32;
+            dropDown.style.top = parentTop + 'px';
+            dropDown.style.left = parentLeft + 'px';
+        }
         if (id === 'ImageSelector') {
             const stocks = document.getElementById('Stocks');
             if (stocks !== null) {
@@ -48,7 +58,9 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
                         <div className={styles.dropDownContent}>
                             <p className={styles.dropDownContent__header}>Выберите вариант:</p>
                             <div className={styles.separator}></div>
-                            <p onClick={() => {showDropDownById('Stocks')}}>Выбрать из популярных фотостоков</p>
+                            <p onClick={() => {
+                                //showDropDownById('Stocks')
+                            }}>Выбрать из популярных фотостоков</p>
                             <div id={"Stocks"} className={styles.dropDown} style={{position: "static"}}>
                                 <div className={styles.dropDownContent} style={{border: "none"}}>
                                     <div className={styles.separator}></div>
