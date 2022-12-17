@@ -1,7 +1,15 @@
 import {Presentation, Slide} from "../core/types/types";
 import {ActionType} from "./store";
 import {deepClone} from "../core/functions/deepClone";
-import {getRandomId} from "../core/functions/utility";
+import {
+    CHANGE_TITLE,
+    CREATE_SLIDE,
+    DELETE_SLIDE,
+    DESELECT_SLIDE,
+    SELECT_MANY_SLIDES,
+    SELECT_SLIDE, SWITCH_SLIDE,
+    getRandomId,
+} from "../core/functions/utility";
 
 function changeTitleReducer(presentation: Presentation, title: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;
@@ -91,19 +99,19 @@ function switchSlideReducer(presentation: Presentation, slideId: string): Presen
 
 function presentationReducer(state: Presentation, action: ActionType): Presentation {
     switch (action.type) {
-        case 'CHANGE_TITLE':
+        case CHANGE_TITLE:
             return action.title !== undefined ? changeTitleReducer(state, action.title) : deepClone(state) as Presentation
-        case 'CREATE_SLIDE':
+        case CREATE_SLIDE:
             return createSlideReducer(state);
-        case 'DELETE_SLIDE':
+        case DELETE_SLIDE:
             return deleteSlidesReducer(state);
-        case 'SELECT_SLIDE':
+        case SELECT_SLIDE:
             return action.slideId !== undefined ? selectSlideReducer(state, action.slideId) : deepClone(state) as Presentation;
-        case 'DESELECT_SLIDE':
+        case DESELECT_SLIDE:
             return action.slideId !== undefined ? deselectReducer(state, action.slideId) : deepClone(state) as Presentation;
-        case 'SELECT_MANY_SLIDES':
+        case SELECT_MANY_SLIDES:
             return action.slideId !== undefined ? selectManySlidesReducer(state, action.slideId) : deepClone(state) as Presentation;
-        case 'SWITCH_SLIDE':
+        case SWITCH_SLIDE:
             return action.slideId !== undefined ? switchSlideReducer(state, action.slideId) : deepClone(state) as Presentation;
         default:
             return deepClone(state) as Presentation
