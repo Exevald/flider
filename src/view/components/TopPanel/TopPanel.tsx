@@ -56,7 +56,8 @@ const TopPanel = (props: TopPanelProps) => {
                 {
                     rename ?
                         <TextArea
-                            placeholder={"Название презентации"}
+                            placeholder={"Назавание презентации"}
+                            type={'title'}
                             onKeyUp={(value: string) => {
                                 if (value !== '') {
                                     props.changeTitle(value)

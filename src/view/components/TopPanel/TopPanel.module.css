@@ -15,15 +15,16 @@
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 17px;
-    color: var(--gendo-default);
-    border: 2px solid var(--ayanami-default);
     display: flex;
     align-items: center;
+    color: var(--gendo-default);
+    border: 2px solid var(--ayanami-default);
+    height: 40px;
     border-radius: 5px;
+    padding: 0 10px 0 10px;
 }
 
 .renameContainer {
-    overflow: hidden;
     margin-left: 1.5vw;
 }
 
