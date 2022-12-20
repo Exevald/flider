@@ -16,6 +16,7 @@ const COLOR_PICKER_COLORS = [
 ];
 
 const MAX_HISTORY_SIZE = 30;
+const MAX_TITLE_SIZE = 12;
 
 function getRandomId(): Id {
     let id: Id = '';
@@ -28,5 +29,5 @@ function getRandomId(): Id {
     return id;
 }
 
-export {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE, COLOR_PICKER_COLORS};
+export {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE, MAX_TITLE_SIZE, COLOR_PICKER_COLORS};
 export {getRandomId};
