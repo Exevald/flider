@@ -1,85 +1,86 @@
 import {Editor} from "../core/types/types";
+import {Actions} from "../core/types/types";
 
 function createPresentation() {
     return {
-        type: 'CREATE_PRESENTATION'
+        type: Actions.CREATE_PRESENTATION
     }
 }
 
 function savePresentation() {
     return {
-        type: 'SAVE_PRESENTATION'
+        type: Actions.SAVE_PRESENTATION
     }
 }
 
 function openPresentation(newEditor: Editor) {
     return {
-        type: 'OPEN_PRESENTATION',
+        type: Actions.OPEN_PRESENTATION,
         newEditor
     }
 }
 
 function changeSlideShowStatus() {
     return {
-        type: 'CHANGE_SLIDE_SHOW_STATUS'
+        type: Actions.CHANGE_SLIDE_SHOW_STATUS
     }
 }
 
 function createSlide() {
     return {
-        type: 'CREATE_SLIDE'
+        type: Actions.CREATE_SLIDE
     }
 }
 
 function deleteSlides() {
     return {
-        type: 'DELETE_SLIDE'
+        type: Actions.DELETE_SLIDE
     }
 }
 
 function switchSlide(slideId: string) {
     return {
-        type: 'SWITCH_SLIDE',
+        type: Actions.SWITCH_SLIDE,
         slideId,
     }
 }
 
 function selectSlide(slideId: string) {
     return {
-        type: 'SELECT_SLIDE',
+        type: Actions.SELECT_SLIDE,
         slideId,
     }
 }
 
 function deselectSlide(slideId: string) {
     return {
-        type: 'DESELECT_SLIDE',
+        type: Actions.DESELECT_SLIDE,
         slideId,
     }
 }
 
 function selectManySlides(slideId: string) {
     return {
-        type: 'SELECT_MANY_SLIDES',
+        type: Actions.SELECT_MANY_SLIDES,
         slideId
     }
 }
 
 function undo() {
     return {
-        type: 'UNDO'
+        type: Actions.UNDO,
     }
 }
 
 function redo() {
     return {
-        type: 'REDO'
+        type: Actions.REDO,
     }
 }
 
 function setTitle(title: string) {
     return {
-        type: 'CHANGE_TITLE',
+        type: Actions.CHANGE_TITLE,
         title,
     }
 }

@@ -1,13 +1,8 @@
 import {Editor, History, Presentation} from "../core/types/types";
 import {ActionType, initialState} from "./store";
 import {deepClone} from "../core/functions/deepClone";
-import {
-    CHANGE_SLIDE_SHOW_STATUS,
-    CREATE_PRESENTATION,
-    OPEN_PRESENTATION, REDO,
-    SAVE_PRESENTATION, UNDO,
-    MAX_HISTORY_SIZE
-} from "../core/functions/utility";
+import {MAX_HISTORY_SIZE} from "../core/functions/utility";
+import {Actions} from "../core/types/types";
 
 function addActionToHistoryReducer(editor: Editor): History {
     const newHistory = deepClone(editor.history) as History;
@@ -89,20 +84,20 @@ function redoReducer(editor: Editor): Editor {
 
 function editorReducer(state: Editor, action: ActionType): Editor {
     switch (action.type) {
-        case CREATE_PRESENTATION:
-            return createPresentationReducer()
-        case SAVE_PRESENTATION:
-            return savePresentationReducer(state)
-        case OPEN_PRESENTATION:
-            return action.newEditor !== undefined ? openPresentationReducer(state, action.newEditor) : deepClone(state) as Editor
-        case CHANGE_SLIDE_SHOW_STATUS:
-            return changeSlideShowStatusReducer(state)
-        case UNDO:
-            return undoReducer(state)
-        case REDO:
-            return redoReducer(state)
+        case Actions.CREATE_PRESENTATION:
+            return createPresentationReducer();
+        case Actions.SAVE_PRESENTATION:
+            return savePresentationReducer(state);
+        case Actions.OPEN_PRESENTATION:
+            return action.newEditor !== undefined ? openPresentationReducer(state, action.newEditor) : deepClone(state) as Editor;
+        case Actions.CHANGE_SLIDE_SHOW_STATUS:
+            return changeSlideShowStatusReducer(state);
+        case Actions.UNDO:
+            return undoReducer(state);
+        case Actions.REDO:
+            return redoReducer(state);
         default:
-            return deepClone(state) as Editor
+            return deepClone(state) as Editor;
     }
 }
 

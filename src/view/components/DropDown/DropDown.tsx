@@ -1,10 +1,8 @@
 import styles from "./DropDown.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
-import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
-import React from "react";
 
 interface DropDownCustomProps {
     id: string,
@@ -29,11 +27,8 @@ function minimizeDropDown() {
         })
     }
 }
-type DropDownActionType = 'saveJSON' | 'savePDF'
 
-function mapStateToProps(state: Editor) {
-    return {}
-}
+type DropDownActionType = 'saveJSON' | 'savePDF'
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
@@ -46,12 +41,12 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     }
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 type DropDownInitialProps = ConnectedProps<typeof connector>
 
 type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 
-function showDropDownById(parent: HTMLElement,id: string): void {
+function showDropDownById(parent: HTMLElement, id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
         dropDown.classList.toggle(styles.dropDownShow);
@@ -77,7 +72,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "imageSelector":
-                return(
+                return (
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
                         <div className={styles.dropDownContent}>
                             <p className={styles.dropDownContent__header}>Выберите вариант:</p>
@@ -100,7 +95,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                             </div>
                             <div className={styles.separator}></div>
                             <form method={"get"}>
-                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage" />
+                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage"/>
                                 <label htmlFor={"uploadImage"}><p>Выбрать с компьютера</p></label>
                             </form>
 
@@ -111,15 +106,20 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                 let colorsList = [];
                 for (let i = 0; i < COLOR_PICKER_COLORS.length; i++) {
                     colorsList.push(
-                        <button className={styles.paletteColor} style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
-                                onClick={() => {
-                                }}></button>
+                        <button
+                            className={`${styles.paletteColor}`}
+                            style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
+                            onClick={() => {
+
+                            }}>
+                        </button>
                     )
                 }
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.palette}`}>
                         <div className={styles.dropDownContent}>
-                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные цвета</p>
+                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные
+                                цвета</p>
                             <div className={styles.separator}></div>
                             <div className={styles.paletteContent}>
                                 {colorsList}
@@ -146,5 +146,5 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
+export default connect(null, mapDispatchToProps)(DropDown)
 export {showDropDownById, minimizeDropDown}
