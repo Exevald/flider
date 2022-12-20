@@ -9,7 +9,6 @@ import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
 
-
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         createSlide: () => dispatcher(createSlide()),

@@ -1,10 +1,8 @@
 import styles from "./DropDown.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
-import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
-import React from "react";
 
 interface DropDownCustomProps {
     id: string,
@@ -31,10 +29,6 @@ function minimizeDropDown() {
 }
 type DropDownActionType = 'saveJSON' | 'savePDF'
 
-function mapStateToProps(state: Editor) {
-    return {}
-}
-
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         action: (actionType: DropDownActionType) => {
@@ -46,12 +40,12 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     }
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 type DropDownInitialProps = ConnectedProps<typeof connector>
 
 type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 
-function showDropDownById(parent: HTMLElement,id: string): void {
+function showDropDownById(parent: HTMLElement, id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
         dropDown.classList.toggle(styles.dropDownShow);
@@ -83,7 +77,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "imageSelector":
-                return(
+                return (
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
                         <div className={styles.dropDownContent}>
                             <p className={styles.dropDownContent__header}>Выберите вариант:</p>
@@ -152,5 +146,5 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
+export default connect(null, mapDispatchToProps)(DropDown)
 export {showDropDownById, minimizeDropDown}

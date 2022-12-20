@@ -15,7 +15,7 @@ function mapStateToProps(state: Editor) {
 const connector = connect(mapStateToProps);
 type WorkSpaceProps = ConnectedProps<typeof connector>
 
-const WorkSpace = () => {
+const WorkSpace = (props: WorkSpaceProps) => {
     return (
         <div className={styles.workspace}>
             <Sidebar></Sidebar>

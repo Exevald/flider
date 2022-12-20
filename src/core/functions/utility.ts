@@ -1,15 +1,5 @@
-import {Id, Presentation, Slide} from "../types/types";
+import {Id} from "../types/types";
 
-const DEFAULT_PRESENTATION_CONFIG: Presentation = {
-    slides: [{
-        id: getRandomId(),
-        items: [],
-        bgColor: "white",
-        selectedItemsIds: []
-    }],
-    title: 'Unnamed',
-    selectedSlidesIds: [],
-};
 const COLOR_PICKER_COLORS = [
     "white", "whitesmoke", "gray", "darkgray", "black",
     "yellow", "orange", "darkorange", "red", "darkred"
@@ -29,5 +19,13 @@ function getRandomId(): Id {
     return id;
 }
 
-export {DEFAULT_PRESENTATION_CONFIG, MAX_HISTORY_SIZE, MAX_TITLE_SIZE, COLOR_PICKER_COLORS};
-export {getRandomId};
+function min(a: number, b: number): number {
+    return a < b ? a : b;
+}
+
+function max(a: number, b: number): number {
+    return a > b ? a : b;
+}
+
+export {MAX_HISTORY_SIZE, COLOR_PICKER_COLORS};
+export {getRandomId, min, max};

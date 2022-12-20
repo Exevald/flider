@@ -18,6 +18,7 @@ type History = {
 type Editor = {
     presentation: Presentation,
     history: History,
+    slideShowStatus: boolean,
 }
 
 type Presentation = {
@@ -69,5 +70,21 @@ type Image = {
     src: string
 }
 
+enum Actions {
+    CREATE_PRESENTATION = "CREATE_PRESENTATION",
+    SAVE_PRESENTATION = "SAVE_PRESENTATION",
+    OPEN_PRESENTATION = "OPEN_PRESENTATION",
+    CHANGE_SLIDE_SHOW_STATUS = "CHANGE_SLIDE_SHOW_SLIDE",
+    UNDO = "UNDO",
+    REDO = "REDO",
+    CHANGE_TITLE = "CHANGE_TITLE",
+    CREATE_SLIDE = "CREATE_SLIDE",
+    DELETE_SLIDE = "DELETE_SLIDE",
+    SELECT_SLIDE = "SELECT_SLIDE",
+    DESELECT_SLIDE = "DESELECT_SLIDE",
+    SELECT_MANY_SLIDES = "SELECT_MANY_SLIDES",
+    SWITCH_SLIDE = "SWITCH_SLIDE",
+}
+
 export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};
-export {ShapeType, ItemType};
+export {ShapeType, ItemType, Actions};
