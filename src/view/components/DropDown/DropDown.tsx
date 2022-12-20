@@ -72,6 +72,12 @@ function showDropDownById(parent: HTMLElement,id: string): void {
         }
     }
 }
+function showChildrenDropDownById(id: string): void {
+    let childDropDown = document.getElementById(id);
+    if (childDropDown !== null) {
+        childDropDown.classList.toggle(styles.dropDownShow);
+    }
+}
 
 const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     if (viewStyle !== null) {
@@ -83,7 +89,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                             <p className={styles.dropDownContent__header}>Выберите вариант:</p>
                             <div className={styles.separator}></div>
                             <p onClick={() => {
-                                //showDropDownById('Stocks')
+                                showChildrenDropDownById('Stocks')
                             }}>Выбрать из популярных фотостоков</p>
                             <div id={"Stocks"} className={styles.dropDown} style={{position: "static"}}>
                                 <div className={styles.dropDownContent} style={{border: "none"}}>
@@ -99,7 +105,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                                 </div>
                             </div>
                             <div className={styles.separator}></div>
-                            <form method={"get"}>
+                            <form method={"get"} style={{padding: '5px 0 5px 0'}}>
                                 <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage" />
                                 <label htmlFor={"uploadImage"}><p>Выбрать с компьютера</p></label>
                             </form>

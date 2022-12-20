@@ -40,7 +40,10 @@ const Toolbar = (props: ToolbarProps) => {
             <ButtonIcon viewStyle={"textArea"} onClick={() => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"image"} onClick={() => {
-                const selector = document.getElementsByTagName('')
+                const iconImage = document.getElementsByClassName(iconsStyles.buttonImage)[0] as HTMLElement;
+                if (iconImage !== null) {
+                    showDropDownById(iconImage, 'ImageSelector')
+                }
             }}></ButtonIcon>
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
             <ButtonIcon viewStyle={"figure"} onClick={() => {

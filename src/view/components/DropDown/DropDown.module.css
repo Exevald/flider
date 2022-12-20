@@ -78,7 +78,7 @@
     cursor: auto;
 }
 .dropDownContent__header:hover {
-    background-color: var(--shinji);
+    background-color: var(--shinji)!important;
     border-radius: 10px 10px 0 0;
 }
 .separator {
@@ -86,7 +86,9 @@
     height: 1px;
     background-color: var(--kaoru-60);
 }
-.dropDownContent > a, p {
+.dropDownContent > a,
+.dropDownContent > p,
+.dropDownContent > form {
     padding: 5px;
     color: var(--gendo-default);
     height: 25px;
@@ -95,12 +97,17 @@
 .dropDownContent a, p {
     cursor: pointer;
 }
-.dropDownContent > a:hover, p:hover {
+.dropDownContent > a:hover,
+.dropDownContent > p:hover,
+.dropDownContent > form:hover {
     background-color: var(--ayanami-20);
 }
-.dropDownContent a:first-child, p:first-child {
+.dropDownContent > a:first-child,
+.dropDownContent > p:first-child {
     border-radius: 10px 10px 0 0;
 }
-.dropDownContent a:last-child, p:last-child {
+.dropDownContent > a:last-child,
+.dropDownContent > p:last-child,
+.dropDownContent > form:last-child {
     border-radius: 0  0 10px 10px;
 }
