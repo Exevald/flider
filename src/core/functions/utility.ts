@@ -27,5 +27,5 @@ function max(a: number, b: number): number {
     return a > b ? a : b;
 }
 
-export {MAX_HISTORY_SIZE, COLOR_PICKER_COLORS};
+export {MAX_HISTORY_SIZE, COLOR_PICKER_COLORS, MAX_TITLE_SIZE};
 export {getRandomId, min, max};
