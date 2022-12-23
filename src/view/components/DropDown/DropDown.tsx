@@ -10,23 +10,27 @@ interface DropDownCustomProps {
         | 'figure' | 'line' | 'palette' | 'saveAction',
 }
 
-// долгий ящик
-function minimizeDropDown() {
-    const root = document.getElementById('root');
+// сейчас обработчик прямо в блоке,
+// надо будет изменить и всунуть функцией
+/*function hideDropDownClick() {
     const saveAction = document.getElementById('saveActionDropDown');
     const colorPicker = document.getElementById('ColorPicker');
     const stocks = document.getElementById('Stocks');
 
-    if (root !== null && saveAction !== null && colorPicker !== null && stocks !== null) {
-        root.addEventListener('keydown', (e) => {
-            if (e.code === 'Escape') {
+    if (saveAction !== null && colorPicker !== null && stocks !== null) {
+
+        document.addEventListener("keypress", (e) => {
+            if(e.code === 'Escape') {
                 saveAction.classList.remove(styles.dropDownShow);
                 colorPicker.classList.remove(styles.dropDownShow);
                 stocks.classList.remove(styles.dropDownShow);
             }
         })
+
     }
-}
+}*/
+
+
 type DropDownActionType = 'saveJSON' | 'savePDF'
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
@@ -147,4 +151,4 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
 }
 
 export default connect(null, mapDispatchToProps)(DropDown)
-export {showDropDownById, minimizeDropDown}
+export {showDropDownById}
