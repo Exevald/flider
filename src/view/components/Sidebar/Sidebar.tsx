@@ -6,13 +6,13 @@ import {connect, ConnectedProps} from "react-redux";
 import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../../model/actionCreators";
 
 interface SlidePreviewProps {
-    id: string,
-    preview?: string,
-    isSelected?: boolean,
-    switchSlide: () => void,
-    selectOneSlide: () => void,
-    deselectSlide: () => void,
-    selectManySlides: () => void,
+    id: string;
+    preview?: string;
+    isSelected?: boolean;
+    switchSlide: () => void;
+    selectOneSlide: () => void;
+    deselectSlide: () => void;
+    selectManySlides: () => void;
 }
 
 

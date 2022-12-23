@@ -5,9 +5,9 @@ import {savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 
 interface DropDownCustomProps {
-    id: string,
+    id: string;
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
-        | 'figure' | 'line' | 'palette' | 'saveAction',
+        | 'figure' | 'line' | 'palette' | 'saveAction';
 }
 
 // сейчас обработчик прямо в блоке,

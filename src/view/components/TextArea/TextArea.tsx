@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import {MAX_TITLE_SIZE} from "../../../core/functions/utility";
 
 interface TextAreaProps {
-    placeholder?: string,
-    type: 'title' | 'ordinary',
-    value?: string,
-    onKeyUp: (value: string) => void,
+    placeholder?: string;
+    type: 'title' | 'ordinary';
+    value?: string;
+    onKeyUp: (value: string) => void;
 }
 
 const TextArea = ({

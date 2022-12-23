@@ -3,12 +3,12 @@ import {Link} from "react-router-dom";
 
 interface ButtonProps {
     viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow'
-        | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide' | 'filler',
-    iconStyle?: 'left' | 'right' | 'center' | 'none'
-    iconSrc?: string,
-    text?: string,
-    onClick: () => void,
-    to?: string,
+        | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide' | 'filler';
+    iconStyle?: 'left' | 'right' | 'center' | 'none';
+    iconSrc?: string;
+    text?: string;
+    onClick: () => void;
+    to?: string;
 }
 
 const linkStyle = {
