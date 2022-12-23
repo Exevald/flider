@@ -1,6 +1,9 @@
 import styles from "./DropDown.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
-import React from "react";
+import {Editor} from "../../../core/types/types";
+import {AppDispatcher} from "../../../model/store";
+
+import {connect, ConnectedProps} from "react-redux";
 
 interface DropDownProps {
     id: string,
@@ -9,20 +12,41 @@ interface DropDownProps {
 }
 
 // долгий ящик
-function minimizeDropDown() {
-    const root = document.getElementById('root');
+function hideDropDownClick(e: KeyboardEvent) {
+    const saveAction = document.getElementById('saveActionDropDown');
+    const colorPicker = document.getElementById('ColorPicker');
+    const stocks = document.getElementById('Stocks');
+    const imageSelector = document.getElementById('ImageSelector');
+
+    if (saveAction !== null && colorPicker !== null && stocks !== null && imageSelector !== null) {
+
+        if (e.code === 'Escape') {
+            if (stocks.classList.contains(styles.dropDownShow)) {
+                stocks.classList.remove(styles.dropDownShow)
+            } else {
+                saveAction.classList.remove(styles.dropDownShow);
+                colorPicker.classList.remove(styles.dropDownShow);
+                imageSelector.classList.remove(styles.dropDownShow);
+            }
+        }
+
+    }
+}
+function hideDropDown() {
     const saveAction = document.getElementById('saveActionDropDown');
     const colorPicker = document.getElementById('ColorPicker');
     const stocks = document.getElementById('Stocks');
 
-    if (root !== null && saveAction !== null && colorPicker !== null && stocks !== null) {
-        root.addEventListener('keydown', (e) => {
-            if (e.code === 'Escape') {
+    if (saveAction !== null && colorPicker !== null && stocks !== null) {
+
+        document.addEventListener("keypress", (e) => {
+            if(e.code === 'Escape') {
                 saveAction.classList.remove(styles.dropDownShow);
                 colorPicker.classList.remove(styles.dropDownShow);
                 stocks.classList.remove(styles.dropDownShow);
             }
         })
+
     }
 }
 
@@ -36,6 +60,7 @@ function showDropDownById(parent: HTMLElement,id: string): void {
         let parentLeft = parent.offsetLeft;
 
         if (parentTop !== null && parentLeft !== null) {
+            // для больши кнопок отступ побольше
             id === 'saveActionDropDown' ? parentTop += 40 : parentTop += 32;
             dropDown.style.top = parentTop + 'px';
             dropDown.style.left = parentLeft + 'px';
@@ -122,4 +147,5 @@ const DropDown = ({id, viewStyle}: DropDownProps) => {
     )
 }
 
-export {DropDown, showDropDownById, minimizeDropDown}
+
+export {showDropDownById, hideDropDown, hideDropDownClick}

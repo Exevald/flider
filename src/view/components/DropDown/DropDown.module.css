@@ -3,10 +3,16 @@
     position: absolute;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
-    z-index: 1;
+    z-index: 2;
 }
 .dropDownShow {
     display: block;
+}
+.closeArea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 /* все типы */
