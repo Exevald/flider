@@ -38,7 +38,8 @@ type Item = {
     id: Id,
     coordinates: Point,
     element: ItemType,
-    space: Area
+    space: Area,
+    figure?: Figure;
 }
 
 enum ItemType {
