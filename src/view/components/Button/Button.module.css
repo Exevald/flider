@@ -167,8 +167,23 @@
     height: 36px;
     background: no-repeat url("ButtonIcons/CreateSlideHoverIcon.svg");
 }
+
 .fillIcon {
-    width: 32px;
-    height: 32px;
     background: no-repeat url("ButtonIcons/FillIcon.svg");
+}
+
+.strokeIcon {
+    background: no-repeat url("ButtonIcons/StrokeIcon.svg");
+}
+
+.boldIcon {
+    background: no-repeat url("ButtonIcons/BoldIcon.svg");
+}
+
+.cursiveIcon {
+    background: no-repeat url("ButtonIcons/CursiveIcon.svg");
+}
+
+.underlineIcon {
+    background: no-repeat url("ButtonIcons/UnderlinedIcon.svg");
 }

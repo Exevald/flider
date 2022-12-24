@@ -3,7 +3,8 @@ import {Link} from "react-router-dom";
 
 interface ButtonProps {
     viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow'
-        | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide' | 'filler';
+        | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide' | 'filler' | 'stroke' | 'bold'
+        | 'cursive' | 'underline';
     iconStyle?: 'left' | 'right' | 'center' | 'none';
     iconSrc?: string;
     text?: string;
@@ -120,7 +121,22 @@ const ButtonIcon = ({
             buttonStyle = styles.fillIcon;
             break;
         }
-
+        case "stroke": {
+            buttonStyle = styles.strokeIcon;
+            break;
+        }
+        case "bold": {
+            buttonStyle  = styles.boldIcon;
+            break;
+        }
+        case "cursive": {
+            buttonStyle = styles.cursiveIcon;
+            break;
+        }
+        case "underline": {
+            buttonStyle = styles.underlineIcon;
+            break;
+        }
     }
     return (
         <button

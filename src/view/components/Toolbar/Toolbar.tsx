@@ -57,7 +57,12 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
             <ButtonIcon viewStyle={"filler"} onClick={() => {
-
+            }}></ButtonIcon>
+            <ButtonIcon viewStyle={"stroke"} onClick={() => {
+            }}></ButtonIcon>
+            <ButtonIcon viewStyle={"cursive"} onClick={() => {
+            }}></ButtonIcon>
+            <ButtonIcon viewStyle={"underline"} onClick={() => {
             }}></ButtonIcon>
         </div>
     )
