@@ -3,6 +3,7 @@ import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
+import React from "react";
 
 interface DropDownCustomProps {
     id: string;
@@ -10,25 +11,44 @@ interface DropDownCustomProps {
         | 'figure' | 'line' | 'palette' | 'saveAction';
 }
 
-// сейчас обработчик прямо в блоке,
-// надо будет изменить и всунуть функцией
-/*function hideDropDownClick() {
+
+function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
     const saveAction = document.getElementById('saveActionDropDown');
     const colorPicker = document.getElementById('ColorPicker');
     const stocks = document.getElementById('Stocks');
+    const imageSelector = document.getElementById('ImageSelector');
 
-    if (saveAction !== null && colorPicker !== null && stocks !== null) {
+    if (saveAction !== null && colorPicker !== null && stocks !== null && imageSelector !== null) {
 
-        document.addEventListener("keypress", (e) => {
-            if(e.code === 'Escape') {
+        if (e.code === 'Escape') {
+            if (stocks.classList.contains(styles.dropDownShow)) {
+                stocks.classList.remove(styles.dropDownShow)
+            } else {
                 saveAction.classList.remove(styles.dropDownShow);
                 colorPicker.classList.remove(styles.dropDownShow);
-                stocks.classList.remove(styles.dropDownShow);
+                imageSelector.classList.remove(styles.dropDownShow);
             }
-        })
+        }
 
     }
-}*/
+}
+
+
+function handleClicks (e: MouseEvent) {
+    const path = e.composedPath();
+    const saveAction = document.getElementById('saveActionDropDown');
+    const colorPicker = document.getElementById('ColorPicker');
+    const imageSelector = document.getElementById('ImageSelector');
+
+    if (path !== null && saveAction !== null && colorPicker !== null && imageSelector !== null) {
+
+        switch (path) {
+
+        }
+
+    }
+
+}
 
 
 type DropDownActionType = 'saveJSON' | 'savePDF'
@@ -93,12 +113,24 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                                 <div className={styles.dropDownContent} style={{border: "none"}}>
                                     <div className={styles.separator}></div>
                                     <ul className={styles.stocks}>
-                                        <li><a href={"https://www.shutterstock.com"}>Shutterstock</a></li>
-                                        <li><a href={"https://www.gettyimages.com"}>Getty Images</a></li>
-                                        <li><a href={"https://stock.adobe.com/ru/"}>Adobe Stock</a></li>
-                                        <li><a href={"https://www.dreamstime.com"}>Dreamstime</a></li>
-                                        <li><a href={"https://ru.123rf.com"}>123RF</a></li>
-                                        <li><a href={"https://photogenica.ru"}>Фотодженика</a></li>
+                                        <li><a href={"https://www.shutterstock.com"} target={"_blank"}>
+                                            Shutterstock
+                                        </a></li>
+                                        <li><a href={"https://www.gettyimages.com"} target={"_blank"}>
+                                            Getty Images
+                                        </a></li>
+                                        <li><a href={"https://stock.adobe.com/ru/"} target={"_blank"}>
+                                            Adobe Stock
+                                        </a></li>
+                                        <li><a href={"https://www.dreamstime.com"} target={"_blank"}>
+                                            Dreamstime
+                                        </a></li>
+                                        <li><a href={"https://ru.123rf.com"} target={"_blank"}>
+                                            123RF
+                                        </a></li>
+                                        <li><a href={"https://photogenica.ru"} target={"_blank"}>
+                                            Фотодженика
+                                        </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -151,4 +183,4 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
 }
 
 export default connect(null, mapDispatchToProps)(DropDown)
-export {showDropDownById}
+export {showDropDownById, handleClicks, hideDropDownKeyboardPressed}
