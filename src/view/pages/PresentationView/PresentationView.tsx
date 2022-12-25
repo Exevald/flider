@@ -4,6 +4,8 @@ import {connect, ConnectedProps} from "react-redux";
 import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {swipeSlideShowSlide} from "../../../model/actionCreators";
+import {Button} from "../../components/Button/Button";
+import {useState} from "react";
 
 function mapStateToProps(state: Editor) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
@@ -11,7 +13,7 @@ function mapStateToProps(state: Editor) {
         slides: state.presentation.slides,
         countOfSlides: state.presentation.slides.length,
         currentSlide: state.presentation.slides[currentSlideIndex],
-        slideShowCurrentSlideIndex: currentSlideIndex,
+        slideShowCurrentSlideIndex: state.slideShowCurrentSlideIndex,
         slideShowStatus: state.slideShowStatus,
     }
 }
@@ -26,18 +28,37 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PresentationViewProps = ConnectedProps<typeof connector>
 
 const PresentationView = (props: PresentationViewProps) => {
+    let slides = [];
+    for (let i = 0; i < props.slides.length; i++) {
+        let slide = props.slides[i];
+        slides.push(
+            <div className={styles.canvas} style={{"backgroundColor": slide.bgColor}}>
+            </div>
+        )
+    }
     return (
         <div className={styles.blackout}>
-            <Link to={"/presentation"}>
-                <p>Вернуться к изменению</p>
-            </Link>
-            <p style={{color: "white"}}>{props.slideShowCurrentSlideIndex}</p>
             <div className={styles.canvasArea}>
-                <div className={styles.canvas}>Заглушка</div>
+                {slides[props.slideShowCurrentSlideIndex]}
+                <p className={styles.slideNumberText}>{props.slideShowCurrentSlideIndex + 1}</p>
                 <div className={styles.arrows}>
-                    <div className={`${styles.arrow}`}></div>
-                    <div className={`${styles.arrow} ${styles.arrowRight}`}></div>
+                    <div
+                        className={`${styles.arrow} ${styles.arrowLeft}`}
+                        onClick={() => {
+                            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left")
+                        }}>
+                    </div>
+                    <div
+                        className={`${styles.arrow} ${styles.arrowRight}`}
+                        onClick={() => {
+                            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right")
+                        }}>
+                    </div>
                 </div>
+                <Link to={"/presentation"}>
+                    <Button viewStyle={"goToEditor"} onClick={() => {
+                    }} text={"Продолжить редактирование презентации"}/>
+                </Link>
             </div>
         </div>
     )

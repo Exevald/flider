@@ -57,6 +57,13 @@
     margin-left: 2.2vw;
 }
 
+.buttonGoToEditor {
+    background-color: var(--shinji);
+    color: var(--gendo-default);
+    border: 1px solid var(--kaoru-60);
+    margin-bottom: 20px;
+}
+
 .buttonSave {
     background-color: var(--shinji);
     color: var(--gendo-default);
@@ -64,8 +71,13 @@
     margin-left: 50vw;
 }
 
-
 .buttonOpen:hover {
+    cursor: pointer;
+    border-color: var(--kaoru-default);
+    color: var(--gendo-default);
+}
+
+.buttonGoToEditor:hover {
     cursor: pointer;
     border-color: var(--kaoru-default);
     color: var(--gendo-default);

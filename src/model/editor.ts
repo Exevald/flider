@@ -24,15 +24,15 @@ function createPresentationReducer(): Editor {
 }
 
 function swipeSlideShowSlideReducer(editor: Editor, slideIndex: number, direction: string): Editor {
-    console.log("reducer")
     const newEditor = deepClone(editor) as Editor;
     let newSlideIndex = slideIndex;
     if (direction === "right") {
         newSlideIndex++;
-        if (newSlideIndex > editor.slideShowCurrentSlideIndex) {
-            newSlideIndex = editor.slideShowCurrentSlideIndex;
+        if (newSlideIndex > editor.presentation.slides.length - 1) {
+            newSlideIndex = editor.presentation.slides.length - 1;
         }
     } else if (direction === "left") {
+        console.log("left")
         newSlideIndex--;
         if (newSlideIndex < 0) {
             newSlideIndex = 0;
@@ -117,12 +117,8 @@ function editorReducer(state: Editor, action: ActionType): Editor {
             return undoReducer(state);
         case Actions.REDO:
             return redoReducer(state);
-        case Actions.SWIPE_SLIDE_SHOW_SLIDE: {
-            if (action.slideShowCurrentSlide !== undefined) {
-                console.log("1111");
-            }
+        case Actions.SWIPE_SLIDE_SHOW_SLIDE:
             return action.slideShowCurrentSlide !== undefined && action.direction !== undefined ? swipeSlideShowSlideReducer(state, action.slideShowCurrentSlide, action.direction) : deepClone(state) as Editor;
-        }
         default:
             return deepClone(state) as Editor;
     }

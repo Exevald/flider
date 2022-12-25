@@ -100,12 +100,11 @@ function changeCurrentColor(color: string) {
     }
 }
 
-function swipeSlideShowSlide(slideShowCurrentSlideIndex: number, direction: string) {
-    console.log("actions");
+function swipeSlideShowSlide(slideIndex: number, direction: string) {
     return {
         type: Actions.SWIPE_SLIDE_SHOW_SLIDE,
-        direction,
-        slideShowCurrentSlideIndex: slideShowCurrentSlideIndex,
+        slideShowCurrentSlide: slideIndex,
+        direction: direction,
     }
 }
 
