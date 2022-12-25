@@ -24,6 +24,7 @@ const LogoArea = () => {
                 <img className={styles.logoArea}
                      src={logoArea}
                      alt={"Main Logo"}
+                     loading={"lazy"}
                 />
             </Link>
         </div>
@@ -78,8 +79,9 @@ const TopPanel = (props: TopPanelProps) => {
                 }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
                 <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
             </div>
-            <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon} onClick={() => {
-            }}/>
+            <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}
+                    to={"/presentation/watch"}
+                    onClick={() => {}}/>
         </div>
     )
 }

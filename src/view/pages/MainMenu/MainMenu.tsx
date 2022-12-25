@@ -37,7 +37,7 @@ const MainMenu = (props: MainMenuProps) => {
                 <Button viewStyle={"default"} onClick={() => props.openPresentation()} text={"Открыть презентацию"} to={"/presentation"}></Button>
             </div>
             <div className={styles.logoImageWrapper}>
-                <img src={logoImage} alt={"logoImage"}></img>
+                <img src={logoImage} alt={"logoImage"} loading={"lazy"}></img>
             </div>
         </div>
     )
