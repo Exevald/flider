@@ -168,22 +168,22 @@
     background: no-repeat url("ButtonIcons/CreateSlideHoverIcon.svg");
 }
 
-.fillIcon {
+.buttonFill {
     background: no-repeat url("ButtonIcons/FillIcon.svg");
 }
 
-.strokeIcon {
+.buttonStroke {
     background: no-repeat url("ButtonIcons/StrokeIcon.svg");
 }
 
-.boldIcon {
+.buttonBold {
     background: no-repeat url("ButtonIcons/BoldIcon.svg");
 }
 
-.cursiveIcon {
+.buttonCursive {
     background: no-repeat url("ButtonIcons/CursiveIcon.svg");
 }
 
-.underlineIcon {
+.buttonUnderline {
     background: no-repeat url("ButtonIcons/UnderlinedIcon.svg");
 }

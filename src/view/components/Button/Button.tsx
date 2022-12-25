@@ -118,23 +118,23 @@ const ButtonIcon = ({
             break;
         }
         case "filler": {
-            buttonStyle = styles.fillIcon;
+            buttonStyle = styles.buttonFill;
             break;
         }
         case "stroke": {
-            buttonStyle = styles.strokeIcon;
+            buttonStyle = styles.buttonStroke;
             break;
         }
         case "bold": {
-            buttonStyle  = styles.boldIcon;
+            buttonStyle  = styles.buttonBold;
             break;
         }
         case "cursive": {
-            buttonStyle = styles.cursiveIcon;
+            buttonStyle = styles.buttonCursive;
             break;
         }
         case "underline": {
-            buttonStyle = styles.underlineIcon;
+            buttonStyle = styles.buttonUnderline;
             break;
         }
     }
