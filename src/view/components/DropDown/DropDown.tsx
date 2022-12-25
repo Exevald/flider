@@ -165,7 +165,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                             <div className={styles.separator}></div>
                             <form method={"get"} style={{padding: '5px 0 5px 0'}}>
                                 <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage" />
-                                <label htmlFor={"uploadImage"}><p>Выбрать с компьютера</p></label>
+                                <label htmlFor={"uploadImage"}>Выбрать с компьютера</label>
                             </form>
 
                         </div>
