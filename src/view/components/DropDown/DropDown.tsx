@@ -1,4 +1,5 @@
 import styles from "./DropDown.module.css"
+import buttonStyles from "../Button/Button.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {savePresentation} from "../../../model/actionCreators";
@@ -35,15 +36,30 @@ function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
 
 
 function handleClicks (e: MouseEvent) {
+    // взял в проверку ещё и кнопки списков,
+    // чтобы при обработке они не переключались два раза (закрылись и снова открылись)
     const path = e.composedPath();
     const saveAction = document.getElementById('saveActionDropDown');
+    const saveButton = document.getElementsByClassName(buttonStyles.buttonSave)[0];
     const colorPicker = document.getElementById('ColorPicker');
+    const pickerButton = document.getElementsByClassName(buttonStyles.buttonPalette)[0];
     const imageSelector = document.getElementById('ImageSelector');
+    const selectorButton = document.getElementsByClassName(buttonStyles.buttonImage)[0];
 
-    if (path !== null && saveAction !== null && colorPicker !== null && imageSelector !== null) {
+    if (path !== null && saveAction !== null && colorPicker !== null && imageSelector !== null
+        && saveButton !== null && selectorButton !== null && pickerButton !== null) {
 
-        switch (path) {
-
+        if (saveAction.classList.contains(styles.dropDownShow) && !path.includes(saveAction)
+            && !path.includes(saveButton)) {
+            saveAction.classList.remove(styles.dropDownShow)
+        }
+        if (colorPicker.classList.contains(styles.dropDownShow) && !path.includes(colorPicker)
+            && !path.includes(pickerButton)) {
+            colorPicker.classList.remove(styles.dropDownShow)
+        }
+        if (imageSelector.classList.contains(styles.dropDownShow) && !path.includes(imageSelector)
+            && !path.includes(selectorButton)) {
+            imageSelector.classList.remove(styles.dropDownShow)
         }
 
     }
@@ -72,7 +88,7 @@ type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 function showDropDownById(parent: HTMLElement, id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
-        dropDown.classList.toggle(styles.dropDownShow);
+         dropDown.classList.toggle(styles.dropDownShow);
 
         let parentTop = parent.offsetTop;
         let parentLeft = parent.offsetLeft;
@@ -113,24 +129,36 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                                 <div className={styles.dropDownContent} style={{border: "none"}}>
                                     <div className={styles.separator}></div>
                                     <ul className={styles.stocks}>
-                                        <li><a href={"https://www.shutterstock.com"} target={"_blank"}>
-                                            Shutterstock
-                                        </a></li>
-                                        <li><a href={"https://www.gettyimages.com"} target={"_blank"}>
-                                            Getty Images
-                                        </a></li>
-                                        <li><a href={"https://stock.adobe.com/ru/"} target={"_blank"}>
-                                            Adobe Stock
-                                        </a></li>
-                                        <li><a href={"https://www.dreamstime.com"} target={"_blank"}>
-                                            Dreamstime
-                                        </a></li>
-                                        <li><a href={"https://ru.123rf.com"} target={"_blank"}>
-                                            123RF
-                                        </a></li>
-                                        <li><a href={"https://photogenica.ru"} target={"_blank"}>
-                                            Фотодженика
-                                        </a></li>
+                                        <a href={"https://www.shutterstock.com"} target={"_blank"}>
+                                            <li>
+                                                Shutterstock
+                                            </li>
+                                        </a>
+                                        <a href={"https://www.gettyimages.com"} target={"_blank"}>
+                                            <li>
+                                                Getty Images
+                                            </li>
+                                        </a>
+                                        <a href={"https://stock.adobe.com/ru/"} target={"_blank"}>
+                                            <li>
+                                                Adobe Stock
+                                            </li>
+                                        </a>
+                                        <a href={"https://www.dreamstime.com"} target={"_blank"}>
+                                            <li>
+                                                Dreamstime
+                                            </li>
+                                        </a>
+                                        <a href={"https://ru.123rf.com"} target={"_blank"}>
+                                            <li>
+                                                123RF
+                                            </li>
+                                        </a>
+                                        <a href={"https://photogenica.ru"} target={"_blank"}>
+                                            <li>
+                                                Фотодженика
+                                            </li>
+                                        </a>
                                     </ul>
                                 </div>
                             </div>

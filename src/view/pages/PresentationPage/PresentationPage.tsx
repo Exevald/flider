@@ -7,18 +7,17 @@ const PresentationPage = () => {
     return (
         <div tabIndex={0} style={{outline: 0}}
              onKeyDown={hideDropDownKeyboardPressed}
-            onClick={() => {
+             onClick={() => {
 
-                const doc = document.querySelector('html')
-                if (doc !== null) {
-                    doc.addEventListener('click', handleClicks)
+                 const doc = document.querySelector('body')
+                 if (doc !== null) {
+                     doc.addEventListener('click', handleClicks);
+                     setTimeout(() => {
+                         doc.removeEventListener('click', handleClicks)
+                     }, 1);
+                 }
 
-
-
-                    doc.removeEventListener('click', handleClicks)
-                }
-
-            }}
+             }}
         >
             <TopPanel/>
             <Toolbar/>
