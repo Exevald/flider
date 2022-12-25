@@ -85,6 +85,20 @@ function setTitle(title: string) {
     }
 }
 
+function setBackgroundColor(backgroundColor: string) {
+    return {
+        type: Actions.SET_BACKGROUND_COLOR,
+        backgroundColor,
+    }
+}
+
+function changeCurrentColor(color: string) {
+    return {
+        type: Actions.CHANGE_SELECTED_COLOR,
+        newColor: color
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -98,4 +112,7 @@ export {
     createPresentation,
     savePresentation,
     openPresentation,
+    changeCurrentColor,
+    changeSlideShowStatus,
+    setBackgroundColor,
 }
