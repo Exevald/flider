@@ -2,7 +2,7 @@ import styles from "./DropDown.module.css"
 import buttonStyles from "../Button/Button.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
-import {savePresentation} from "../../../model/actionCreators";
+import {changeCurrentColor, savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
 
@@ -35,7 +35,7 @@ function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
 }
 
 
-function handleClicks (e: MouseEvent) {
+function handleClicks(e: MouseEvent) {
     // взял в проверку ещё и кнопки списков,
     // чтобы при обработке они не переключались два раза (закрылись и снова открылись)
     const path = e.composedPath();
@@ -67,14 +67,21 @@ function handleClicks (e: MouseEvent) {
 }
 
 
-type DropDownActionType = 'saveJSON' | 'savePDF'
+type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor'
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
-        action: (actionType: DropDownActionType) => {
+        action: (actionType: DropDownActionType, color?: string) => {
             switch (actionType) {
-                case 'saveJSON':
-                    dispatcher(savePresentation())
+                case 'saveJSON': {
+                    dispatcher(savePresentation());
+                    break;
+                }
+                case "changeCurrentColor": {
+                    if (color !== undefined) {
+                        dispatcher(changeCurrentColor(color))
+                    }
+                }
             }
         }
     }
@@ -88,7 +95,7 @@ type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 function showDropDownById(parent: HTMLElement, id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
-         dropDown.classList.toggle(styles.dropDownShow);
+        dropDown.classList.toggle(styles.dropDownShow);
 
         let parentTop = parent.offsetTop;
         let parentLeft = parent.offsetLeft;
@@ -106,6 +113,7 @@ function showDropDownById(parent: HTMLElement, id: string): void {
         }
     }
 }
+
 function showChildrenDropDownById(id: string): void {
     let childDropDown = document.getElementById(id);
     if (childDropDown !== null) {
@@ -175,15 +183,17 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                 let colorsList = [];
                 for (let i = 0; i < COLOR_PICKER_COLORS.length; i++) {
                     colorsList.push(
-                        <button className={styles.paletteColor} style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
-                                onClick={() => {
-                                }}></button>
+                        <button className={styles.paletteColor}
+                                style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
+                                onClick={() => action('changeCurrentColor', COLOR_PICKER_COLORS[i])}
+                        />
                     )
                 }
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.palette}`}>
                         <div className={styles.dropDownContent}>
-                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные цвета</p>
+                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные
+                                цвета</p>
                             <div className={styles.separator}></div>
                             <div className={styles.paletteContent}>
                                 {colorsList}

@@ -3,13 +3,11 @@ import {connect, ConnectedProps} from "react-redux";
 import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 
-const canvasSettings = {
-    width: 1280,
-    height: 720,
-}
-
 function mapStateToProps(state: Editor) {
-    return {}
+    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
+    return {
+        bgColor: state.presentation.slides[currentSlideIndex].bgColor
+    }
 }
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
@@ -17,23 +15,16 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-type SlideProps = ConnectedProps<typeof connector>
-
-const Slide = (props: SlideProps) => {
-    return (
-        <div className={styles.slide}>
-            <canvas id={"canvas"} width={canvasSettings.width} height={canvasSettings.height}></canvas>
-        </div>
-    )
-}
+type SlideAreaProps = ConnectedProps<typeof connector>
 
 
-const SlideArea = () => {
+const SlideArea = (props: SlideAreaProps) => {
     return (
         <div className={styles.slideArea}>
-            <Slide></Slide>
+            <div className={styles.slide} style={{"background": props.bgColor}}>
+            </div>
         </div>
     )
 }
 
-export {SlideArea};
+export default connect(mapStateToProps, mapDispatchToProps)(SlideArea)
