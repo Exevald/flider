@@ -13,6 +13,7 @@ interface SlidePreviewProps {
     selectOneSlide: () => void;
     deselectSlide: () => void;
     selectManySlides: () => void;
+    bgColor: string;
 }
 
 
@@ -26,10 +27,11 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
 }
 
 function mapStateToProps(state: Editor) {
+    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
         slides: state.presentation.slides,
         countOfSlides: state.presentation.slides.length,
-        selectedSlideIds: state.presentation.selectedSlidesIds
+        selectedSlideIds: state.presentation.selectedSlidesIds,
     }
 }
 
@@ -58,7 +60,11 @@ const SlidePreview = (props: SlidePreviewProps) => {
             }
         }}>
             <p className={styles.slideIndex}>{slideId}</p>
-            <div className={`${styles.slidePreview} ${borderStyle}`}>{props.preview}</div>
+            <div
+                className={`${styles.slidePreview} ${borderStyle}`}
+                style={{"backgroundColor": props.bgColor}}>
+                {props.preview}
+            </div>
         </div>
     )
 }
@@ -76,6 +82,7 @@ const Sidebar = (props: SidebarProps) => {
                 selectOneSlide={() => props.selectOneSlide(slide.id)}
                 selectManySlides={() => props.selectManySlides(slide.id)}
                 deselectSlide={() => props.deselectSlide(slide.id)}
+                bgColor={slide.bgColor}
             />
         )
     }
