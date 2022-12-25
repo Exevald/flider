@@ -1,10 +1,35 @@
 .blackout {
-    width: 100%;
-    height: 100%;
+    padding:0 10vw 0 10vw;
+    width: 80vw;
+    height: 100vh;
     background-color: black;
 }
 .canvasArea {
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.canvas {
+    background-color: white;
+    width: 100%;
+    height: 85vh
+}
+
+/*          стрелки           */
+.arrows {
+    width: 98%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.arrow {
+    margin: 10px;
+    width: 58px;
+    height: 45px;
+    background: no-repeat url("arrows/arrowLeftDefault.svg");
+}
+.arrowRight {
+    transform: scale(-1, 1);
 }

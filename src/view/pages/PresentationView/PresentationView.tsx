@@ -31,9 +31,13 @@ const PresentationView = (props: PresentationViewProps) => {
             <Link to={"/presentation"}>
                 <p>Вернуться к изменению</p>
             </Link>
-            <p style={{color: "white"}}>{}</p>
+            <p style={{color: "white"}}>{props.slideShowCurrentSlideIndex}</p>
             <div className={styles.canvasArea}>
-
+                <div className={styles.canvas}>Заглушка</div>
+                <div className={styles.arrows}>
+                    <div className={`${styles.arrow}`}></div>
+                    <div className={`${styles.arrow} ${styles.arrowRight}`}></div>
+                </div>
             </div>
         </div>
     )
