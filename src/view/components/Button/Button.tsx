@@ -44,29 +44,53 @@ const Button = ({
             break;
         }
     }
-    return (
-        <button
-            type="button"
-            className={`${styles.button} ${buttonStyle}`}
-            onClick={onClick}
-        >
-            {iconStyle === "left" &&
-                <div className={styles.iconAreaLeft}>
-                    <img src={iconSrc} alt={"buttonIcon"}></img>
-                </div>
-            }
-            <div className={styles.text_default}>
-                {
-                    to !== undefined ? <Link to={to} style={linkStyle}>{text}</Link> : <>{text}</>
+    if(to !== undefined) {
+        return (
+            <Link to={to} style={linkStyle}>
+                <button
+                    type="button"
+                    className={`${styles.button} ${buttonStyle}`}
+                    onClick={onClick}
+                >
+                    {iconStyle === "left" &&
+                        <div className={styles.iconAreaLeft}>
+                            <img src={iconSrc} alt={"buttonIcon"}></img>
+                        </div>
+                    }
+                    <div className={styles.text_default}>
+                        {text}
+                    </div>
+                    {iconStyle === "right" &&
+                        <div className={styles.iconAreaRight}>
+                            <img src={iconSrc} alt={"buttonIcon"}></img>
+                        </div>
+                    }
+                </button>
+            </Link>
+        )
+    } else {
+        return (
+            <button
+                type="button"
+                className={`${styles.button} ${buttonStyle}`}
+                onClick={onClick}
+            >
+                {iconStyle === "left" &&
+                    <div className={styles.iconAreaLeft}>
+                        <img src={iconSrc} alt={"buttonIcon"}></img>
+                    </div>
                 }
-            </div>
-            {iconStyle === "right" &&
-                <div className={styles.iconAreaRight}>
-                    <img src={iconSrc} alt={"buttonIcon"}></img>
+                <div className={styles.text_default}>
+                    {text}
                 </div>
-            }
-        </button>
-    )
+                {iconStyle === "right" &&
+                    <div className={styles.iconAreaRight}>
+                        <img src={iconSrc} alt={"buttonIcon"}></img>
+                    </div>
+                }
+            </button>
+        )
+    }
 
 }
 
