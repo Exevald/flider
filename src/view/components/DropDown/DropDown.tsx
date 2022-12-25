@@ -9,7 +9,7 @@ import React from "react";
 interface DropDownCustomProps {
     id: string;
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
-        | 'figure' | 'line' | 'palette' | 'saveAction';
+        | 'line' | 'palette' | 'saveAction' | 'figureShapes';
 }
 
 
@@ -18,13 +18,16 @@ function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
     const colorPicker = document.getElementById('ColorPicker');
     const stocks = document.getElementById('Stocks');
     const imageSelector = document.getElementById('ImageSelector');
+    const shapes = document.getElementById('shapes');
 
-    if (saveAction !== null && colorPicker !== null && stocks !== null && imageSelector !== null) {
+    if (saveAction !== null && colorPicker !== null && stocks !== null && imageSelector !== null
+        && shapes !== null) {
 
         if (e.code === 'Escape') {
             if (stocks.classList.contains(styles.dropDownShow)) {
                 stocks.classList.remove(styles.dropDownShow)
             } else {
+                shapes.classList.remove(styles.dropDownShow);
                 saveAction.classList.remove(styles.dropDownShow);
                 colorPicker.classList.remove(styles.dropDownShow);
                 imageSelector.classList.remove(styles.dropDownShow);
@@ -45,9 +48,12 @@ function handleClicks(e: MouseEvent) {
     const pickerButton = document.getElementsByClassName(buttonStyles.buttonPalette)[0];
     const imageSelector = document.getElementById('ImageSelector');
     const selectorButton = document.getElementsByClassName(buttonStyles.buttonImage)[0];
+    const figure = document.getElementsByClassName(buttonStyles.buttonFigure)[0];
+    const shapes = document.getElementById('shapes');
 
     if (path !== null && saveAction !== null && colorPicker !== null && imageSelector !== null
-        && saveButton !== null && selectorButton !== null && pickerButton !== null) {
+        && saveButton !== null && selectorButton !== null && pickerButton !== null && figure !== null
+        && shapes !== null) {
 
         if (saveAction.classList.contains(styles.dropDownShow) && !path.includes(saveAction)
             && !path.includes(saveButton)) {
@@ -60,6 +66,10 @@ function handleClicks(e: MouseEvent) {
         if (imageSelector.classList.contains(styles.dropDownShow) && !path.includes(imageSelector)
             && !path.includes(selectorButton)) {
             imageSelector.classList.remove(styles.dropDownShow)
+        }
+        if (shapes.classList.contains(styles.dropDownShow) && !path.includes(shapes)
+            && !path.includes(figure)) {
+            shapes.classList.remove(styles.dropDownShow)
         }
 
     }
@@ -124,6 +134,23 @@ function showChildrenDropDownById(id: string): void {
 const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
+            case "figureShapes":
+                return (
+                    <div id={id} className={`${styles.dropDown} ${styles.figures}`}>
+                        <div className={styles.dropDownContent}>
+                            <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>
+                                Выберите фигуру
+                            </p>
+                            <div className={styles.separator}></div>
+                            <div className={styles.shapesContent}>
+                                <div className={`${styles.shapes} ${styles.shapeRectangle}`}></div>
+                                <div className={`${styles.shapes} ${styles.shapeArc}`}></div>
+                                <div className={`${styles.shapes} ${styles.shapeTriangle}`}></div>
+                                <div className={`${styles.shapes} ${styles.shapesStar}`}></div>
+                            </div>
+                        </div>
+                    </div>
+                )
             case "imageSelector":
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
@@ -137,32 +164,38 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                                 <div className={styles.dropDownContent} style={{border: "none"}}>
                                     <div className={styles.separator}></div>
                                     <ul className={styles.stocks}>
-                                        <a href={"https://www.shutterstock.com"} target={"_blank"}>
+                                        <a href={"https://www.shutterstock.com"} target={"_blank"}
+                                           rel={"noreferrer"}>
                                             <li>
                                                 Shutterstock
                                             </li>
                                         </a>
-                                        <a href={"https://www.gettyimages.com"} target={"_blank"}>
+                                        <a href={"https://www.gettyimages.com"} target={"_blank"}
+                                           rel={"noreferrer"}>
                                             <li>
                                                 Getty Images
                                             </li>
                                         </a>
-                                        <a href={"https://stock.adobe.com/ru/"} target={"_blank"}>
+                                        <a href={"https://stock.adobe.com/ru/"} target={"_blank"}
+                                           rel={"noreferrer"}>
                                             <li>
                                                 Adobe Stock
                                             </li>
                                         </a>
-                                        <a href={"https://www.dreamstime.com"} target={"_blank"}>
+                                        <a href={"https://www.dreamstime.com"} target={"_blank"}
+                                           rel={"noreferrer"}>
                                             <li>
                                                 Dreamstime
                                             </li>
                                         </a>
-                                        <a href={"https://ru.123rf.com"} target={"_blank"}>
+                                        <a href={"https://ru.123rf.com"} target={"_blank"}
+                                           rel={"noreferrer"}>
                                             <li>
                                                 123RF
                                             </li>
                                         </a>
-                                        <a href={"https://photogenica.ru"} target={"_blank"}>
+                                        <a href={"https://photogenica.ru"} target={"_blank"}
+                                           rel={"noreferrer"}>
                                             <li>
                                                 Фотодженика
                                             </li>
@@ -205,9 +238,9 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.saveAction}`}>
                         <div className={styles.dropDownContent}>
-                            <a href={""}>Сохранить PDF</a>
+                            <p>Сохранить PDF</p>
                             <div className={styles.separator}></div>
-                            <a onClick={() => action('saveJSON')}>Сохранить JSON</a>
+                            <p onClick={() => action('saveJSON')}>Сохранить JSON</p>
                         </div>
                     </div>
                 )

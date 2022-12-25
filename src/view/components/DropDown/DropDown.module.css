@@ -42,6 +42,40 @@
     border-color: var(--kaoru-60)
 }
 
+.figures {
+    width: 200px;
+}
+.shapes {
+    width: 32px;
+    height: 32px;
+}
+
+.shapes:hover {
+    background-color: var(--kaoru-20);
+    border-radius: 8px;
+}
+.shapes:active {
+    background-color: var(--kaoru-60);
+}
+.shapeRectangle {
+    background: no-repeat url("dropDownIcons/shapesRectangle.svg");
+}
+.shapeArc {
+    background: no-repeat url("dropDownIcons/shapesArc.svg");
+}
+.shapeTriangle {
+    background: no-repeat url("dropDownIcons/shapesTriangle.svg");
+}
+.shapesStar {
+    background: no-repeat url("dropDownIcons/shapesStar.svg");
+}
+.shapesContent {
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 10px;
+}
+
 
 .imageSelector {
     max-width: 300px;

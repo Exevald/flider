@@ -63,7 +63,12 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
             <ButtonIcon viewStyle={"figure"} onClick={() => {
+                const figureIcon = document.getElementsByClassName(iconsStyles.buttonFigure)[0] as HTMLElement;
+                if (figureIcon !== null) {
+                    showDropDownById(figureIcon, 'shapes')
+                }
             }}></ButtonIcon>
+            <DropDown id={'shapes'}  viewStyle={"figureShapes"}></DropDown>
             <ButtonIcon viewStyle={"line"} onClick={() => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"palette"} onClick={() => {
