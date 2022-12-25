@@ -1,4 +1,4 @@
-import {Editor} from "../core/types/types";
+import {Editor, ItemType} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
@@ -38,24 +38,24 @@ type ActionType = {
     backgroundColor?: string,
     element?: string,
     elementId?: string,
-    addObjectArgs?: {
-        element: string,
+    addItemParams?: {
+        element: ItemType,
         textValue?: string
     }
-    changeAngleArgs?: {
+    changeAngleParams?: {
         angleShift: number
     },
     changePositionCoordinates?: {
         xShift: number,
         yShift: number
     },
-    ChangeSizeArgs?: {
+    ChangeSizeParams?: {
         newWidth: number,
         newHeight: number,
         xShift: number,
         yShift: number
     },
-    ChangeTextArgs?: {
+    ChangeTextParams?: {
         font?: string
         textColor?: string,
         textValue?: string,

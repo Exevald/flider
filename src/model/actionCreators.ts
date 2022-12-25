@@ -1,4 +1,4 @@
-import {Editor} from "../core/types/types";
+import {Editor, ItemType} from "../core/types/types";
 import {Actions} from "../core/types/types";
 import {type} from "os";
 
@@ -108,6 +108,16 @@ function swipeSlideShowSlide(slideIndex: number, direction: string) {
     }
 }
 
+function addSlideItem(item: ItemType, textValue?: string) {
+    return {
+        type: Actions.ADD_SLIDE_ITEM,
+        addItemParams: {
+            item,
+            textValue,
+        }
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -125,4 +135,5 @@ export {
     changeSlideShowStatus,
     setBackgroundColor,
     swipeSlideShowSlide,
+    addSlideItem,
 }

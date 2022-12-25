@@ -41,7 +41,8 @@ type Item = {
     coordinates: Point,
     element: ItemType,
     space: Area,
-    figure?: Figure;
+    figure?: Figure,
+    textArea?: TextArea,
 }
 
 enum ItemType {
@@ -60,6 +61,7 @@ type Figure = {
     shape: ShapeType,
     fillColor: string,
     strokeColor: string,
+    strokeWidth: number
 }
 
 type TextArea = {
@@ -90,6 +92,7 @@ enum Actions {
     SWITCH_SLIDE = "SWITCH_SLIDE",
     SET_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
     SWIPE_SLIDE_SHOW_SLIDE = "SWIPE_SLIDE_SHOW_SLIDE",
+    ADD_SLIDE_ITEM = "ADD_SLIDE_ITEM",
 }
 
 export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};
