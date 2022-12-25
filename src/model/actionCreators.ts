@@ -1,5 +1,6 @@
 import {Editor} from "../core/types/types";
 import {Actions} from "../core/types/types";
+import {type} from "os";
 
 function createPresentation() {
     return {
@@ -99,6 +100,15 @@ function changeCurrentColor(color: string) {
     }
 }
 
+function swipeSlideShowSlide(slideShowCurrentSlideIndex: number, direction: string) {
+    console.log("actions");
+    return {
+        type: Actions.SWIPE_SLIDE_SHOW_SLIDE,
+        direction,
+        slideShowCurrentSlideIndex: slideShowCurrentSlideIndex,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -115,4 +125,5 @@ export {
     changeCurrentColor,
     changeSlideShowStatus,
     setBackgroundColor,
+    swipeSlideShowSlide,
 }
