@@ -19,7 +19,8 @@ let initialState: Editor = {
                 selectedItemsIds: ["0"],
             },
         ],
-        selectedSlidesIds: ["0"]
+        selectedSlidesIds: ["0"],
+        currentColor: "white",
     },
     history: {
         undoStack: [],

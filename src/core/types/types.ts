@@ -25,6 +25,7 @@ type Presentation = {
     slides: Array<Slide>,
     title: string,
     selectedSlidesIds: Array<Id>,
+    currentColor: string,
 }
 
 type Slide = {
@@ -79,12 +80,14 @@ enum Actions {
     UNDO = "UNDO",
     REDO = "REDO",
     CHANGE_TITLE = "CHANGE_TITLE",
+    CHANGE_SELECTED_COLOR = "CHANGE_SELECTED_COLOR",
     CREATE_SLIDE = "CREATE_SLIDE",
     DELETE_SLIDE = "DELETE_SLIDE",
     SELECT_SLIDE = "SELECT_SLIDE",
     DESELECT_SLIDE = "DESELECT_SLIDE",
     SELECT_MANY_SLIDES = "SELECT_MANY_SLIDES",
     SWITCH_SLIDE = "SWITCH_SLIDE",
+    SET_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
 }
 
 export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};

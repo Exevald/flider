@@ -1,5 +1,5 @@
 import Sidebar from "../Sidebar/Sidebar";
-import {SlideArea} from "../SlideArea/SlideArea";
+import SlideArea from "../SlideArea/SlideArea";
 import styles from "./WorkSpace.module.css";
 import {Editor} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";

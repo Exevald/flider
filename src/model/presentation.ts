@@ -90,12 +90,22 @@ function switchSlideReducer(presentation: Presentation, slideId: string): Presen
     }
 }
 
+function changeSelectedColorReducer(presentation: Presentation, newColor: string): Presentation {
+    const newPresentation = deepClone(presentation) as Presentation;
+    return {
+        ...newPresentation,
+        currentColor: newColor,
+    }
+}
+
 function presentationReducer(state: Presentation, action: ActionType): Presentation {
     switch (action.type) {
         case Actions.CHANGE_TITLE:
             return action.title !== undefined ? changeTitleReducer(state, action.title) : deepClone(state) as Presentation;
         case Actions.CREATE_SLIDE:
             return createSlideReducer(state);
+        case Actions.CHANGE_SELECTED_COLOR:
+            return action.newColor ? changeSelectedColorReducer(state, action.newColor) : deepClone(state) as Presentation;
         case Actions.DELETE_SLIDE:
             return deleteSlidesReducer(state);
         case Actions.SELECT_SLIDE:
