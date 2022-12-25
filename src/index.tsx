@@ -8,7 +8,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {PresentationPage} from "./view/pages/PresentationPage/PresentationPage";
 import MainMenu from "./view/pages/MainMenu/MainMenu";
-import {PresentationView} from "./view/pages/PresentationView/PresentationView";
+import PresentationView from "./view/pages/PresentationView/PresentationView";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
