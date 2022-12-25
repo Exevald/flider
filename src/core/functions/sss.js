@@ -21,21 +21,34 @@ canvas.height = WINDOW.height
 
 var FIGURE = []
 var CurrFunc = "select"
-var FIGURES = ["rect", "star"]
+var FIGURES = ["rect", "star", "ellipse", "triangle"]
 var corner = ""
-var cornerRectSide = 50
+var cornerRectSide = 20
 
 var SELECTED = new Set()
 var selectedAreaX, selectedAreaY, selectedAreaWidth, selectedAreaHeight = 0
+
+var startFigureX = []
+var startFigureY = []
+var startFigureWidth = []
+var startFigureHeight = []
+var startMouseX, startMouseY = 0 
+var startSelectedAreaX, startSelectedAreaY, startSelectedAreaWidth, startSelectedAreaHeight = 0
+
+var highestLayer = false
+
+var mouseX = 0
+var mouseY = 0
+
+var count = 0
+var i = 0
 
 function initEventsListeners() {
     window.addEventListener("mousemove", onMouseMove)
     window.addEventListener("mousedown", onMouseDown)
     window.addEventListener("mouseup", onMouseUp)
+    window.addEventListener("keydown", onKeyDown)
 }
-
-var mouseX = 0
-var mouseY = 0
 
 function max(a, b) {
     if (a > b) {return a} else return b
@@ -59,13 +72,6 @@ function ifSelected(i) {
     }
     return bool
 } 
-
-var startFigureX = []
-var startFigureY = []
-var startFigureWidth = []
-var startFigureHeight = []
-var startMouseX, startMouseY = 0 
-var startSelectedAreaX, startSelectedAreaY, startSelectedAreaWidth, startSelectedAreaHeight = 0
 
 function onMouseMove(event) {
     mouseX = event.clientX - 5
@@ -101,10 +107,7 @@ function onMouseMove(event) {
 
 function onMouseDown() {
     if (!WINDOW.down) { 
-        if (mouseX > MENU.x && mouseY > MENU.y && mouseY < MENU.y + MENU.height) {
-            if (mouseY < MENU.y + 150) CurrFunc = "rect";
-            else if (mouseY < MENU.y + 300) CurrFunc = "star"
-        } else if (FIGURES.includes(CurrFunc)) {
+        if (FIGURES.includes(CurrFunc)) {
             count++
             FIGURE[count] = {
                 type: CurrFunc,
@@ -138,10 +141,13 @@ function onMouseDown() {
             CurrFunc = "select"
             selectX = mouseX
             selectY = mouseY
+            highestLayer = true
             findSelectedArea()
+            if (SELECTED.size == 1) { CurrFunc = "none" }
         }
     }
     WINDOW.down = true
+    highestLayer = false
     console.log(mouseX, mouseY)
 }
 
@@ -150,6 +156,114 @@ function onMouseUp() {
     if (!(mouseX > MENU.x && mouseY > MENU.y && mouseY < MENU.y + MENU.height)) {
         CurrFunc = "none"
     }  
+}
+
+function swapFigures(a, b) {
+    FIGURE[count + 1] = FIGURE[a]
+    FIGURE[a] = FIGURE[b]
+    FIGURE[b] = FIGURE[count + 1]
+    FIGURE.splice(count + 1, 1)
+}
+
+function layerUp(i) {
+    if (i < count) {
+        swapFigures(i, i + 1)
+    }
+} 
+
+function layerDown(i) {
+    if (i > 1) {
+        swapFigures(i, i - 1)
+    }
+}
+
+function onKeyDown(event) {
+    key = event.code
+    console.log(key)
+    if (key == "KeyS") { CurrFunc = "star" } else
+    if (key == "KeyR") { CurrFunc = "rect" } else
+    if (key == "KeyE") { CurrFunc = "ellipse" } else
+    if (key == "KeyT") { CurrFunc = "triangle" } else
+    if (key == "Delete") { deleteSelected(); CurrFunc = "none" } else
+    if (key == "PageUp") { 
+        if (SELECTED.size == 1) {
+            let temp = 0
+            SELECTED.forEach(element => temp = element) 
+            console.log(temp)
+            layerUp(temp)
+            if (temp < count) {
+                SELECTED.clear()
+                SELECTED.add(temp + 1)
+                CurrFunc = "none"
+            }
+        } 
+    } else 
+    if (key == "PageDown") { 
+        if (SELECTED.size == 1) {
+            let temp = 0
+            SELECTED.forEach(element => temp = element) 
+            console.log(temp)
+            layerDown(temp)
+            if (temp > 1) {
+                SELECTED.clear()
+                SELECTED.add(temp - 1)
+                CurrFunc = "none"
+            }
+        }
+    } else
+    if (key == "Equal") {
+        SELECTED.forEach(element => FIGURE[element].strokeWidth++)
+    } else
+    if (key == "Minus") {
+        SELECTED.forEach(element => { if (FIGURE[element].strokeWidth > 1) FIGURE[element].strokeWidth-- })
+    } else
+    if (key == "ArrowUp") {
+        SELECTED.forEach(element => {
+            FIGURE[element].y--
+        })
+        selectedAreaY--
+    } else
+    if (key == "ArrowDown") {
+        SELECTED.forEach(element => {
+            FIGURE[element].y++
+        })
+        selectedAreaY++
+    } else
+    if (key == "ArrowLeft") {
+        SELECTED.forEach(element => {
+            FIGURE[element].x--
+        })
+        selectedAreaX--
+    }
+    if (key == "ArrowRight") {
+        SELECTED.forEach(element => {
+            FIGURE[element].x++
+        })
+        selectedAreaX++
+    }
+}
+
+function deleteSelected() {
+    let temp = 0
+    let startCount = count
+    for (i = 1; i <= startCount; i++) {
+        if (SELECTED.has(i)) {
+            temp = i
+            while (!SELECTED.has(temp) && temp <= startCount) {
+                temp++
+            }
+            if (temp <= startCount) {
+                FIGURE[i] = FIGURE[temp]
+                FIGURE.splice(i, 1)
+            } else { 
+                FIGURE.splice(1, count)
+                count = 1
+            }
+            count--
+            SELECTED.delete(i)
+        }
+    }
+    SELECTED = new Set()
 }
 
 function findSelectedArea() {
@@ -161,6 +275,13 @@ function findSelectedArea() {
     selectedAreaRY = 0
     for (i = 1; i <= count; i++){
         if (ifSelected(i)) {
+            if (highestLayer) { 
+                SELECTED = new Set()
+                selectedAreaX = min(FIGURE[i].x, FIGURE[i].x + FIGURE[i].width)
+                selectedAreaY = min(FIGURE[i].y, FIGURE[i].y + FIGURE[i].height)
+                selectedAreaRX = max(FIGURE[i].x, FIGURE[i].x + FIGURE[i].width)
+                selectedAreaRY = max(FIGURE[i].y, FIGURE[i].y + FIGURE[i].height)
+            }
             SELECTED.add(i)
             selectedAreaX = min(selectedAreaX, min(FIGURE[i].x, FIGURE[i].x + FIGURE[i].width))
             selectedAreaY = min(selectedAreaY, min(FIGURE[i].y, FIGURE[i].y + FIGURE[i].height)) 
@@ -239,9 +360,6 @@ function drawMenu() {
     canvasContext.closePath()
 }
 
-var count = 0
-
-
 function mouseOnSelected() {
     let i
     let bol = false
@@ -252,11 +370,11 @@ function mouseOnSelected() {
             console.log(selectedAreaX, selectedAreaY, selectedAreaWidth, selectedAreaHeight)
             if (mouseX > selectedAreaX && mouseX < selectedAreaX + selectedAreaWidth && mouseY > selectedAreaY && mouseY < selectedAreaY + selectedAreaHeight) {
                 bol = true
-                console.log(bol)
+                // console.log(bol)
             }
         }
     }   
-    console.log(bol)
+    // console.log(bol)
     return bol
 }
 
@@ -264,7 +382,7 @@ function moveFigure() {
     for (i = 0; i <= count; i++) {
         if (SELECTED.has(i)) {
             if (!beginMoving) {
-                console.log(startFigureX.length)
+                // console.log(startFigureX.length)
                 FIGURE[i].x = startFigureX[i] + (mouseX - startMouseX)
                 FIGURE[i].y = startFigureY[i] + (mouseY - startMouseY)
                 selectedAreaX = startSelectedAreaX + (mouseX - startMouseX)
@@ -283,8 +401,6 @@ function moveFigure() {
     beginMoving = false
 }
 
-let i = 0
-
 function drawSelect() {
     canvasContext.beginPath()
     canvasContext.fillStyle = "rgba(100, 150, 185, 0.5)"
@@ -297,6 +413,7 @@ function drawSelectedArea() {
     canvasContext.beginPath()
     canvasContext.fillStyle = "black"
     canvasContext.rect(selectedAreaX, selectedAreaY, selectedAreaWidth, selectedAreaHeight)
+    canvasContext.lineWidth = 4
     canvasContext.stroke()
     canvasContext.closePath()
 }
@@ -307,7 +424,32 @@ function drawRect(i) {
     canvasContext.rect(FIGURE[i].x, FIGURE[i].y, FIGURE[i].width, FIGURE[i].height)
     canvasContext.fill()
     canvasContext.fillStyle = FIGURE[i].strokeColor
-    canvasContext.lineWidth = 1
+    canvasContext.lineWidth = FIGURE[i].strokeWidth
+    canvasContext.stroke()
+    canvasContext.closePath()
+}
+
+function drawEllipse(i) {
+    canvasContext.beginPath()
+    canvasContext.fillStyle = FIGURE[i].fillColor
+    canvasContext.ellipse(FIGURE[i].x + FIGURE[i].width / 2, FIGURE[i].y + FIGURE[i].height / 2, Math.abs(FIGURE[i].width / 2), Math.abs(FIGURE[i].height / 2), 0, 0, 2 * Math.PI)
+    canvasContext.fill()
+    canvasContext.fillStyle = FIGURE[i].strokeColor
+    canvasContext.lineWidth = FIGURE[i].strokeWidth
+    canvasContext.stroke()
+    canvasContext.closePath()
+}
+
+function drawTriangle(i) {
+    canvasContext.beginPath()
+    canvasContext.fillStyle = FIGURE[i].fillColor
+    canvasContext.moveTo(FIGURE[i].x, FIGURE[i].y + FIGURE[i].height)
+    canvasContext.lineTo(FIGURE[i].x + FIGURE[i].width / 2, FIGURE[i].y)
+    canvasContext.lineTo(FIGURE[i].x + FIGURE[i].width, FIGURE[i].y + FIGURE[i].height)
+    canvasContext.lineTo(FIGURE[i].x, FIGURE[i].y + FIGURE[i].height)
+    canvasContext.fill()
+    canvasContext.lineWidth = FIGURE[i].strokeWidth
+    canvasContext.fillStyle = FIGURE[i].strokeColor
     canvasContext.stroke()
     canvasContext.closePath()
 }
@@ -317,7 +459,7 @@ function drawStar(i) {
     let startX = FIGURE[i].x
     let startY = FIGURE[i].y + 0.381 * starHeight
     canvasContext.beginPath()
-    canvasContext.fillStyle = FIGURE[i].strokeColor
+
     canvasContext.moveTo(startX, startY)
     canvasContext.lineTo(FIGURE[i].width * 0.384 + startX, startY)
     canvasContext.lineTo(FIGURE[i].x + FIGURE[i].width / 2, FIGURE[i].y)
@@ -333,8 +475,8 @@ function drawStar(i) {
     canvasContext.lineTo(startX, startY)
     canvasContext.lineTo(FIGURE[i].width * 0.384 + startX, startY)
     
-
-    canvasContext.lineWidth = 1
+    canvasContext.lineWidth = FIGURE[i].strokeWidth
+    canvasContext.fillStyle  =FIGURE[i].strokeColor
     canvasContext.stroke()
     canvasContext.fillStyle = FIGURE[i].fillColor
     canvasContext.fill()
@@ -370,11 +512,13 @@ function drawOutline(i) {
 function drawFigure(i) {
     switch(FIGURE[i].type) {
         case "rect": drawRect(i); break
-        case "star": drawStar(i); break     
+        case "star": drawStar(i); break 
+        case "ellipse": drawEllipse(i); break
+        case "triangle" : drawTriangle(i); break    
     }
     if (SELECTED.size != 0) {   
         drawSelectedArea() 
-        drawScaleCorners(i) 
+        drawScaleCorners() 
     }
 }
 
@@ -385,11 +529,8 @@ function drawFrame() {
     }
     if (CurrFunc == "select" && WINDOW.down) {
         drawSelect()
-    }
-    if (CurrFunc == "move") {
-        drawSelectedArea()
-    }
-    drawMenu()
+    }           
+    // drawMenu()
 }
 
 function doSmth() {

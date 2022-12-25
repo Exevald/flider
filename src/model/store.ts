@@ -26,7 +26,8 @@ let initialState: Editor = {
         undoStack: [],
         redoStack: []
     },
-    slideShowStatus: false
+    slideShowStatus: false,
+    slideShowCurrentSlideIndex: 0,
 }
 
 type ActionType = {
@@ -65,7 +66,9 @@ type ActionType = {
     urlImage?: string,
     newWidth?: number,
     newColor?: string,
-    newEditor?: Editor
+    newEditor?: Editor,
+    slideShowCurrentSlide?: number,
+    direction?: string,
 }
 
 function loadPresentation() {

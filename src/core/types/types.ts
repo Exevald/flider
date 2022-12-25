@@ -19,6 +19,7 @@ type Editor = {
     presentation: Presentation,
     history: History,
     slideShowStatus: boolean,
+    slideShowCurrentSlideIndex: number,
 }
 
 type Presentation = {
@@ -88,6 +89,7 @@ enum Actions {
     SELECT_MANY_SLIDES = "SELECT_MANY_SLIDES",
     SWITCH_SLIDE = "SWITCH_SLIDE",
     SET_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
+    SWIPE_SLIDE_SHOW_SLIDE = "SWIPE_SLIDE_SHOW_SLIDE",
 }
 
 export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};
