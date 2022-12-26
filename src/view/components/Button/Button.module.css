@@ -7,12 +7,13 @@
 
     border: none;
     border-radius: 9px;
+    cursor: pointer;
 
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 11px 11px;
+    padding: 0 11px 0 11px;
 }
 .button:active {
     background-color: var(--kaoru-60);
@@ -33,10 +34,10 @@
 .buttonDefault {
     background-color: var(--ayanami-default);
     color: var(--shinji);
+    cursor: pointer;
 }
 
 .buttonDefault:hover {
-    cursor: pointer;
     background-color: var(--ayanami-dark);
 }
 
@@ -198,4 +199,19 @@
 
 .buttonUnderline {
     background: no-repeat url("ButtonIcons/UnderlinedIcon.svg");
+}
+.fontArea {
+    background-color: white;
+    color: var(--gendo-default);
+    border: 1px solid var(--gendo-default);
+    margin-left: 35px;
+    width: 200px;
+    height: 30px;
+    justify-content: space-between;
+}
+.fontArea:hover {
+    background-color: var(--kaoru-20);
+}
+.fontArea:active {
+    background-color: var(--kaoru-60);
 }
