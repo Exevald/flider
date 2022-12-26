@@ -42,18 +42,35 @@ const PresentationView = (props: PresentationViewProps) => {
                 {slides[props.slideShowCurrentSlideIndex]}
                 <p className={styles.slideNumberText}>{props.slideShowCurrentSlideIndex + 1}</p>
                 <div className={styles.arrows}>
-                    <div
-                        className={`${styles.arrow} ${styles.arrowLeft}`}
-                        onClick={() => {
-                            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left")
-                        }}>
-                    </div>
-                    <div
-                        className={`${styles.arrow} ${styles.arrowRight}`}
-                        onClick={() => {
-                            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right")
-                        }}>
-                    </div>
+
+                    {
+                        props.slideShowCurrentSlideIndex === 0 ?
+                            // если первый
+                            <div
+                                className={`${styles.arrow} ${styles.arrowLeftDisabled}`}>
+                            </div>
+                            :
+                            <div
+                                className={`${styles.arrow} ${styles.arrowLeft}`}
+                                onClick={() => {
+                                    props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left")
+                                }}>
+                            </div>
+                    }
+                    {
+                        props.slideShowCurrentSlideIndex == props.countOfSlides - 1 ?
+                            // если последний
+                            <div
+                                className={`${styles.arrow} ${styles.arrowRightDisabled}`}>
+                            </div>
+                            :
+                            <div
+                                className={`${styles.arrow} ${styles.arrowRight}`}
+                                onClick={() => {
+                                    props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right")
+                                }}>
+                            </div>
+                    }
                 </div>
                 <Link to={"/presentation"}>
                     <Button viewStyle={"goToEditor"} onClick={() => {
