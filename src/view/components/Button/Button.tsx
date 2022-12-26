@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 interface ButtonProps {
     viewStyle: 'default' | 'open' | 'save' | 'watch' | 'add' | 'undo' | 'redo' | 'selectArea' | 'selectArrow'
         | 'textArea' | 'image' | 'figure' | 'line' | 'palette' | 'createSlide' | 'filler' | 'stroke' | 'bold'
-        | 'cursive' | 'underline' | 'goToEditor';
+        | 'cursive' | 'underline' | 'goToEditor' | 'fontArea';
     iconStyle?: 'left' | 'right' | 'center' | 'none';
     iconSrc?: string;
     text?: string;
@@ -45,6 +45,10 @@ const Button = ({
         }
         case "goToEditor": {
             buttonStyle = styles.buttonGoToEditor;
+            break;
+        }
+        case "fontArea": {
+            buttonStyle = styles.fontArea;
             break;
         }
     }
@@ -163,6 +167,10 @@ const ButtonIcon = ({
         }
         case "underline": {
             buttonStyle = styles.buttonUnderline;
+            break;
+        }
+        case "fontArea": {
+            buttonStyle = styles.fontArea;
             break;
         }
     }
