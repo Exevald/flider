@@ -4,5 +4,44 @@
     border-bottom: 1px solid var(--kaoru-default);
     display: flex;
     align-items: center;
-
+}
+.fontSizeArea {
+    margin-left: 35px;
+    border: 1px solid var(--gendo-default);
+    border-radius: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    color: var(--gendo-default);
+    font-size: 14px;
+}
+.sizeAdjuster {
+    padding: 0 10px 0 10px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+.sizeAdjuster:first-child {
+    border-radius: 10px 0 0 10px;
+}
+.sizeAdjuster:last-child {
+    border-radius: 0 10px 10px 0;
+}
+.sizeAdjuster:hover {
+    background-color: var(--kaoru-20);
+}
+.sizeAdjuster:active {
+    background-color: var(--kaoru-60);
+}
+.fontAdjuster {
+    padding: 0 20px 0 20px;
+    cursor: pointer;
+}
+.vertSeparator {
+    height: 100%;
+    width: 1px;
+    background-color: var(--gendo-default)
 }
