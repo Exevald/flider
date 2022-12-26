@@ -58,7 +58,7 @@ const PresentationView = (props: PresentationViewProps) => {
                             </div>
                     }
                     {
-                        props.slideShowCurrentSlideIndex == props.countOfSlides - 1 ?
+                        props.slideShowCurrentSlideIndex === props.countOfSlides - 1 ?
                             // если последний
                             <div
                                 className={`${styles.arrow} ${styles.arrowRightDisabled}`}>
