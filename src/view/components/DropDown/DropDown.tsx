@@ -5,6 +5,8 @@ import {AppDispatcher} from "../../../model/store";
 import {changeCurrentColor, savePresentation} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
+import {Area, Figure, ItemType, Point, ShapeType} from "../../../core/types/types";
+import {DrawSlideItem} from "../SlideItem/SlidesItem";
 
 interface DropDownCustomProps {
     id: string;
@@ -76,21 +78,27 @@ function handleClicks(e: MouseEvent) {
 
 }
 
-
-type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor'
+type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor' | 'addFigure'
 
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
-        action: (actionType: DropDownActionType, color?: string) => {
+        action: (actionType: DropDownActionType, color?: string, itemType?: ItemType, shape?: ShapeType, area?: Area, coordinates?: Point) => {
             switch (actionType) {
                 case 'saveJSON': {
                     dispatcher(savePresentation());
                     break;
                 }
                 case "changeCurrentColor": {
-                    if (color !== undefined) {
+                    if (color) {
                         dispatcher(changeCurrentColor(color))
                     }
+                    break;
+                }
+                case "addFigure": {
+                    if (color !== undefined && itemType !== undefined && shape !== undefined && area !== undefined && coordinates !== undefined) {
+                        DrawSlideItem(color, itemType, shape, area, coordinates);
+                    }
+                    break;
                 }
             }
         }
@@ -143,8 +151,24 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                             </p>
                             <div className={styles.separator}></div>
                             <div className={styles.shapesContent}>
-                                <div className={`${styles.shapes} ${styles.shapeRectangle}`}></div>
-                                <div className={`${styles.shapes} ${styles.shapeArc}`}></div>
+                                <div
+                                    className={`${styles.shapes} ${styles.shapeRectangle}`}
+                                    onClick={() => {
+                                        action("addFigure", "red", ItemType.Figure, ShapeType.Rectangle, {
+                                            width: 200,
+                                            height: 200
+                                        }, {x: 100, y: 100});
+                                    }
+                                    }/>
+                                <div
+                                    className={`${styles.shapes} ${styles.shapeArc}`}
+                                    onClick={() => {
+                                        action("addFigure", "red", ItemType.Figure, ShapeType.Arc, {
+                                            width: 200,
+                                            height: 200
+                                        }, {x: 300, y: 200});
+                                    }
+                                    }/>
                                 <div className={`${styles.shapes} ${styles.shapeTriangle}`}></div>
                                 <div className={`${styles.shapes} ${styles.shapesStar}`}></div>
                             </div>
@@ -205,7 +229,7 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                             </div>
                             <div className={styles.separator}></div>
                             <form method={"get"} style={{padding: '5px 0 5px 0'}}>
-                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage" />
+                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage"/>
                                 <label htmlFor={"uploadImage"}>Выбрать с компьютера</label>
                             </form>
 

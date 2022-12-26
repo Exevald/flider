@@ -1,17 +1,25 @@
 import styles from "./SlideArea.module.css"
 import {connect, ConnectedProps} from "react-redux";
-import {Editor} from "../../../core/types/types";
-import {useEffect, useRef} from "react";
+import {Editor, Item} from "../../../core/types/types";
 
 const canvasSettings = {
     width: 1280,
     height: 720,
+    down: false,
+}
+
+function initEventsListeners() {
+    window.addEventListener("mousemove", () => {})
+    window.addEventListener("mousedown", () => onMouseDown)
+    window.addEventListener("mouseup", () => {})
+    window.addEventListener("keydown", () => console.log("down"))
 }
 
 function mapStateToProps(state: Editor) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
-        bgColor: state.presentation.slides[currentSlideIndex].bgColor
+        bgColor: state.presentation.slides[currentSlideIndex].bgColor,
+        slideItems: state.presentation.slides[currentSlideIndex].items,
     }
 }
 
@@ -20,6 +28,7 @@ type SlideAreaProps = ConnectedProps<typeof connector>
 
 
 const SlideArea = (props: SlideAreaProps) => {
+    let slideItems = props.slideItems;
     return (
         <div className={styles.slideArea}>
             <div className={styles.slide} style={{"background": props.bgColor}}>
@@ -28,5 +37,7 @@ const SlideArea = (props: SlideAreaProps) => {
         </div>
     )
 }
+
+initEventsListeners();
 
 export default connect(mapStateToProps, null)(SlideArea)

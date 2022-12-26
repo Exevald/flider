@@ -34,6 +34,7 @@ type Slide = {
     items: Array<Item>,
     bgColor: string,
     selectedItemsIds: Array<Id>,
+    currentAction: Actions,
 }
 
 type Item = {
@@ -43,6 +44,7 @@ type Item = {
     space: Area,
     figure?: Figure,
     textArea?: TextArea,
+    layer: number,
 }
 
 enum ItemType {
@@ -93,6 +95,7 @@ enum Actions {
     SET_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
     SWIPE_SLIDE_SHOW_SLIDE = "SWIPE_SLIDE_SHOW_SLIDE",
     ADD_SLIDE_ITEM = "ADD_SLIDE_ITEM",
+    SELECT_AREA = "SELECT_AREA",
 }
 
 export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};

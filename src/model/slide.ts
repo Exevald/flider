@@ -23,7 +23,8 @@ function addSlideItemReducer(slide: Slide, item: ItemType, textValue?: string): 
         space: {
             width: 100,
             height: 100,
-        }
+        },
+        layer: 1,
     }
     switch (item) {
         case ItemType.Figure: {
@@ -66,6 +67,14 @@ function addSlideItemReducer(slide: Slide, item: ItemType, textValue?: string): 
     }
     newSlide.items.push(newItem);
     return newSlide;
+}
+
+function changeCurrentActionReducer(slide: Slide, newAction: Actions): Slide {
+    const newSlide = deepClone(slide) as Slide;
+    return {
+        ...newSlide,
+        currentAction: newAction,
+    }
 }
 
 function slideReducer(state: Slide, action: ActionType): Slide {

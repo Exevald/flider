@@ -17,6 +17,7 @@ let initialState: Editor = {
                 items: [],
                 bgColor: "white",
                 selectedItemsIds: ["0"],
+                currentAction: Actions.SELECT_AREA,
             },
         ],
         selectedSlidesIds: ["0"],
