@@ -37,6 +37,7 @@ type Slide = {
     bgColor: string,
     selectedItemsIds: Array<Id>,
     currentState: SlideState,
+    currentFigureType: ShapeType,
 }
 
 type Item = {
@@ -46,6 +47,7 @@ type Item = {
     space: Area,
     figure?: Figure,
     textArea?: TextArea,
+    image?: Image,
     layer: number,
 }
 
@@ -59,6 +61,8 @@ enum ShapeType {
     Rectangle,
     Arc,
     Triangle,
+    Star,
+    NoShape
 }
 
 type Figure = {
@@ -97,11 +101,14 @@ enum Actions {
     SET_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
     SWIPE_SLIDE_SHOW_SLIDE = "SWIPE_SLIDE_SHOW_SLIDE",
     ADD_SLIDE_ITEM = "ADD_SLIDE_ITEM",
-    SET_CURRENT_MOUSE_COORDINATES = "SET_CURRENT_MOUSE_COORDINATES",
+    CHANGE_CURRENT_SLIDE_STATE = "CHANGE_CURRENT_SLIDE_STATE",
+    SET_CURRENT_CURSOR_POSITION = "SET_CURRENT_CURSOR_POSITION",
+    CHANGE_CURRENT_FIGURE_TYPE = "CHANGE_CURRENT_FIGURE_TYPE",
 }
 
 enum SlideState {
     SELECT_AREA = "SELECT_AREA",
+    DRAW_FIGURE = "DRAW_FIGURE",
     INIT_CURRENT_CURSOR_POSITION = "INIT_CURRENT_CURSOR_POSITION",
 }
 

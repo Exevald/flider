@@ -2,11 +2,15 @@ import styles from "./DropDown.module.css"
 import buttonStyles from "../Button/Button.module.css"
 import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
-import {changeCurrentColor, savePresentation} from "../../../model/actionCreators";
+import {
+    changeCurrentColor,
+    changeCurrentFigureType,
+    changeCurrentSlideState,
+    savePresentation
+} from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
-import {Area, Figure, ItemType, Point, ShapeType} from "../../../core/types/types";
-import {DrawSlideItem} from "../SlideItem/SlidesItem";
+import {Editor, ShapeType, SlideState} from "../../../core/types/types";
 
 interface DropDownCustomProps {
     id: string;
@@ -79,9 +83,16 @@ function handleClicks(e: MouseEvent) {
 
 type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor' | 'addFigure'
 
+function mapStateToProps(state: Editor) {
+    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
+    return {
+        currentSlide: state.presentation.slides[currentSlideIndex],
+    }
+}
+
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
-        action: (actionType: DropDownActionType, color?: string, itemType?: ItemType, shape?: ShapeType, area?: Area, coordinates?: Point) => {
+        action: (actionType: DropDownActionType, color?: string) => {
             switch (actionType) {
                 case 'saveJSON': {
                     dispatcher(savePresentation());
@@ -94,17 +105,16 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
                     break;
                 }
                 case "addFigure": {
-                    if (color !== undefined && itemType !== undefined && shape !== undefined && area !== undefined && coordinates !== undefined) {
-                        DrawSlideItem(color, itemType, shape, area, coordinates);
-                    }
                     break;
                 }
             }
-        }
+        },
+        setCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
+        changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
     }
 }
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type DropDownInitialProps = ConnectedProps<typeof connector>
 
 type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
@@ -138,7 +148,7 @@ function showChildrenDropDownById(id: string): void {
     }
 }
 
-const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
+const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFigureType}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "figureShapes":
@@ -153,23 +163,29 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
                                 <div
                                     className={`${styles.shapes} ${styles.shapeRectangle}`}
                                     onClick={() => {
-                                        action("addFigure", "red", ItemType.Figure, ShapeType.Rectangle, {
-                                            width: 200,
-                                            height: 200
-                                        }, {x: 100, y: 100});
-                                    }
-                                    }/>
+                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
+                                        changeCurrentFigureType(ShapeType.Rectangle);
+                                    }}/>
                                 <div
                                     className={`${styles.shapes} ${styles.shapeArc}`}
                                     onClick={() => {
-                                        action("addFigure", "red", ItemType.Figure, ShapeType.Arc, {
-                                            width: 200,
-                                            height: 200
-                                        }, {x: 300, y: 200});
-                                    }
-                                    }/>
-                                <div className={`${styles.shapes} ${styles.shapeTriangle}`}></div>
-                                <div className={`${styles.shapes} ${styles.shapesStar}`}></div>
+                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
+                                        changeCurrentFigureType(ShapeType.Arc);
+                                    }}/>
+                                <div
+                                    className={`${styles.shapes} ${styles.shapeTriangle}`}
+                                    onClick={() => {
+                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
+                                        changeCurrentFigureType(ShapeType.Triangle);
+                                    }}
+                                />
+                                <div
+                                    className={`${styles.shapes} ${styles.shapesStar}`}
+                                    onClick={() => {
+                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
+                                        changeCurrentFigureType(ShapeType.Star);
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
@@ -276,5 +292,5 @@ const DropDown = ({id, viewStyle, action}: DropDownMergedProps) => {
     )
 }
 
-export default connect(null, mapDispatchToProps)(DropDown)
+export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
 export {showDropDownById, handleClicks, hideDropDownKeyboardPressed}

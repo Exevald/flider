@@ -1,4 +1,4 @@
-import {Editor, ItemType} from "../core/types/types";
+import {Editor, ItemType, ShapeType, SlideState} from "../core/types/types";
 import {Actions} from "../core/types/types";
 
 function createPresentation() {
@@ -107,9 +107,9 @@ function swipeSlideShowSlide(slideIndex: number, direction: string) {
     }
 }
 
-function setNewMouseCoordinates(clientX: number, clientY: number) {
+function setCurrentCursorPosition(clientX: number, clientY: number) {
     return {
-        type: Actions.SET_CURRENT_MOUSE_COORDINATES,
+        type: Actions.SET_CURRENT_CURSOR_POSITION,
         clientX: clientX,
         clientY: clientY,
     }
@@ -122,6 +122,20 @@ function addSlideItem(item: ItemType, textValue?: string) {
             item,
             textValue,
         }
+    }
+}
+
+function changeCurrentSlideState(newSlideState: SlideState) {
+    return {
+        type: Actions.CHANGE_CURRENT_SLIDE_STATE,
+        newSlideState: newSlideState,
+    }
+}
+
+function changeCurrentFigureType(newCurrentFigureType: ShapeType) {
+    return {
+        type: Actions.CHANGE_CURRENT_FIGURE_TYPE,
+        newCurrentFigureType: newCurrentFigureType,
     }
 }
 
@@ -143,5 +157,7 @@ export {
     setBackgroundColor,
     swipeSlideShowSlide,
     addSlideItem,
-    setNewMouseCoordinates,
+    setCurrentCursorPosition,
+    changeCurrentSlideState,
+    changeCurrentFigureType,
 }

@@ -126,10 +126,10 @@ function editorReducer(state: Editor, action: ActionType): Editor {
             return undoReducer(state);
         case Actions.REDO:
             return redoReducer(state);
+        case Actions.SET_CURRENT_CURSOR_POSITION:
+            return action.clientX !== undefined && action.clientY !== undefined ? setCurrentMouseCoordinatesReducer(state, action.clientX, action.clientY) : deepClone(state) as Editor;
         case Actions.SWIPE_SLIDE_SHOW_SLIDE:
             return action.slideShowCurrentSlide !== undefined && action.direction !== undefined ? swipeSlideShowSlideReducer(state, action.slideShowCurrentSlide, action.direction) : deepClone(state) as Editor;
-        case Actions.SET_CURRENT_MOUSE_COORDINATES:
-            return action.clientX !== undefined && action.clientY !== undefined ? setCurrentMouseCoordinatesReducer(state, action.clientX, action.clientY) : deepClone(state) as Editor;
         default:
             return deepClone(state) as Editor;
     }

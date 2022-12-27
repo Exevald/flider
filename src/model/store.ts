@@ -1,11 +1,9 @@
-import {Editor, ItemType, SlideState} from "../core/types/types";
+import {Actions, Editor, ItemType, ShapeType, SlideState} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
-import {deleteSlides, redo, undo} from "./actionCreators";
+import {deleteSlides, openPresentation, redo, undo} from "./actionCreators";
 import {deepClone} from "../core/functions/deepClone";
-import {openPresentation} from "./actionCreators";
-import {Actions} from "../core/types/types";
 import {slideReducer} from "./slide";
 
 let initialState: Editor = {
@@ -18,6 +16,7 @@ let initialState: Editor = {
                 bgColor: "white",
                 selectedItemsIds: ["0"],
                 currentState: SlideState.SELECT_AREA,
+                currentFigureType: ShapeType.NoShape,
             },
         ],
         selectedSlidesIds: ["0"],
@@ -64,7 +63,6 @@ type ActionType = {
         textValue?: string,
         fontSize?: number,
         fontWeight?: number,
-        align?: "left" | "center" | "right"
     },
     urlImage?: string,
     newWidth?: number,
@@ -74,6 +72,8 @@ type ActionType = {
     direction?: string,
     clientX?: number,
     clientY?: number,
+    newSlideState?: SlideState,
+    newCurrentFigureType?: ShapeType,
 }
 
 function loadPresentation() {

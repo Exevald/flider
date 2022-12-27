@@ -1,4 +1,4 @@
-import {Actions, Presentation, Slide, SlideState} from "../core/types/types";
+import {Actions, Presentation, ShapeType, Slide, SlideState} from "../core/types/types";
 import {ActionType} from "./store";
 import {deepClone} from "../core/functions/deepClone";
 import {getRandomId} from "../core/functions/utility";
@@ -20,6 +20,7 @@ function createSlideReducer(presentation: Presentation): Presentation {
         bgColor: "white",
         selectedItemsIds: [],
         currentState: SlideState.SELECT_AREA,
+        currentFigureType: ShapeType.Rectangle,
     });
     return {
         ...newPresentation,

@@ -69,7 +69,7 @@ function addSlideItemReducer(slide: Slide, item: ItemType, textValue?: string): 
     return newSlide;
 }
 
-function changeCurrentSlideState(slide: Slide, newState: SlideState): Slide {
+function changeCurrentSlideStateReducer(slide: Slide, newState: SlideState): Slide {
     const newSlide = deepClone(slide) as Slide;
     return {
         ...newSlide,
@@ -77,8 +77,40 @@ function changeCurrentSlideState(slide: Slide, newState: SlideState): Slide {
     }
 }
 
+function changeCurrentFigureTypeReducer(slide: Slide, newFigureType: ShapeType): Slide {
+    const newSlide = deepClone(slide) as Slide;
+    return {
+        ...newSlide,
+        currentFigureType: newFigureType,
+    }
+}
+
+function changeFillColorReducer(slide: Slide, newColor: string): Slide {
+    const newSlide = deepClone(slide) as Slide;
+    const selectedElementsId: Array<string> = newSlide.selectedItemsIds.concat();
+    for (let i = 0; i < newSlide.items.length; i++) {
+        if (selectedElementsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.Figure) && (newSlide.items[i].figure !== undefined)) {
+            const newElement: Item = {
+                ...newSlide.items[i],
+                figure: {
+                    shape: newSlide.items[i].figure!.shape,
+                    strokeColor: newSlide.items[i].figure!.strokeColor,
+                    strokeWidth: newSlide.items[i].figure!.strokeWidth,
+                    fillColor: newColor
+                }
+            }
+            newSlide.items.splice(i, 1, newElement);
+        }
+    }
+    return newSlide;
+}
+
 function slideReducer(state: Slide, action: ActionType): Slide {
     switch (action.type) {
+        case Actions.CHANGE_CURRENT_SLIDE_STATE:
+            return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as Slide;
+        case Actions.CHANGE_CURRENT_FIGURE_TYPE:
+            return action.newCurrentFigureType !== undefined ? changeCurrentFigureTypeReducer(state, action.newCurrentFigureType) : deepClone(state) as Slide;
         case Actions.SET_BACKGROUND_COLOR:
             return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as Slide;
         case Actions.ADD_SLIDE_ITEM:

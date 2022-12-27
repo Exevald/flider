@@ -57,7 +57,6 @@ const FontSizeArea = ({size}: fontSizeProps) => {
 const Toolbar = (props: ToolbarProps) => {
     let textSelected = false;
     let figureSelected = false;
-    const [drawBlock, setDrawBlock] = useState('absent');
     props.currentSlide.selectedItemsIds.forEach(id => {
             if (props.currentSlide.items.find(item => item.id === id)?.element === ItemType.Figure) {
                 textSelected = false;
@@ -66,7 +65,6 @@ const Toolbar = (props: ToolbarProps) => {
             }
         }
     )
-    const firstSelectedItem: Item | undefined = props.currentSlide.items.find(item => item.id === props.currentSlide.selectedItemsIds[0]);
     return (
         <div className={styles.toolbar}>
             <ButtonIcon viewStyle={"createSlide"} onClick={() => props.createSlide()}></ButtonIcon>

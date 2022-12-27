@@ -8,12 +8,12 @@ interface SlideItemProps {
     slideRef: React.RefObject<HTMLElement | null>;
 }
 
-const DrawSlideItem = (figureColor: string, itemType: ItemType, shape: ShapeType, area: Area, coordinates: Point) => {
+const DrawSlideItem = (itemType: ItemType, shape: ShapeType, coordinates: Point, area: Area, color: string) => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const canvasContext = canvas.getContext("2d");
     switch (itemType) {
         case ItemType.Figure: {
-            DrawFigure(shape, area, coordinates)
+            DrawFigure(shape, coordinates, area, color)
             break;
         }
     }
