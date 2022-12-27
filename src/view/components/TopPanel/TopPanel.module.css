@@ -1,6 +1,6 @@
 .topPanel {
     width: 100%;
-    height: 78px;
+    height: 8vh;
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--kaoru-default);
