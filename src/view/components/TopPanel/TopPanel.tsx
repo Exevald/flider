@@ -52,36 +52,42 @@ const TopPanel = (props: TopPanelProps) => {
 
     return (
         <div className={styles.topPanel}>
-            <LogoArea/>
-            <div className={styles.renameContainer}>
-                {
-                    rename ?
-                        <TextArea
-                            placeholder={"Назавание презентации"}
-                            type={'title'}
-                            onKeyUp={(value: string) => {
-                                if (value !== '') {
-                                    props.changeTitle(value)
-                                }
-                                setRename(false)
-                            }}
-                        />
-                        : <p className={styles.name}>{props.title}</p>
-                }
-            </div>
-            <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
-            <div className={styles.dropDownArea}>
-                <Button viewStyle={"save"} onClick={() => {
-                    const saveAction = document.getElementsByClassName(iconStyles.buttonSave)[0] as HTMLElement;
-                    if (saveAction !== null) {
-                        showDropDownById(saveAction,'saveActionDropDown');
+            <div>
+                <LogoArea/>
+                <div className={styles.renameContainer}>
+                    {
+                        rename ?
+                            <TextArea
+                                placeholder={"Назавание презентации"}
+                                type={'title'}
+                                onKeyUp={(value: string) => {
+                                    if (value !== '') {
+                                        props.changeTitle(value)
+                                    }
+                                    setRename(false)
+                                }}
+                            />
+                            : <p className={styles.name}>{props.title}</p>
                     }
-                }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
-                <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
+                </div>
+                <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
             </div>
-            <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}
-                    to={"/presentation/watch"}
-                    onClick={() => {}}/>
+
+            <div>
+                <div className={styles.dropDownArea}>
+                    <Button viewStyle={"save"} onClick={() => {
+                        const saveAction = document.getElementsByClassName(iconStyles.buttonSave)[0] as HTMLElement;
+                        if (saveAction !== null) {
+                            showDropDownById(saveAction,'saveActionDropDown');
+                        }
+                    }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
+                    <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
+                </div>
+                <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}
+                        to={"/presentation/watch"}
+                        onClick={() => {}}/>
+            </div>
+
         </div>
     )
 }
