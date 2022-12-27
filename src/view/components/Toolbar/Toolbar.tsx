@@ -1,7 +1,8 @@
 import styles from "./Toolbar.module.css"
 import iconsStyles from "./../Button/Button.module.css"
 
-import {ButtonIcon} from "../Button/Button";
+import {Button, ButtonIcon} from "../Button/Button";
+import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
 import {AppDispatcher} from "../../../model/store";
 import {createSlide, undo, redo, setBackgroundColor} from "../../../model/actionCreators";
 import {Editor, Item, ItemType} from "../../../core/types/types";
@@ -31,6 +32,24 @@ function mapStateToProps(state: Editor) {
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type ToolbarProps = ConnectedProps<typeof connector>
+
+//заглушка
+interface fontSizeProps {
+    size: number;
+}
+const FontSizeArea = ({size}: fontSizeProps) => {
+    return (
+        <div className={styles.fontSizeArea}>
+            <div className={styles.sizeAdjuster} onClick={() => {
+            }}>–</div>
+            <div className={styles.vertSeparator}></div>
+            <div className={styles.fontAdjuster}>{size}</div>
+            <div className={styles.vertSeparator}></div>
+            <div className={styles.sizeAdjuster} onClick={() => {
+            }}>+</div>
+        </div>
+    )
+}
 
 const Toolbar = (props: ToolbarProps) => {
     let textSelected = false;
@@ -90,6 +109,10 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"underline"} onClick={() => {
             }}></ButtonIcon>
+            <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon}
+                    text={"Inter"}
+                    onClick={() =>{}}></Button>
+            <FontSizeArea size={14}></FontSizeArea>
         </div>
     )
 }
