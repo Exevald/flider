@@ -1,8 +1,7 @@
-import {Presentation, Slide} from "../core/types/types";
+import {Actions, Presentation, Slide} from "../core/types/types";
 import {ActionType} from "./store";
 import {deepClone} from "../core/functions/deepClone";
 import {getRandomId} from "../core/functions/utility";
-import {Actions} from "../core/types/types";
 
 function changeTitleReducer(presentation: Presentation, title: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;
@@ -19,7 +18,8 @@ function createSlideReducer(presentation: Presentation): Presentation {
         id: getRandomId(),
         items: [],
         bgColor: "white",
-        selectedItemsIds: []
+        selectedItemsIds: [],
+        currentAction: Actions.SELECT_AREA,
     });
     return {
         ...newPresentation,
