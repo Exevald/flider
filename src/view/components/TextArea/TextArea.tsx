@@ -1,4 +1,5 @@
 import styles from "./TextArea.module.css"
+import topPanelStyles from "../TopPanel/TopPanel.module.css"
 import {connect} from "react-redux";
 import {MAX_TITLE_SIZE} from "../../../core/functions/utility";
 
@@ -15,16 +16,14 @@ const TextArea = ({
                       onKeyUp,
                       type
                   }: TextAreaProps) => {
-    debugger
-    let textAreaStyle = styles.button_default;
-    if (type === 'title') {
-        value = value?.substring(0, MAX_TITLE_SIZE);
-    }
+    let textAreaStyle: string;
+    type === 'title' ? textAreaStyle = topPanelStyles.name : textAreaStyle = `${styles.button_default} ${styles.inputDefault}`;
     return (
         <input type="text"
+               style={{width: 228}}
                value={value}
                placeholder={placeholder}
-               className={`${styles.inputDefault} ${textAreaStyle}`}
+               className={textAreaStyle}
                onKeyUp={(event) => {
                    if (event.key === "Enter") {
                        onKeyUp(event.currentTarget.value)
