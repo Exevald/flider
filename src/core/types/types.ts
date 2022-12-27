@@ -20,6 +20,8 @@ type Editor = {
     history: History,
     slideShowStatus: boolean,
     slideShowCurrentSlideIndex: number,
+    currentClientX: number,
+    currentClientY: number,
 }
 
 type Presentation = {
@@ -34,7 +36,7 @@ type Slide = {
     items: Array<Item>,
     bgColor: string,
     selectedItemsIds: Array<Id>,
-    currentAction: Actions,
+    currentState: SlideState,
 }
 
 type Item = {
@@ -95,8 +97,13 @@ enum Actions {
     SET_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
     SWIPE_SLIDE_SHOW_SLIDE = "SWIPE_SLIDE_SHOW_SLIDE",
     ADD_SLIDE_ITEM = "ADD_SLIDE_ITEM",
+    SET_CURRENT_MOUSE_COORDINATES = "SET_CURRENT_MOUSE_COORDINATES",
+}
+
+enum SlideState {
     SELECT_AREA = "SELECT_AREA",
+    INIT_CURRENT_CURSOR_POSITION = "INIT_CURRENT_CURSOR_POSITION",
 }
 
 export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};
-export {ShapeType, ItemType, Actions};
+export {ShapeType, ItemType, Actions, SlideState};

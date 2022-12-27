@@ -1,4 +1,4 @@
-import {Editor, ItemType} from "../core/types/types";
+import {Editor, ItemType, SlideState} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
@@ -17,7 +17,7 @@ let initialState: Editor = {
                 items: [],
                 bgColor: "white",
                 selectedItemsIds: ["0"],
-                currentAction: Actions.SELECT_AREA,
+                currentState: SlideState.SELECT_AREA,
             },
         ],
         selectedSlidesIds: ["0"],
@@ -29,6 +29,8 @@ let initialState: Editor = {
     },
     slideShowStatus: false,
     slideShowCurrentSlideIndex: 0,
+    currentClientX: 0,
+    currentClientY: 0,
 }
 
 type ActionType = {
@@ -70,6 +72,8 @@ type ActionType = {
     newEditor?: Editor,
     slideShowCurrentSlide?: number,
     direction?: string,
+    clientX?: number,
+    clientY?: number,
 }
 
 function loadPresentation() {

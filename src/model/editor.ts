@@ -76,7 +76,7 @@ function openPresentationReducer(editor: Editor, newEditor: Editor): Editor {
 function undoReducer(editor: Editor): Editor {
     const newEditor = deepClone(editor) as Editor;
     if (newEditor.history.undoStack.length !== 0) {
-        const newHistory = deepClone(newEditor.history) as History;
+        const newHistory = newEditor.history;
         const newPresentation: Presentation = newHistory.undoStack.pop()!;
         newHistory.redoStack.push(newEditor.presentation);
         return {
@@ -91,7 +91,7 @@ function undoReducer(editor: Editor): Editor {
 function redoReducer(editor: Editor): Editor {
     const newEditor = deepClone(editor) as Editor;
     if (newEditor.history.redoStack.length !== 0) {
-        const newHistory = deepClone(newEditor.history) as History;
+        const newHistory = newEditor.history;
         const newPresentation: Presentation = newHistory.redoStack.pop()!;
         newHistory.undoStack.push(newEditor.presentation);
         return {
@@ -101,6 +101,15 @@ function redoReducer(editor: Editor): Editor {
         }
     }
     return newEditor
+}
+
+function setCurrentMouseCoordinatesReducer(editor: Editor, clientX: number, clientY: number) {
+    const newEditor = deepClone(editor) as Editor;
+    return {
+        ...newEditor,
+        currentClientX: clientX,
+        currentClientY: clientY,
+    }
 }
 
 function editorReducer(state: Editor, action: ActionType): Editor {
@@ -119,6 +128,8 @@ function editorReducer(state: Editor, action: ActionType): Editor {
             return redoReducer(state);
         case Actions.SWIPE_SLIDE_SHOW_SLIDE:
             return action.slideShowCurrentSlide !== undefined && action.direction !== undefined ? swipeSlideShowSlideReducer(state, action.slideShowCurrentSlide, action.direction) : deepClone(state) as Editor;
+        case Actions.SET_CURRENT_MOUSE_COORDINATES:
+            return action.clientX !== undefined && action.clientY !== undefined ? setCurrentMouseCoordinatesReducer(state, action.clientX, action.clientY) : deepClone(state) as Editor;
         default:
             return deepClone(state) as Editor;
     }

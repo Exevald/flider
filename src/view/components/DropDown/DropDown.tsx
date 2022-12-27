@@ -14,7 +14,6 @@ interface DropDownCustomProps {
         | 'line' | 'palette' | 'saveAction' | 'figureShapes';
 }
 
-
 function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
     const saveAction = document.getElementById('saveActionDropDown');
     const colorPicker = document.getElementById('ColorPicker');

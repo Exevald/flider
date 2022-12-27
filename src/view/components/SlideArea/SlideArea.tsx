@@ -9,10 +9,10 @@ const canvasSettings = {
 }
 
 function initEventsListeners() {
-    window.addEventListener("mousemove", () => {})
-    window.addEventListener("mousedown", () => onMouseDown)
-    window.addEventListener("mouseup", () => {})
-    window.addEventListener("keydown", () => console.log("down"))
+    window.addEventListener("mousemove", () => {});
+    window.addEventListener("mousedown", () => {});
+    window.addEventListener("mouseup", () => {});
+    window.addEventListener("keydown", () => console.log("down"));
 }
 
 function mapStateToProps(state: Editor) {

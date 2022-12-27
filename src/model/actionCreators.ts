@@ -1,6 +1,5 @@
 import {Editor, ItemType} from "../core/types/types";
 import {Actions} from "../core/types/types";
-import {type} from "os";
 
 function createPresentation() {
     return {
@@ -108,6 +107,14 @@ function swipeSlideShowSlide(slideIndex: number, direction: string) {
     }
 }
 
+function setNewMouseCoordinates(clientX: number, clientY: number) {
+    return {
+        type: Actions.SET_CURRENT_MOUSE_COORDINATES,
+        clientX: clientX,
+        clientY: clientY,
+    }
+}
+
 function addSlideItem(item: ItemType, textValue?: string) {
     return {
         type: Actions.ADD_SLIDE_ITEM,
@@ -136,4 +143,5 @@ export {
     setBackgroundColor,
     swipeSlideShowSlide,
     addSlideItem,
+    setNewMouseCoordinates,
 }

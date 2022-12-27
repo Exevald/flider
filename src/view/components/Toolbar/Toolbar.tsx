@@ -37,16 +37,19 @@ type ToolbarProps = ConnectedProps<typeof connector>
 interface fontSizeProps {
     size: number;
 }
+
 const FontSizeArea = ({size}: fontSizeProps) => {
     return (
         <div className={styles.fontSizeArea}>
             <div className={styles.sizeAdjuster} onClick={() => {
-            }}>–</div>
+            }}>–
+            </div>
             <div className={styles.vertSeparator}></div>
             <div className={styles.fontAdjuster}>{size}</div>
             <div className={styles.vertSeparator}></div>
             <div className={styles.sizeAdjuster} onClick={() => {
-            }}>+</div>
+            }}>+
+            </div>
         </div>
     )
 }
@@ -88,9 +91,7 @@ const Toolbar = (props: ToolbarProps) => {
                     showDropDownById(figureIcon, 'shapes')
                 }
             }}></ButtonIcon>
-            <DropDown id={'shapes'}  viewStyle={"figureShapes"}></DropDown>
-            <ButtonIcon viewStyle={"line"} onClick={() => {
-            }}></ButtonIcon>
+            <DropDown id={'shapes'} viewStyle={"figureShapes"}></DropDown>
             <ButtonIcon viewStyle={"palette"} onClick={() => {
                 const palette = document.getElementsByClassName(iconsStyles.buttonPalette)[0] as HTMLElement;
                 if (palette !== null) {
@@ -111,7 +112,8 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon}
                     text={"Inter"}
-                    onClick={() =>{}}></Button>
+                    onClick={() => {
+                    }}></Button>
             <FontSizeArea size={14}></FontSizeArea>
         </div>
     )

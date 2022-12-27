@@ -1,4 +1,4 @@
-import {Actions, Item, ItemType, ShapeType, Slide} from "../core/types/types";
+import {Actions, Item, ItemType, ShapeType, Slide, SlideState} from "../core/types/types";
 import {getRandomId} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
@@ -69,11 +69,11 @@ function addSlideItemReducer(slide: Slide, item: ItemType, textValue?: string): 
     return newSlide;
 }
 
-function changeCurrentActionReducer(slide: Slide, newAction: Actions): Slide {
+function changeCurrentSlideState(slide: Slide, newState: SlideState): Slide {
     const newSlide = deepClone(slide) as Slide;
     return {
         ...newSlide,
-        currentAction: newAction,
+        currentState: newState,
     }
 }
 
