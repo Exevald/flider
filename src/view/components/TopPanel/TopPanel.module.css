@@ -2,7 +2,7 @@
     width: 100%;
     height: 8vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--kaoru-default);
 }
@@ -11,9 +11,14 @@
     flex-direction: row;
     align-items: center;
 }
+.topPanel > div:first-child {
+    margin-left: 30px;
+}
+.topPanel > div:last-child {
+    margin-right: 30px;
+}
 
 .logoArea {
-    margin-left: 30px;
     cursor: pointer;
 }
 
@@ -32,6 +37,7 @@
 
 .renameContainer {
     margin-left: 1.5vw;
+    width: 252px;
 }
 
 .dropDownArea {

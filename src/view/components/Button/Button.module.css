@@ -69,7 +69,6 @@
     background-color: var(--shinji);
     color: var(--gendo-default);
     border: 1px solid var(--kaoru-60);
-    margin-left: 50vw;
 }
 
 .buttonOpen:hover {
