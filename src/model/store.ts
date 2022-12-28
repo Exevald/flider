@@ -1,4 +1,4 @@
-import {Actions, Editor, ItemType, ShapeType, SlideState} from "../core/types/types";
+import {Actions, Editor, ItemType, Point, ShapeType, SlideState} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
@@ -20,7 +20,7 @@ let initialState: Editor = {
             },
         ],
         selectedSlidesIds: ["0"],
-        currentColor: "white",
+        currentColor: "black",
     },
     history: {
         undoStack: [],
@@ -40,9 +40,10 @@ type ActionType = {
     backgroundColor?: string,
     element?: string,
     elementId?: string,
-    addItemParams?: {
-        element: ItemType,
-        textValue?: string
+    addFigureParams?: {
+        shape: ShapeType,
+        coordinates: Point,
+        color: string,
     }
     changeAngleParams?: {
         angleShift: number

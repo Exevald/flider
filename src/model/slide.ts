@@ -1,4 +1,4 @@
-import {Actions, Item, ItemType, ShapeType, Slide, SlideState} from "../core/types/types";
+import {Actions, Item, ItemType, Point, ShapeType, Slide, SlideState} from "../core/types/types";
 import {getRandomId} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
@@ -11,13 +11,13 @@ function setBackgroundColorReducer(slide: Slide, backgroundColor: string): Slide
     }
 }
 
-function addSlideItemReducer(slide: Slide, item: ItemType, textValue?: string): Slide {
+function addFigureItemReducer(slide: Slide, shape: ShapeType, coordinates: Point, color: string): Slide {
     const newSlide = deepClone(slide) as Slide;
     const newItem: Item = {
         id: getRandomId(),
         coordinates: {
-            x: 500,
-            y: 400,
+            x: coordinates.x,
+            y: coordinates.y,
         },
         element: ItemType.Figure,
         space: {
@@ -26,41 +26,40 @@ function addSlideItemReducer(slide: Slide, item: ItemType, textValue?: string): 
         },
         layer: 1,
     }
-    switch (item) {
-        case ItemType.Figure: {
-            if (ShapeType.Rectangle) {
-                newItem.figure = {
-                    shape: ShapeType.Rectangle,
-                    fillColor: "white",
-                    strokeColor: "black",
-                    strokeWidth: 1
-                }
-            }
-            if (ShapeType.Triangle) {
-                newItem.figure = {
-                    shape: ShapeType.Triangle,
-                    fillColor: "white",
-                    strokeColor: "black",
-                    strokeWidth: 1,
-                }
-            }
-            if (ShapeType.Arc) {
-                newItem.figure = {
-                    shape: ShapeType.Arc,
-                    fillColor: "white",
-                    strokeColor: "black",
-                    strokeWidth: 1,
-                }
+    switch (shape) {
+        case ShapeType.Rectangle: {
+            newItem.figure = {
+                shape: ShapeType.Rectangle,
+                fillColor: color,
+                strokeColor: "black",
+                strokeWidth: 1
             }
             break;
         }
-        case ItemType.TextArea: {
-            newItem.element = ItemType.Image;
-            newItem.textArea = {
-                fontFamily: "Inter",
-                fontColor: "black",
-                fontSize: 16,
-                value: textValue ? textValue : "Введите ваш текст",
+        case ShapeType.Triangle: {
+            newItem.figure = {
+                shape: ShapeType.Triangle,
+                fillColor: color,
+                strokeColor: "black",
+                strokeWidth: 1,
+            }
+            break;
+        }
+        case ShapeType.Arc: {
+            newItem.figure = {
+                shape: ShapeType.Arc,
+                fillColor: color,
+                strokeColor: "black",
+                strokeWidth: 1,
+            }
+            break;
+        }
+        case ShapeType.Star: {
+            newItem.figure = {
+                shape: ShapeType.Star,
+                fillColor: color,
+                strokeColor: "black",
+                strokeWidth: 1,
             }
             break;
         }
@@ -113,8 +112,8 @@ function slideReducer(state: Slide, action: ActionType): Slide {
             return action.newCurrentFigureType !== undefined ? changeCurrentFigureTypeReducer(state, action.newCurrentFigureType) : deepClone(state) as Slide;
         case Actions.SET_BACKGROUND_COLOR:
             return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as Slide;
-        case Actions.ADD_SLIDE_ITEM:
-            return action.addItemParams !== undefined ? addSlideItemReducer(state, action.addItemParams.element, action.addItemParams.textValue) : deepClone(state)  as Slide;
+        case Actions.ADD_FIGURE_ITEM:
+            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.coordinates, action.addFigureParams.color) : deepClone(state) as Slide;
         default:
             return deepClone(state) as Slide;
     }

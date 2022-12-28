@@ -1,4 +1,4 @@
-import {Editor, ItemType, ShapeType, SlideState} from "../core/types/types";
+import {Editor, ItemType, Point, ShapeType, SlideState} from "../core/types/types";
 import {Actions} from "../core/types/types";
 
 function createPresentation() {
@@ -115,12 +115,13 @@ function setCurrentCursorPosition(clientX: number, clientY: number) {
     }
 }
 
-function addSlideItem(item: ItemType, textValue?: string) {
+function addFigureItem(shape: ShapeType, coordinates: Point, color: string) {
     return {
-        type: Actions.ADD_SLIDE_ITEM,
-        addItemParams: {
-            item,
-            textValue,
+        type: Actions.ADD_FIGURE_ITEM,
+        addFigureParams: {
+            shape,
+            coordinates,
+            color,
         }
     }
 }
@@ -156,7 +157,7 @@ export {
     changeSlideShowStatus,
     setBackgroundColor,
     swipeSlideShowSlide,
-    addSlideItem,
+    addFigureItem,
     setCurrentCursorPosition,
     changeCurrentSlideState,
     changeCurrentFigureType,

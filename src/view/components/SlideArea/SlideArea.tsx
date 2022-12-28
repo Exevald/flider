@@ -1,13 +1,14 @@
 import styles from "./SlideArea.module.css"
 import {connect, ConnectedProps} from "react-redux";
-import {Editor, ItemType, ShapeType, SlideState} from "../../../core/types/types";
+import {Editor, ItemType, Point, ShapeType, SlideState} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {
+    addFigureItem,
     changeCurrentFigureType,
     changeCurrentSlideState,
     setCurrentCursorPosition
 } from "../../../model/actionCreators";
-import {DrawSlideItem} from "../SlideItem/SlidesItem";
+import {DrawItems} from "../SlideItem/SlidesItem";
 
 const canvasSettings = {
     width: 1280,
@@ -33,6 +34,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         setCurrentCursorPosition: (clientX: number, clientY: number) => dispatcher(setCurrentCursorPosition(clientX, clientY)),
         setCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
+        addFigureItem: (shape: ShapeType, coordinates: Point, color: string) => dispatcher(addFigureItem(shape, coordinates, color)),
     }
 }
 
@@ -60,43 +62,42 @@ const SlideArea = (props: SlideAreaProps) => {
                                 props.setCurrentCursorPosition(clientX, clientY);
                                 switch (props.currentFigureType) {
                                     case ShapeType.Rectangle: {
-                                        console.log("rect");
-                                        DrawSlideItem(ItemType.Figure, ShapeType.Rectangle, {
-                                                x: clientX,
-                                                y: clientY
-                                            }, {width: 100, height: 100},
-                                            props.currentColor);
+                                        props.addFigureItem(ShapeType.Rectangle, {
+                                            x: clientX,
+                                            y: clientY
+                                        }, props.currentColor);
                                         props.setCurrentSlideState(SlideState.SELECT_AREA);
                                         break;
                                     }
                                     case ShapeType.Triangle: {
-                                        console.log("tria");
-                                        DrawSlideItem(ItemType.Figure, ShapeType.Triangle, {
-                                                x: clientX,
-                                                y: clientY
-                                            }, {width: 100, height: 100},
-                                            props.currentColor);
+                                        props.addFigureItem(ShapeType.Triangle, {
+                                            x: clientX,
+                                            y: clientY
+                                        }, props.currentColor);
                                         props.setCurrentSlideState(SlideState.SELECT_AREA);
                                         break;
                                     }
                                     case ShapeType.Arc: {
-                                        console.log("arc");
-                                        DrawSlideItem(ItemType.Figure, ShapeType.Arc, {
-                                                x: clientX,
-                                                y: clientY
-                                            }, {width: 50, height: 50},
-                                            props.currentColor);
+                                        props.addFigureItem(ShapeType.Arc, {
+                                            x: clientX,
+                                            y: clientY
+                                        }, props.currentColor);
                                         props.setCurrentSlideState(SlideState.SELECT_AREA);
                                         break;
                                     }
                                     case ShapeType.Star: {
-                                        console.log("star");
+                                        props.addFigureItem(ShapeType.Star, {
+                                            x: clientX,
+                                            y: clientY
+                                        }, props.currentColor);
+                                        props.setCurrentSlideState(SlideState.SELECT_AREA);
                                         break;
                                     }
                                 }
                                 break;
                             }
                         }
+                        DrawItems(props.slideItems);
                     }
                 }
                 }>
