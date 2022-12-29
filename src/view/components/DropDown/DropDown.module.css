@@ -4,9 +4,16 @@
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     z-index: 1;
+
+    transform: scale(0);
+    transform-origin: top left;
+    transition: transform 220ms ease-in-out;
 }
 .dropDownShow {
     display: block;
+}
+.dropDownOpen {
+    transform: scale(1);
 }
 
 /* все типы */

@@ -1,6 +1,6 @@
 import styles from "./DropDown.module.css"
 import buttonStyles from "../Button/Button.module.css"
-import {COLOR_PICKER_COLORS} from "../../../core/functions/utility";
+import {COLOR_PICKER_COLORS, DROPDOWN_ANIMATION_TIME} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {
     changeCurrentColor,
@@ -62,19 +62,31 @@ function handleClicks(e: MouseEvent) {
 
         if (saveAction.classList.contains(styles.dropDownShow) && !path.includes(saveAction)
             && !path.includes(saveButton)) {
-            saveAction.classList.remove(styles.dropDownShow)
+            saveAction.classList.remove(styles.dropDownOpen);
+            setTimeout(() => {
+                saveAction.classList.remove(styles.dropDownShow);
+            },DROPDOWN_ANIMATION_TIME);
         }
         if (colorPicker.classList.contains(styles.dropDownShow) && !path.includes(colorPicker)
             && !path.includes(pickerButton)) {
-            colorPicker.classList.remove(styles.dropDownShow)
+            colorPicker.classList.remove(styles.dropDownOpen);
+            setTimeout(() => {
+                colorPicker.classList.remove(styles.dropDownShow);
+            },DROPDOWN_ANIMATION_TIME);
         }
         if (imageSelector.classList.contains(styles.dropDownShow) && !path.includes(imageSelector)
             && !path.includes(selectorButton)) {
-            imageSelector.classList.remove(styles.dropDownShow)
+            imageSelector.classList.remove(styles.dropDownOpen);
+            setTimeout(() => {
+                imageSelector.classList.remove(styles.dropDownShow);
+            },DROPDOWN_ANIMATION_TIME);
         }
         if (shapes.classList.contains(styles.dropDownShow) && !path.includes(shapes)
             && !path.includes(figure)) {
-            shapes.classList.remove(styles.dropDownShow)
+            shapes.classList.remove(styles.dropDownOpen);
+            setTimeout(() => {
+                shapes.classList.remove(styles.dropDownShow);
+            },DROPDOWN_ANIMATION_TIME);
         }
 
     }
@@ -122,7 +134,19 @@ type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 function showDropDownById(parent: HTMLElement, id: string): void {
     const dropDown = document.getElementById(id);
     if (dropDown !== null) {
-        dropDown.classList.toggle(styles.dropDownShow);
+        if (dropDown.classList.contains(styles.dropDownShow)) {
+            // если открыт
+            dropDown.classList.remove(styles.dropDownOpen);
+            setTimeout(() => {
+                dropDown.classList.remove(styles.dropDownShow);
+            },DROPDOWN_ANIMATION_TIME);
+        } else {
+            // если закрыт
+            dropDown.classList.add(styles.dropDownShow);
+            setTimeout(() => {
+                dropDown.classList.toggle(styles.dropDownOpen);
+            },1);
+        }
 
         let parentTop = parent.offsetTop;
         let parentLeft = parent.offsetLeft;
@@ -145,6 +169,7 @@ function showChildrenDropDownById(id: string): void {
     let childDropDown = document.getElementById(id);
     if (childDropDown !== null) {
         childDropDown.classList.toggle(styles.dropDownShow);
+        childDropDown.classList.toggle(styles.dropDownOpen);
     }
 }
 
