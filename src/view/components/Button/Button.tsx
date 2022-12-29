@@ -10,6 +10,7 @@ interface ButtonProps {
     text?: string;
     onClick: () => void;
     to?: string;
+    id?: string;
 }
 
 const linkStyle = {
@@ -23,6 +24,7 @@ const Button = ({
                     text = '',
                     onClick,
                     to,
+                    id
                 }: ButtonProps) => {
     let buttonStyle = styles.buttonDefault;
 
@@ -76,6 +78,29 @@ const Button = ({
                 </button>
             </Link>
         )
+    } else if (id !== undefined) {
+        return (
+            <button
+                type="button"
+                className={`${styles.button} ${buttonStyle}`}
+                onClick={onClick}
+                id = {id}
+            >
+                {iconStyle === "left" &&
+                    <div className={styles.iconAreaLeft}>
+                        <img src={iconSrc} alt={"buttonIcon"}></img>
+                    </div>
+                }
+                <div className={styles.text_default}>
+                    {text}
+                </div>
+                {iconStyle === "right" &&
+                    <div className={styles.iconAreaRight}>
+                        <img src={iconSrc} alt={"buttonIcon"}></img>
+                    </div>
+                }
+            </button>
+        )
     } else {
         return (
             <button
@@ -105,6 +130,7 @@ const Button = ({
 const ButtonIcon = ({
                         viewStyle,
                         onClick,
+                        id
                     }: ButtonProps) => {
     let buttonStyle;
 
@@ -174,14 +200,26 @@ const ButtonIcon = ({
             break;
         }
     }
-    return (
-        <button
-            type="button"
-            className={`${styles.iconButton} ${buttonStyle}`}
-            onClick={onClick}
-        >
-        </button>
-    )
+    if (id !== undefined) {
+        return (
+            <button
+                type="button"
+                className={`${styles.iconButton} ${buttonStyle}`}
+                onClick={onClick}
+                id={id}
+            >
+            </button>
+        )
+    } else {
+        return (
+            <button
+                type="button"
+                className={`${styles.iconButton} ${buttonStyle}`}
+                onClick={onClick}
+            >
+            </button>
+        )
+    }
 }
 
 export {Button, ButtonIcon}
