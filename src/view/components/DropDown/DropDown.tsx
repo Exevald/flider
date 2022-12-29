@@ -1,5 +1,4 @@
 import styles from "./DropDown.module.css"
-import buttonStyles from "../Button/Button.module.css"
 import {COLOR_PICKER_COLORS, DROPDOWN_ANIMATION_TIME} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {
@@ -42,18 +41,26 @@ function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
     }
 }
 
-
+function removeOpenedDropDownById(id: string): void {
+    const el = document.getElementById(id);
+    if (el !== null) {
+        el.classList.remove(styles.dropDownOpen);
+        setTimeout(() => {
+            el.classList.remove(styles.dropDownShow);
+        }, DROPDOWN_ANIMATION_TIME);
+    }
+}
 function handleClicks(e: MouseEvent) {
     // взял в проверку ещё и кнопки списков,
     // чтобы при обработке они не переключались два раза (закрылись и снова открылись)
     const path = e.composedPath();
     const saveAction = document.getElementById('saveActionDropDown');
-    const saveButton = document.getElementsByClassName(buttonStyles.buttonSave)[0];
+    const saveButton = document.getElementById('SavePresentationButton');
     const colorPicker = document.getElementById('ColorPicker');
-    const pickerButton = document.getElementsByClassName(buttonStyles.buttonPalette)[0];
+    const pickerButton = document.getElementById('PickerButton');
     const imageSelector = document.getElementById('ImageSelector');
-    const selectorButton = document.getElementsByClassName(buttonStyles.buttonImage)[0];
-    const figure = document.getElementsByClassName(buttonStyles.buttonFigure)[0];
+    const selectorButton = document.getElementById('SelectorButton');
+    const figure = document.getElementById('FigureButton');
     const shapes = document.getElementById('shapes');
 
     if (path !== null && saveAction !== null && colorPicker !== null && imageSelector !== null
@@ -62,31 +69,19 @@ function handleClicks(e: MouseEvent) {
 
         if (saveAction.classList.contains(styles.dropDownShow) && !path.includes(saveAction)
             && !path.includes(saveButton)) {
-            saveAction.classList.remove(styles.dropDownOpen);
-            setTimeout(() => {
-                saveAction.classList.remove(styles.dropDownShow);
-            },DROPDOWN_ANIMATION_TIME);
+            removeOpenedDropDownById('saveActionDropDown');
         }
         if (colorPicker.classList.contains(styles.dropDownShow) && !path.includes(colorPicker)
             && !path.includes(pickerButton)) {
-            colorPicker.classList.remove(styles.dropDownOpen);
-            setTimeout(() => {
-                colorPicker.classList.remove(styles.dropDownShow);
-            },DROPDOWN_ANIMATION_TIME);
+            removeOpenedDropDownById('ColorPicker')
         }
         if (imageSelector.classList.contains(styles.dropDownShow) && !path.includes(imageSelector)
             && !path.includes(selectorButton)) {
-            imageSelector.classList.remove(styles.dropDownOpen);
-            setTimeout(() => {
-                imageSelector.classList.remove(styles.dropDownShow);
-            },DROPDOWN_ANIMATION_TIME);
+            removeOpenedDropDownById('ImageSelector')
         }
         if (shapes.classList.contains(styles.dropDownShow) && !path.includes(shapes)
             && !path.includes(figure)) {
-            shapes.classList.remove(styles.dropDownOpen);
-            setTimeout(() => {
-                shapes.classList.remove(styles.dropDownShow);
-            },DROPDOWN_ANIMATION_TIME);
+            removeOpenedDropDownById('shapes');
         }
 
     }
@@ -131,15 +126,13 @@ type DropDownInitialProps = ConnectedProps<typeof connector>
 
 type DropDownMergedProps = DropDownInitialProps & DropDownCustomProps
 
-function showDropDownById(parent: HTMLElement, id: string): void {
+function showDropDownById(parentId: string, id: string): void {
+    const parent = document.getElementById(parentId);
     const dropDown = document.getElementById(id);
-    if (dropDown !== null) {
+    if (parent !== null && dropDown !== null) {
         if (dropDown.classList.contains(styles.dropDownShow)) {
             // если открыт
-            dropDown.classList.remove(styles.dropDownOpen);
-            setTimeout(() => {
-                dropDown.classList.remove(styles.dropDownShow);
-            },DROPDOWN_ANIMATION_TIME);
+            removeOpenedDropDownById(id);
         } else {
             // если закрыт
             dropDown.classList.add(styles.dropDownShow);
@@ -159,7 +152,8 @@ function showDropDownById(parent: HTMLElement, id: string): void {
         if (id === 'ImageSelector') {
             const stocks = document.getElementById('Stocks');
             if (stocks !== null) {
-                stocks.classList.remove(styles.dropDownShow)
+                stocks.classList.remove(styles.dropDownShow);
+                stocks.classList.remove(styles.dropDownOpen);
             }
         }
     }

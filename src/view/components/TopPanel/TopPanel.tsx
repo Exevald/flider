@@ -2,7 +2,6 @@ import logoArea from "./LogoArea.svg"
 import styles from "./TopPanel.module.css"
 import WatchIcon from "../Button/ButtonIcons/WatchIcon.svg"
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg"
-import iconStyles from  "./../Button/Button.module.css"
 
 import TextArea from "../TextArea/TextArea";
 import {Button} from "../Button/Button";
@@ -75,12 +74,11 @@ const TopPanel = (props: TopPanelProps) => {
 
             <div>
                 <div className={styles.dropDownArea}>
-                    <Button viewStyle={"save"} onClick={() => {
-                        const saveAction = document.getElementsByClassName(iconStyles.buttonSave)[0] as HTMLElement;
-                        if (saveAction !== null) {
-                            showDropDownById(saveAction,'saveActionDropDown');
+                    <Button viewStyle={"save"} id={"SavePresentationButton"}
+                            onClick={() => {
+                            showDropDownById('SavePresentationButton','saveActionDropDown');
                         }
-                    }} text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
+                    } text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
                     <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
                 </div>
                 <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}

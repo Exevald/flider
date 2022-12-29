@@ -1,5 +1,4 @@
 import styles from "./Toolbar.module.css"
-import iconsStyles from "./../Button/Button.module.css"
 
 import {Button, ButtonIcon} from "../Button/Button";
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
@@ -74,26 +73,23 @@ const Toolbar = (props: ToolbarProps) => {
             }}></ButtonIcon>
             <ButtonIcon viewStyle={"textArea"} onClick={() => {
             }}></ButtonIcon>
-            <ButtonIcon viewStyle={"image"} onClick={() => {
-                const iconImage = document.getElementsByClassName(iconsStyles.buttonImage)[0] as HTMLElement;
-                if (iconImage !== null) {
-                    showDropDownById(iconImage, 'ImageSelector')
-                }
-            }}></ButtonIcon>
+            <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
+                        onClick={() => {
+                            showDropDownById('SelectorButton', 'ImageSelector')
+                        }
+            }></ButtonIcon>
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
-            <ButtonIcon viewStyle={"figure"} onClick={() => {
-                const figureIcon = document.getElementsByClassName(iconsStyles.buttonFigure)[0] as HTMLElement;
-                if (figureIcon !== null) {
-                    showDropDownById(figureIcon, 'shapes')
-                }
-            }}></ButtonIcon>
+            <ButtonIcon viewStyle={"figure"} id={'FigureButton'}
+                        onClick={() => {
+                            showDropDownById('FigureButton', 'shapes')
+                        }
+            }></ButtonIcon>
             <DropDown id={'shapes'} viewStyle={"figureShapes"}></DropDown>
-            <ButtonIcon viewStyle={"palette"} onClick={() => {
-                const palette = document.getElementsByClassName(iconsStyles.buttonPalette)[0] as HTMLElement;
-                if (palette !== null) {
-                    showDropDownById(palette, 'ColorPicker')
-                }
-            }}></ButtonIcon>
+            <ButtonIcon viewStyle={"palette"} id={'PickerButton'}
+                        onClick={() => {
+                            showDropDownById('PickerButton', 'ColorPicker')
+                        }
+            }></ButtonIcon>
             <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
             <ButtonIcon viewStyle={"filler"} onClick={() => {
                 if (!textSelected && !figureSelected) {
