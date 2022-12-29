@@ -51,7 +51,18 @@ const FontSizeArea = ({size}: fontSizeProps) => {
     )
 }
 
-const Toolbar = (props: ToolbarProps) => {
+// заглушка, чтобы отображать поля по статусам
+enum Statuses {
+    default,
+    noItems,
+    TextArea,
+    Figure,
+    Image
+}
+interface StatusProps {
+    status: Statuses;
+}
+const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     let textSelected = false;
     let figureSelected = false;
     props.currentSlide.selectedItemsIds.forEach(id => {
@@ -64,26 +75,39 @@ const Toolbar = (props: ToolbarProps) => {
     )
     return (
         <div className={styles.toolbar}>
-            <ButtonIcon viewStyle={"createSlide"} onClick={() => props.createSlide()}></ButtonIcon>
+            {
+                (status === 1 || status === 0)
+                && <ButtonIcon viewStyle={"createSlide"}
+                               onClick={() => props.createSlide()}></ButtonIcon>
+            }
+
             <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}></ButtonIcon>
             <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}></ButtonIcon>
-            <ButtonIcon viewStyle={"selectArea"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"textArea"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
-                        onClick={() => {
-                            showDropDownById('SelectorButton', 'ImageSelector')
-                        }
-            }></ButtonIcon>
+
+            {
+                (status === 1 || status === 4 || status === 0) && <>
+                <ButtonIcon viewStyle={"selectArea"} onClick={() => {}}></ButtonIcon>
+                <ButtonIcon viewStyle={"selectArrow"} onClick={() => {}}></ButtonIcon>
+                <ButtonIcon viewStyle={"textArea"} onClick={() => {}}></ButtonIcon>
+                <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
+                            onClick={() => {
+                                showDropDownById('SelectorButton', 'ImageSelector')
+                            }
+                }></ButtonIcon> </>
+            }
+
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
-            <ButtonIcon viewStyle={"figure"} id={'FigureButton'}
-                        onClick={() => {
-                            showDropDownById('FigureButton', 'shapes')
-                        }
-            }></ButtonIcon>
+
+
+            {
+                (status !== 2 && status !== 4) &&
+                <ButtonIcon viewStyle={"figure"} id={'FigureButton'}
+                            onClick={() => {
+                                showDropDownById('FigureButton', 'shapes')
+                            }
+                            }></ButtonIcon>
+            }
+
             <DropDown id={'shapes'} viewStyle={"figureShapes"}></DropDown>
             <ButtonIcon viewStyle={"palette"} id={'PickerButton'}
                         onClick={() => {
@@ -91,22 +115,34 @@ const Toolbar = (props: ToolbarProps) => {
                         }
             }></ButtonIcon>
             <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
-            <ButtonIcon viewStyle={"filler"} onClick={() => {
-                if (!textSelected && !figureSelected) {
-                    props.setBgColor(props.currentColor)
-                }
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"stroke"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"cursive"} onClick={() => {
-            }}></ButtonIcon>
-            <ButtonIcon viewStyle={"underline"} onClick={() => {
-            }}></ButtonIcon>
-            <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon}
-                    text={"Inter"}
-                    onClick={() => {
-                    }}></Button>
-            <FontSizeArea size={14}></FontSizeArea>
+
+            {
+                status !== 4 &&
+                <ButtonIcon viewStyle={"filler"} onClick={() => {
+                    if (!textSelected && !figureSelected) {
+                        props.setBgColor(props.currentColor)
+                    }
+                }}></ButtonIcon>
+            }
+
+            {
+                status !== 1 &&
+                <ButtonIcon viewStyle={"stroke"} onClick={() => {
+                }}></ButtonIcon>
+            }
+
+            {
+                (status === 0 || status === 2) && <>
+                <ButtonIcon viewStyle={"bold"} onClick={() => {}}></ButtonIcon>
+                <ButtonIcon viewStyle={"cursive"} onClick={() => {}}></ButtonIcon>
+                <ButtonIcon viewStyle={"underline"} onClick={() => {}}></ButtonIcon>
+                    <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}
+                            onClick={() => {}}></Button> </>
+            }
+
+            {
+                status !== 1 && <FontSizeArea size={14}></FontSizeArea>
+            }
         </div>
     )
 }
