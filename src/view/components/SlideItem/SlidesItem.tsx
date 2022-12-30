@@ -7,7 +7,6 @@ const DrawItems = (slideItems: Array<Item>) => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
     canvasContext.clearRect(0,0, CANVAS_SETTINGS.width, CANVAS_SETTINGS.height);
-    console.log(slideItems)
     for (let i = 0; i < slideItems.length; i++)
     {
         let item = slideItems[i];
