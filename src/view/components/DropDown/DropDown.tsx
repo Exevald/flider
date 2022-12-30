@@ -1,5 +1,5 @@
 import styles from "./DropDown.module.css"
-import {COLOR_PICKER_COLORS, DROPDOWN_ANIMATION_TIME} from "../../../core/functions/utility";
+import {COLOR_PICKER_COLORS, DEFAULT_STOCKS, DROPDOWN_ANIMATION_TIME} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {
     changeCurrentColor,
@@ -168,6 +168,32 @@ function showChildrenDropDownById(id: string): void {
     }
 }
 
+const Separator = () => {
+    return (
+        <div className={styles.separator}></div>
+    )
+}
+const Stocks = () => {
+    let stocks = DEFAULT_STOCKS.map((stock) =>
+        <a key={stock.name.toString()} href={stock.url} target={"_blank"}
+           rel={"noreferrer"}>
+            <li>
+                {stock.name}
+            </li>
+        </a>
+    );
+    return (
+        <div id={"Stocks"} className={styles.dropDown} style={{position: "static"}}>
+            <div className={styles.dropDownContent} style={{border: "none"}}>
+                <Separator/>
+                <ul className={styles.stocks}>
+                    {stocks}
+                </ul>
+            </div>
+        </div>
+    )
+}
+
 const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFigureType}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
@@ -178,7 +204,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                             <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>
                                 Выберите фигуру
                             </p>
-                            <div className={styles.separator}></div>
+                            <Separator/>
                             <div className={styles.shapesContent}>
                                 <div
                                     className={`${styles.shapes} ${styles.shapeRectangle}`}
@@ -215,55 +241,13 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                     <div id={id} className={`${styles.dropDown} ${styles.imageSelector}`}>
                         <div className={styles.dropDownContent}>
                             <p className={styles.dropDownContent__header}>Выберите вариант:</p>
-                            <div className={styles.separator}></div>
+                            <Separator/>
                             <p onClick={() => {
                                 showChildrenDropDownById('Stocks')
                             }}>Выбрать из популярных фотостоков</p>
-                            <div id={"Stocks"} className={styles.dropDown} style={{position: "static"}}>
-                                <div className={styles.dropDownContent} style={{border: "none"}}>
-                                    <div className={styles.separator}></div>
-                                    <ul className={styles.stocks}>
-                                        <a href={"https://www.shutterstock.com"} target={"_blank"}
-                                           rel={"noreferrer"}>
-                                            <li>
-                                                Shutterstock
-                                            </li>
-                                        </a>
-                                        <a href={"https://www.gettyimages.com"} target={"_blank"}
-                                           rel={"noreferrer"}>
-                                            <li>
-                                                Getty Images
-                                            </li>
-                                        </a>
-                                        <a href={"https://stock.adobe.com/ru/"} target={"_blank"}
-                                           rel={"noreferrer"}>
-                                            <li>
-                                                Adobe Stock
-                                            </li>
-                                        </a>
-                                        <a href={"https://www.dreamstime.com"} target={"_blank"}
-                                           rel={"noreferrer"}>
-                                            <li>
-                                                Dreamstime
-                                            </li>
-                                        </a>
-                                        <a href={"https://ru.123rf.com"} target={"_blank"}
-                                           rel={"noreferrer"}>
-                                            <li>
-                                                123RF
-                                            </li>
-                                        </a>
-                                        <a href={"https://photogenica.ru"} target={"_blank"}
-                                           rel={"noreferrer"}>
-                                            <li>
-                                                Фотодженика
-                                            </li>
-                                        </a>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className={styles.separator}></div>
-                            <div style={{padding: '5px 0 5px 0'}} className={styles.addImage} onClick={() => {
+                            <Stocks/>
+                            <Separator/>
+                            <div className={styles.addImage} onClick={() => {
                                 setCurrentSlideState(SlideState.DRAW_IMAGE);
                             }}>
                                 <p>Выбрать с компьютера</p>
@@ -286,7 +270,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                         <div className={styles.dropDownContent}>
                             <p className={styles.dropDownContent__header} style={{fontWeight: "normal"}}>Основные
                                 цвета</p>
-                            <div className={styles.separator}></div>
+                            <Separator/>
                             <div className={styles.paletteContent}>
                                 {colorsList}
                             </div>
@@ -298,7 +282,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                     <div id={id} className={`${styles.dropDown} ${styles.saveAction}`}>
                         <div className={styles.dropDownContent}>
                             <p>Сохранить PDF</p>
-                            <div className={styles.separator}></div>
+                            <Separator/>
                             <p onClick={() => action('saveJSON')}>Сохранить JSON</p>
                         </div>
                     </div>
@@ -306,9 +290,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
         }
     }
     return (
-        <div id={id} className={styles.dropDown}>
-            <p>Введено название рендеринга, которого нет</p>
-        </div>
+        <p>Введено название рендеринга, которого нет</p>
     )
 }
 
