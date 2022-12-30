@@ -50,6 +50,7 @@ function removeOpenedDropDownById(id: string): void {
         }, DROPDOWN_ANIMATION_TIME);
     }
 }
+
 function handleClicks(e: MouseEvent) {
     // взял в проверку ещё и кнопки списков,
     // чтобы при обработке они не переключались два раза (закрылись и снова открылись)
@@ -138,7 +139,7 @@ function showDropDownById(parentId: string, id: string): void {
             dropDown.classList.add(styles.dropDownShow);
             setTimeout(() => {
                 dropDown.classList.toggle(styles.dropDownOpen);
-            },1);
+            }, 1);
         }
 
         let parentTop = parent.offsetTop;
@@ -262,19 +263,11 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                                 </div>
                             </div>
                             <div className={styles.separator}></div>
-                            <div style={{padding: '5px 0 5px 0'}} onClick={() => {
+                            <div style={{padding: '5px 0 5px 0'}} className={styles.addImage} onClick={() => {
                                 setCurrentSlideState(SlideState.DRAW_IMAGE);
                             }}>
                                 <p>Выбрать с компьютера</p>
-
                             </div>
-                            {/*<form method={"get"} style={{padding: '5px 0 5px 0'}} onClick={() => {*/}
-                            {/*    setCurrentSlideState(SlideState.DRAW_IMAGE);*/}
-                            {/*}*/}
-                            {/*}>*/}
-                            {/*    <label htmlFor={"uploadImage"}>Выбрать с компьютера</label>*/}
-                            {/*</form>*/}
-
                         </div>
                     </div>
                 )

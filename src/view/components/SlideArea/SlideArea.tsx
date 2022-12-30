@@ -22,6 +22,7 @@ function mapStateToProps(state: Editor) {
         currentSlideState: state.presentation.slides[currentSlideIndex].currentState,
         currentFigureType: state.presentation.slides[currentSlideIndex].currentFigureType,
         currentColor: state.presentation.currentColor,
+        currentSlide: state.presentation.slides[currentSlideIndex],
     }
 }
 
@@ -45,6 +46,7 @@ const SlideArea = (props: SlideAreaProps) => {
                 id={"slide"}
                 className={styles.slide}
                 style={{"background": props.bgColor}}
+                onLoad={() => DrawItems(props.slideItems)}
                 onClick={(event) => {
                     const slide = document.getElementById("slide");
                     if (slide) {
@@ -110,6 +112,8 @@ const SlideArea = (props: SlideAreaProps) => {
                                 }
                                 inputFile.click();
                                 inputFile.remove();
+                                props.setCurrentSlideState(SlideState.SELECT_AREA);
+                                break;
                             }
                         }
                         DrawItems(props.slideItems)

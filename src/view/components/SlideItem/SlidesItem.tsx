@@ -19,7 +19,6 @@ const DrawItems = (slideItems: Array<Item>) => {
                 break;
             }
             case ItemType.Image: {
-                console.log("image")
                 if (item.image) {
                     DrawImage(item.image.src, item.coordinates);
                 }

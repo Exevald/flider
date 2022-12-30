@@ -16,6 +16,8 @@ const CANVAS_SETTINGS = {
     height: 720,
 }
 
+
+
 function getRandomId(): Id {
     let id: Id = '';
     let vocabulary = 'abdehkmnpswxzABDEFGHKMNPQRSTWXZ123456789';

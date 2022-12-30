@@ -5,7 +5,8 @@ import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {swipeSlideShowSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
-import {useState} from "react";
+import {CANVAS_SETTINGS} from "../../../core/functions/utility";
+import {DrawItems} from "../../components/SlideItem/SlidesItem";
 
 function mapStateToProps(state: Editor) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
@@ -15,6 +16,7 @@ function mapStateToProps(state: Editor) {
         currentSlide: state.presentation.slides[currentSlideIndex],
         slideShowCurrentSlideIndex: state.slideShowCurrentSlideIndex,
         slideShowStatus: state.slideShowStatus,
+        slideItems: state.presentation.slides[currentSlideIndex].items,
     }
 }
 
@@ -32,7 +34,8 @@ const PresentationView = (props: PresentationViewProps) => {
     for (let i = 0; i < props.slides.length; i++) {
         let slide = props.slides[i];
         slides.push(
-            <div className={styles.canvas} style={{"backgroundColor": slide.bgColor}}>
+            <div className={styles.canvas} style={{"backgroundColor": slide.bgColor}} onClick={() => DrawItems(props.slideItems)}>
+                <canvas id={"canvas"} width={CANVAS_SETTINGS.width} height={CANVAS_SETTINGS.height}></canvas>
             </div>
         )
     }

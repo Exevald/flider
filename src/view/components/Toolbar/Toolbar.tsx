@@ -85,12 +85,12 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
 
             {
                 (status === 1 || status === 4 || status === 0) && <>
-                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"textArea"} onClick={() => {
-                    }}></ButtonIcon>
+                    {/*<ButtonIcon viewStyle={"selectArea"} onClick={() => {*/}
+                    {/*}}></ButtonIcon>*/}
+                    {/*<ButtonIcon viewStyle={"selectArrow"} onClick={() => {*/}
+                    {/*}}></ButtonIcon>*/}
+                    {/*<ButtonIcon viewStyle={"textArea"} onClick={() => {*/}
+                    {/*}}></ButtonIcon>*/}
                     <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
                                 onClick={() => {
                                     showDropDownById('SelectorButton', 'ImageSelector')
@@ -126,29 +126,28 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                     }
                 }}></ButtonIcon>
             }
+            {/*{*/}
+            {/*    status !== 1 &&*/}
+            {/*    <ButtonIcon viewStyle={"stroke"} onClick={() => {*/}
+            {/*    }}></ButtonIcon>*/}
+            {/*}*/}
 
-            {
-                status !== 1 &&
-                <ButtonIcon viewStyle={"stroke"} onClick={() => {
-                }}></ButtonIcon>
-            }
+            {/*{*/}
+            {/*    (status === 0 || status === 2) && <>*/}
+            {/*        <ButtonIcon viewStyle={"bold"} onClick={() => {*/}
+            {/*        }}></ButtonIcon>*/}
+            {/*        <ButtonIcon viewStyle={"cursive"} onClick={() => {*/}
+            {/*        }}></ButtonIcon>*/}
+            {/*        <ButtonIcon viewStyle={"underline"} onClick={() => {*/}
+            {/*        }}></ButtonIcon>*/}
+            {/*        <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}*/}
+            {/*                onClick={() => {*/}
+            {/*                }}></Button> </>*/}
+            {/*}*/}
 
-            {
-                (status === 0 || status === 2) && <>
-                    <ButtonIcon viewStyle={"bold"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"underline"} onClick={() => {
-                    }}></ButtonIcon>
-                    <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}
-                            onClick={() => {
-                            }}></Button> </>
-            }
-
-            {
-                status !== 1 && <FontSizeArea size={14}></FontSizeArea>
-            }
+            {/*{*/}
+            {/*    status !== 1 && <FontSizeArea size={14}></FontSizeArea>*/}
+            {/*}*/}
         </div>
     )
 }
