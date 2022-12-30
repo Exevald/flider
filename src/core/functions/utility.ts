@@ -8,7 +8,6 @@ const COLOR_PICKER_COLORS = [
 // надо менять ещё и в css стиле
 const DROPDOWN_ANIMATION_TIME = 220; //ms
 
-
 const DEFAULT_STOCKS = [
     {
         name: 'Shutterstock',
@@ -34,6 +33,9 @@ const DEFAULT_STOCKS = [
         name: 'Фотодженика',
         url: 'https://photogenica.ru'
     }
+];
+const DEFAULT_FIGURES = [
+    'Rectangle', 'Triangle', 'Arc', 'Star'
 ];
 
 
