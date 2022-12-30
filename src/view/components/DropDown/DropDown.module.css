@@ -88,12 +88,7 @@
     max-width: 300px;
     height: auto;
 }
-
-.addImage:hover {
-    background-color: var(--ayanami-20)!important;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    cursor: pointer;
+.addImage {
 }
 
 
@@ -140,7 +135,7 @@
 }
 .dropDownContent > a,
 .dropDownContent > p,
-.dropDownContent > form {
+.addImage > p {
     padding: 5px;
     color: var(--gendo-default);
     height: 25px;
@@ -150,7 +145,7 @@
 }
 .dropDownContent > a:hover,
 .dropDownContent > p:hover,
-.dropDownContent > form:hover {
+.addImage > p:hover {
     background-color: var(--ayanami-20);
 }
 .dropDownContent > a:first-child,
@@ -159,6 +154,6 @@
 }
 .dropDownContent > a:last-child,
 .dropDownContent > p:last-child,
-.dropDownContent > form:last-child {
+.addImage > p:last-child {
     border-radius: 0  0 10px 10px;
 }
