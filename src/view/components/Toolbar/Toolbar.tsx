@@ -78,24 +78,21 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     return (
         <div className={styles.toolbar}>
             <ButtonIcon viewStyle={"createSlide"}
-                        onClick={() => props.createSlide()}></ButtonIcon>
+                        onClick={() => props.createSlide()}/>
 
-            <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}></ButtonIcon>
-            <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}></ButtonIcon>
+            <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}/>
+            <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}/>
 
             {
                 (status === 1 || status === 4 || status === 0) && <>
-                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"textArea"} onClick={() => {
-                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"textArea"} onClick={() => {}}/>
                     <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
                                 onClick={() => {
                                     showDropDownById('SelectorButton', 'ImageSelector')
                                 }
-                                }></ButtonIcon> </>
+                                }/> </>
             }
 
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
@@ -110,13 +107,13 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                             }></ButtonIcon>
             }
 
-            <DropDown id={'shapes'} viewStyle={"figureShapes"}></DropDown>
+            <DropDown id={'shapes'} viewStyle={"figureShapes"}/>
             <ButtonIcon viewStyle={"palette"} id={'PickerButton'}
                         onClick={() => {
                             showDropDownById('PickerButton', 'ColorPicker')
                         }
-                        }></ButtonIcon>
-            <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
+                        }/>
+            <DropDown id={'ColorPicker'} viewStyle={'palette'}/>
 
             {
                 status !== 4 &&
@@ -124,29 +121,26 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                     if (!textSelected && !figureSelected) {
                         props.setBgColor(props.currentColor)
                     }
-                }}></ButtonIcon>
+                }}/>
             }
             {
                 status !== 1 &&
                 <ButtonIcon viewStyle={"stroke"} onClick={() => {
-                }}></ButtonIcon>
+                }}/>
             }
 
             {
                 (status === 0 || status === 2) && <>
-                    <ButtonIcon viewStyle={"bold"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
-                    }}></ButtonIcon>
-                    <ButtonIcon viewStyle={"underline"} onClick={() => {
-                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"bold"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"underline"} onClick={() => {}}/>
                     <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}
                             onClick={() => {
-                            }}></Button> </>
+                            }}/> </>
             }
 
             {
-                status !== 1 && <FontSizeArea size={14}></FontSizeArea>
+                status !== 1 && <FontSizeArea size={14}/>
             }
         </div>
     )
