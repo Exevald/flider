@@ -8,6 +8,35 @@ const COLOR_PICKER_COLORS = [
 // надо менять ещё и в css стиле
 const DROPDOWN_ANIMATION_TIME = 220; //ms
 
+
+const DEFAULT_STOCKS = [
+    {
+        name: 'Shutterstock',
+        url: 'https://www.shutterstock.com'
+    },
+    {
+        name: 'Getty Images',
+        url: 'https://www.gettyimages.com'
+    },
+    {
+        name: 'Adobe Stock',
+        url: 'https://stock.adobe.com/ru/'
+    },
+    {
+        name: 'Dreamstime',
+        url: 'https://www.dreamstime.com'
+    },
+    {
+        name: '123RF',
+        url: 'https://ru.123rf.com'
+    },
+    {
+        name: 'Фотодженика',
+        url: 'https://photogenica.ru'
+    }
+];
+
+
 const MAX_HISTORY_SIZE = 30;
 const MAX_TITLE_SIZE = 12;
 
@@ -55,5 +84,7 @@ function getBase64FromPicture(src: string, size: Area): Promise<string> {
     });
 }
 
-export {MAX_HISTORY_SIZE, COLOR_PICKER_COLORS, MAX_TITLE_SIZE, DROPDOWN_ANIMATION_TIME, CANVAS_SETTINGS};
+export {
+    MAX_HISTORY_SIZE, COLOR_PICKER_COLORS, MAX_TITLE_SIZE, DROPDOWN_ANIMATION_TIME, CANVAS_SETTINGS, DEFAULT_STOCKS
+};
 export {getRandomId, min, max, getBase64FromPicture};
