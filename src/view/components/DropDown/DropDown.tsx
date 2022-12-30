@@ -256,15 +256,15 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                     </div>
                 )
             case "palette":
-                let colorsList = [];
-                for (let i = 0; i < COLOR_PICKER_COLORS.length; i++) {
-                    colorsList.push(
-                        <button className={styles.paletteColor}
-                                style={{backgroundColor: COLOR_PICKER_COLORS[i]}}
-                                onClick={() => action('changeCurrentColor', COLOR_PICKER_COLORS[i])}
-                        />
-                    )
-                }
+                let colorsList = COLOR_PICKER_COLORS.map((color) =>
+                    <button className={styles.paletteColor}
+                            style={{backgroundColor: color}}
+                            onClick={() => {
+                                action('changeCurrentColor', color);
+                                removeOpenedDropDownById(id)
+                            }}
+                    />
+                );
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.palette}`}>
                         <div className={styles.dropDownContent}>
