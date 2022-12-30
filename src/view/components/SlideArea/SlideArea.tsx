@@ -1,19 +1,15 @@
 import styles from "./SlideArea.module.css"
 import {connect, ConnectedProps} from "react-redux";
-import {Editor, ItemType, Point, ShapeType, SlideState} from "../../../core/types/types";
+import {Editor, Point, ShapeType, SlideState} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {
-    addFigureItem,
+    addFigureItem, addImageItem,
     changeCurrentFigureType,
     changeCurrentSlideState,
     setCurrentCursorPosition
 } from "../../../model/actionCreators";
 import {DrawItems} from "../SlideItem/SlidesItem";
-
-const canvasSettings = {
-    width: 1280,
-    height: 720,
-}
+import {CANVAS_SETTINGS, getBase64FromPicture} from "../../../core/functions/utility";
 
 function mapStateToProps(state: Editor) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
@@ -35,6 +31,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         setCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
         addFigureItem: (shape: ShapeType, coordinates: Point, color: string) => dispatcher(addFigureItem(shape, coordinates, color)),
+        addImageItem: (imageSrc: string, coordinates: Point) => dispatcher(addImageItem(imageSrc, coordinates)),
     }
 }
 
@@ -96,12 +93,30 @@ const SlideArea = (props: SlideAreaProps) => {
                                 }
                                 break;
                             }
+                            case SlideState.DRAW_IMAGE: {
+                                const clientX = event.clientX - slide.offsetLeft;
+                                const clientY = event.clientY - slide.offsetTop;
+                                const inputFile = document.createElement('input');
+                                inputFile.type = 'file';
+                                inputFile.style.display = 'none';
+                                inputFile.accept = 'image/*';
+                                inputFile.onchange = () => {
+                                    if (inputFile.files) {
+                                        const urlImage = URL.createObjectURL(inputFile.files[0])
+                                        getBase64FromPicture(urlImage, {width: 400, height: 400}).then((newUrl) => {
+                                            props.addImageItem(newUrl, {x: clientX, y: clientY})
+                                        })
+                                    }
+                                }
+                                inputFile.click();
+                                inputFile.remove();
+                            }
                         }
-                        DrawItems(props.slideItems);
+                        DrawItems(props.slideItems)
                     }
                 }
                 }>
-                <canvas id={"canvas"} width={canvasSettings.width} height={canvasSettings.height}></canvas>
+                <canvas id={"canvas"} width={CANVAS_SETTINGS.width} height={CANVAS_SETTINGS.height}></canvas>
             </div>
         </div>
     )

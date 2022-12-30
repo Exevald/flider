@@ -45,6 +45,10 @@ type ActionType = {
         coordinates: Point,
         color: string,
     }
+    addImageParams?: {
+        imageSrc: string,
+        coordinates: Point,
+    }
     changeAngleParams?: {
         angleShift: number
     },
@@ -65,7 +69,7 @@ type ActionType = {
         fontSize?: number,
         fontWeight?: number,
     },
-    urlImage?: string,
+    urlSrc?: string,
     newWidth?: number,
     newColor?: string,
     newEditor?: Editor,

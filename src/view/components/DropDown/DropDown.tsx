@@ -262,10 +262,18 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                                 </div>
                             </div>
                             <div className={styles.separator}></div>
-                            <form method={"get"} style={{padding: '5px 0 5px 0'}}>
-                                <input style={{display: "none"}} type={"file"} id="uploadImage" name="uploadImage"/>
-                                <label htmlFor={"uploadImage"}>Выбрать с компьютера</label>
-                            </form>
+                            <div style={{padding: '5px 0 5px 0'}} onClick={() => {
+                                setCurrentSlideState(SlideState.DRAW_IMAGE);
+                            }}>
+                                <p>Выбрать с компьютера</p>
+
+                            </div>
+                            {/*<form method={"get"} style={{padding: '5px 0 5px 0'}} onClick={() => {*/}
+                            {/*    setCurrentSlideState(SlideState.DRAW_IMAGE);*/}
+                            {/*}*/}
+                            {/*}>*/}
+                            {/*    <label htmlFor={"uploadImage"}>Выбрать с компьютера</label>*/}
+                            {/*</form>*/}
 
                         </div>
                     </div>

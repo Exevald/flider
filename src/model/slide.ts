@@ -1,5 +1,5 @@
-import {Actions, Item, ItemType, Point, ShapeType, Slide, SlideState} from "../core/types/types";
-import {getRandomId} from "../core/functions/utility";
+import {Actions, Id, Item, ItemType, Point, ShapeType, Slide, SlideState} from "../core/types/types";
+import {getRandomId, min, max} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
 
@@ -84,24 +84,41 @@ function changeCurrentFigureTypeReducer(slide: Slide, newFigureType: ShapeType):
     }
 }
 
-function changeFillColorReducer(slide: Slide, newColor: string): Slide {
+function selectItemReducer(slide: Slide, itemId: Id): Slide {
     const newSlide = deepClone(slide) as Slide;
-    const selectedElementsId: Array<string> = newSlide.selectedItemsIds.concat();
-    for (let i = 0; i < newSlide.items.length; i++) {
-        if (selectedElementsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.Figure) && (newSlide.items[i].figure !== undefined)) {
-            const newElement: Item = {
-                ...newSlide.items[i],
-                figure: {
-                    shape: newSlide.items[i].figure!.shape,
-                    strokeColor: newSlide.items[i].figure!.strokeColor,
-                    strokeWidth: newSlide.items[i].figure!.strokeWidth,
-                    fillColor: newColor
-                }
-            }
-            newSlide.items.splice(i, 1, newElement);
-        }
+    return {
+        ...newSlide,
+        selectedItemsIds: [itemId],
     }
-    return newSlide;
+}
+
+function selectManyItemsReducer(slide: Slide, itemId: Id): Slide {
+    const newSlide = deepClone(slide) as Slide;
+    newSlide.selectedItemsIds.push(itemId);
+    return newSlide
+}
+
+function addImageReducer(slide: Slide, imageSrc: string, coordinates: Point): Slide {
+    console.log("imageReducer")
+    const newSlide = deepClone(slide) as Slide;
+    const newItem: Item = {
+        id: getRandomId(),
+        coordinates: {
+            x: coordinates.x,
+            y: coordinates.y,
+        },
+        element: ItemType.Image,
+        space: {
+            width: 100,
+            height: 100,
+        },
+        layer: 1,
+        image: {
+            src: imageSrc,
+        },
+    }
+    newSlide.items.push(newItem);
+    return newSlide
 }
 
 function slideReducer(state: Slide, action: ActionType): Slide {
@@ -114,6 +131,8 @@ function slideReducer(state: Slide, action: ActionType): Slide {
             return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as Slide;
         case Actions.ADD_FIGURE_ITEM:
             return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.coordinates, action.addFigureParams.color) : deepClone(state) as Slide;
+        case Actions.ADD_IMAGE:
+            return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as Slide;
         default:
             return deepClone(state) as Slide;
     }

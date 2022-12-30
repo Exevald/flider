@@ -59,9 +59,11 @@ enum Statuses {
     Figure,
     Image
 }
+
 interface StatusProps {
     status: Statuses;
 }
+
 const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     let textSelected = false;
     let figureSelected = false;
@@ -75,25 +77,25 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     )
     return (
         <div className={styles.toolbar}>
-            {
-                (status === 1 || status === 0)
-                && <ButtonIcon viewStyle={"createSlide"}
-                               onClick={() => props.createSlide()}></ButtonIcon>
-            }
+            <ButtonIcon viewStyle={"createSlide"}
+                        onClick={() => props.createSlide()}></ButtonIcon>
 
             <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}></ButtonIcon>
             <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}></ButtonIcon>
 
             {
                 (status === 1 || status === 4 || status === 0) && <>
-                <ButtonIcon viewStyle={"selectArea"} onClick={() => {}}></ButtonIcon>
-                <ButtonIcon viewStyle={"selectArrow"} onClick={() => {}}></ButtonIcon>
-                <ButtonIcon viewStyle={"textArea"} onClick={() => {}}></ButtonIcon>
-                <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
-                            onClick={() => {
-                                showDropDownById('SelectorButton', 'ImageSelector')
-                            }
-                }></ButtonIcon> </>
+                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {
+                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
+                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"textArea"} onClick={() => {
+                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
+                                onClick={() => {
+                                    showDropDownById('SelectorButton', 'ImageSelector')
+                                }
+                                }></ButtonIcon> </>
             }
 
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
@@ -113,7 +115,7 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                         onClick={() => {
                             showDropDownById('PickerButton', 'ColorPicker')
                         }
-            }></ButtonIcon>
+                        }></ButtonIcon>
             <DropDown id={'ColorPicker'} viewStyle={'palette'}></DropDown>
 
             {
@@ -133,11 +135,15 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
 
             {
                 (status === 0 || status === 2) && <>
-                <ButtonIcon viewStyle={"bold"} onClick={() => {}}></ButtonIcon>
-                <ButtonIcon viewStyle={"cursive"} onClick={() => {}}></ButtonIcon>
-                <ButtonIcon viewStyle={"underline"} onClick={() => {}}></ButtonIcon>
+                    <ButtonIcon viewStyle={"bold"} onClick={() => {
+                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
+                    }}></ButtonIcon>
+                    <ButtonIcon viewStyle={"underline"} onClick={() => {
+                    }}></ButtonIcon>
                     <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}
-                            onClick={() => {}}></Button> </>
+                            onClick={() => {
+                            }}></Button> </>
             }
 
             {

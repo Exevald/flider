@@ -126,6 +126,17 @@ function addFigureItem(shape: ShapeType, coordinates: Point, color: string) {
     }
 }
 
+function addImageItem(imageSrc: string, coordinates: Point) {
+    console.log("action")
+    return {
+        type: Actions.ADD_IMAGE,
+        addImageParams: {
+            imageSrc,
+            coordinates,
+        }
+    }
+}
+
 function changeCurrentSlideState(newSlideState: SlideState) {
     return {
         type: Actions.CHANGE_CURRENT_SLIDE_STATE,
@@ -161,4 +172,5 @@ export {
     setCurrentCursorPosition,
     changeCurrentSlideState,
     changeCurrentFigureType,
+    addImageItem,
 }
