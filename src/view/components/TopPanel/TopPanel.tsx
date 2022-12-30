@@ -51,41 +51,37 @@ const TopPanel = (props: TopPanelProps) => {
 
     return (
         <div className={styles.topPanel}>
-            <div>
-                <LogoArea/>
-                <div className={styles.renameContainer}>
-                    {
-                        rename ?
-                            <TextArea
-                                placeholder={"Назавание презентации"}
-                                type={'title'}
-                                onKeyUp={(value: string) => {
-                                    if (value !== '') {
-                                        props.changeTitle(value)
-                                    }
-                                    setRename(false)
-                                }}
-                            />
-                            : <p className={styles.name}>{props.title}</p>
-                    }
-                </div>
-                <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
+            <LogoArea/>
+            <div className={styles.renameContainer}>
+                {
+                    rename ?
+                        <TextArea
+                            placeholder={"Назавание презентации"}
+                            type={'title'}
+                            onKeyUp={(value: string) => {
+                                if (value !== '') {
+                                    props.changeTitle(value)
+                                }
+                                setRename(false)
+                            }}
+                        />
+                        : <p className={styles.name}>{props.title}</p>
+                }
             </div>
+            <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
 
-            <div>
-                <div className={styles.dropDownArea}>
-                    <Button viewStyle={"save"} id={"SavePresentationButton"}
-                            onClick={() => {
+            <div className={styles.dropDownArea}>
+                <Button viewStyle={"save"} id={"SavePresentationButton"}
+                        onClick={() => {
                             showDropDownById('SavePresentationButton','saveActionDropDown');
-                        }
-                    } text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
-                    <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}></DropDown>
-                </div>
-                <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}
-                        to={"/presentation/watch"}
-                        onClick={() => {}}/>
+                        }}
+                        text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
+                <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}/>
             </div>
-
+            <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}
+                    to={"/presentation/watch"}
+                    onClick={() => {}}
+            />
         </div>
     )
 }

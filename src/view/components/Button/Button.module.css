@@ -92,7 +92,7 @@
 .buttonWatch {
     background-color: var(--ayanami-default);
     color: var(--shinji);
-    margin-left: 2.2vw;
+    margin: 0 2.2vw 0 2.2vw;
 }
 
 .buttonWatch:hover {
