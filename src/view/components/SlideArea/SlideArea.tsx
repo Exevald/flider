@@ -10,6 +10,7 @@ import {
 } from "../../../model/actionCreators";
 import {DrawItems} from "../SlideItem/SlidesItem";
 import {CANVAS_SETTINGS, getBase64FromPicture} from "../../../core/functions/utility";
+import {useEffect} from "react";
 
 function mapStateToProps(state: Editor) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
@@ -40,6 +41,12 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 type SlideAreaProps = ConnectedProps<typeof connector>
 
 const SlideArea = (props: SlideAreaProps) => {
+    useEffect(() => {
+        const doc = document.querySelector('body');
+        if (doc !== null) {
+            DrawItems(props.slideItems);
+        }
+    })
     return (
         <div className={styles.slideArea}>
             <div
@@ -116,7 +123,6 @@ const SlideArea = (props: SlideAreaProps) => {
                                 break;
                             }
                         }
-                        DrawItems(props.slideItems)
                     }
                 }
                 }>
