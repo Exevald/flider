@@ -209,18 +209,21 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                                     onClick={() => {
                                         setCurrentSlideState(SlideState.DRAW_FIGURE);
                                         changeCurrentFigureType(ShapeType.Rectangle);
+                                        removeOpenedDropDownById('shapes');
                                     }}/>
                                 <div
                                     className={`${styles.shapes} ${styles.shapeArc}`}
                                     onClick={() => {
                                         setCurrentSlideState(SlideState.DRAW_FIGURE);
                                         changeCurrentFigureType(ShapeType.Arc);
+                                        removeOpenedDropDownById('shapes');
                                     }}/>
                                 <div
                                     className={`${styles.shapes} ${styles.shapeTriangle}`}
                                     onClick={() => {
                                         setCurrentSlideState(SlideState.DRAW_FIGURE);
                                         changeCurrentFigureType(ShapeType.Triangle);
+                                        removeOpenedDropDownById('shapes');
                                     }}
                                 />
                                 <div
@@ -228,6 +231,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                                     onClick={() => {
                                         setCurrentSlideState(SlideState.DRAW_FIGURE);
                                         changeCurrentFigureType(ShapeType.Star);
+                                        removeOpenedDropDownById('shapes');
                                     }}
                                 />
                             </div>
@@ -247,6 +251,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                             <Separator/>
                             <div className={styles.addImage} onClick={() => {
                                 setCurrentSlideState(SlideState.DRAW_IMAGE);
+                                removeOpenedDropDownById('ImageSelector');
                             }}>
                                 <p>Выбрать с компьютера</p>
                             </div>
