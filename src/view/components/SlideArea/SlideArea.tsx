@@ -42,10 +42,7 @@ type SlideAreaProps = ConnectedProps<typeof connector>
 
 const SlideArea = (props: SlideAreaProps) => {
     useEffect(() => {
-        const doc = document.querySelector('body');
-        if (doc !== null) {
-            DrawItems(props.slideItems);
-        }
+        DrawItems(props.slideItems);
     })
     return (
         <div className={styles.slideArea}>
