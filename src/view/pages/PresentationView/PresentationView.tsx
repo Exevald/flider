@@ -3,10 +3,11 @@ import {Link} from "react-router-dom";
 import {connect, ConnectedProps} from "react-redux";
 import {Editor} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
-import {swipeSlideShowSlide} from "../../../model/actionCreators";
+import {selectManySlides, swipeSlideShowSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
 import {CANVAS_SETTINGS} from "../../../core/functions/utility";
 import {DrawItems} from "../../components/SlideItem/SlidesItem";
+import {useEffect} from "react";
 
 function mapStateToProps(state: Editor) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
@@ -30,11 +31,12 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PresentationViewProps = ConnectedProps<typeof connector>
 
 const PresentationView = (props: PresentationViewProps) => {
+    useEffect(() => DrawItems(props.slideItems))
     let slides = [];
     for (let i = 0; i < props.slides.length; i++) {
         let slide = props.slides[i];
         slides.push(
-            <div className={styles.canvas} style={{"backgroundColor": slide.bgColor}} onClick={() => DrawItems(props.slideItems)}>
+            <div className={styles.canvas} style={{"backgroundColor": slide.bgColor}}>
                 <canvas id={"canvas"} width={CANVAS_SETTINGS.width} height={CANVAS_SETTINGS.height}></canvas>
             </div>
         )
@@ -49,11 +51,11 @@ const PresentationView = (props: PresentationViewProps) => {
                     {
                         props.slideShowCurrentSlideIndex === 0 ?
                             // если первый
-                            <div
+                            <div id={'ArrowLeft'}
                                 className={`${styles.arrow} ${styles.arrowLeftDisabled}`}>
                             </div>
                             :
-                            <div
+                            <div id={'ArrowLeft'}
                                 className={`${styles.arrow} ${styles.arrowLeft}`}
                                 onClick={() => {
                                     props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left")
@@ -63,11 +65,11 @@ const PresentationView = (props: PresentationViewProps) => {
                     {
                         props.slideShowCurrentSlideIndex === props.countOfSlides - 1 ?
                             // если последний
-                            <div
+                            <div id={'ArrowRight'}
                                 className={`${styles.arrow} ${styles.arrowRightDisabled}`}>
                             </div>
                             :
-                            <div
+                            <div id={'ArrowRight'}
                                 className={`${styles.arrow} ${styles.arrowRight}`}
                                 onClick={() => {
                                     props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right")
