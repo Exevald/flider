@@ -177,9 +177,7 @@ const Stocks = () => {
     let stocks = DEFAULT_STOCKS.map((stock) =>
         <a key={stock.name.toString()} href={stock.url} target={"_blank"}
            rel={"noreferrer"}>
-            <li>
-                {stock.name}
-            </li>
+            <li>{stock.name}</li>
         </a>
     );
     return (
