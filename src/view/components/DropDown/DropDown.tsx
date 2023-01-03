@@ -1,5 +1,10 @@
 import styles from "./DropDown.module.css"
-import {COLOR_PICKER_COLORS, DEFAULT_STOCKS, DROPDOWN_ANIMATION_TIME} from "../../../core/functions/utility";
+import {
+    COLOR_PICKER_COLORS,
+    DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,
+    DEFAULT_STOCKS,
+    DROPDOWN_ANIMATION_TIME
+} from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {
     changeCurrentColor,
@@ -175,7 +180,7 @@ const Separator = () => {
 }
 const Stocks = () => {
     let stocks = DEFAULT_STOCKS.map((stock) =>
-        <a key={stock.name.toString()} href={stock.url} target={"_blank"}
+        <a key={`stock-${stock.name.toString()}`} href={stock.url} target={"_blank"}
            rel={"noreferrer"}>
             <li>{stock.name}</li>
         </a>
@@ -196,6 +201,18 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "figureShapes":
+                let figures = [];
+                for (let i = 0; i < DEFAULT_FIGURES.length; i++) {
+                    figures.push(
+                        <div className={`${styles.shapes} ${DEFAULT_FIGURES_STYLES[i]}`}
+                             onClick={() => {
+                                 setCurrentSlideState(SlideState.DRAW_FIGURE);
+                                 changeCurrentFigureType(DEFAULT_FIGURES[i].modelId);
+                                 removeOpenedDropDownById('shapes');
+                             }}
+                        />
+                    )
+                }
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.figures}`}>
                         <div className={styles.dropDownContent}>
@@ -204,36 +221,7 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                             </p>
                             <Separator/>
                             <div className={styles.shapesContent}>
-                                <div
-                                    className={`${styles.shapes} ${styles.shapeRectangle}`}
-                                    onClick={() => {
-                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
-                                        changeCurrentFigureType(ShapeType.Rectangle);
-                                        removeOpenedDropDownById('shapes');
-                                    }}/>
-                                <div
-                                    className={`${styles.shapes} ${styles.shapeArc}`}
-                                    onClick={() => {
-                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
-                                        changeCurrentFigureType(ShapeType.Arc);
-                                        removeOpenedDropDownById('shapes');
-                                    }}/>
-                                <div
-                                    className={`${styles.shapes} ${styles.shapeTriangle}`}
-                                    onClick={() => {
-                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
-                                        changeCurrentFigureType(ShapeType.Triangle);
-                                        removeOpenedDropDownById('shapes');
-                                    }}
-                                />
-                                <div
-                                    className={`${styles.shapes} ${styles.shapesStar}`}
-                                    onClick={() => {
-                                        setCurrentSlideState(SlideState.DRAW_FIGURE);
-                                        changeCurrentFigureType(ShapeType.Star);
-                                        removeOpenedDropDownById('shapes');
-                                    }}
-                                />
+                                {figures}
                             </div>
                         </div>
                     </div>
