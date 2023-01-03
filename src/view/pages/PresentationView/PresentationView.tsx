@@ -6,7 +6,7 @@ import {AppDispatcher} from "../../../model/store";
 import {swipeSlideShowSlide, switchSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
 import {CANVAS_SETTINGS} from "../../../core/functions/utility";
-import {DrawItems} from "../../components/SlideItem/SlidesItem";
+import {DrawSlideItems} from "../../components/SlideItem/SlidesItem";
 import {useEffect} from "react";
 
 function mapStateToProps(state: Editor) {
@@ -34,6 +34,15 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PresentationViewProps = ConnectedProps<typeof connector>
 
 const PresentationView = (props: PresentationViewProps) => {
+    useEffect(() => {
+        DrawSlideItems(props.slideItems, "canvas");
+        const body = document.querySelector('body');
+        if (body !== null) {
+            body.addEventListener("keydown", keysHandler);
+
+            return () => body.removeEventListener("keydown", keysHandler);
+        }
+    });
     const slidesIds = props.slides.map(slide => {
         return slide.id;
     });
@@ -46,7 +55,6 @@ const PresentationView = (props: PresentationViewProps) => {
             </div>
         )
     }
-    console.log(props.currentSlideIndex);
     function keysHandler(e: KeyboardEvent) {
         console.log('hii')
         if (e.code === 'ArrowLeft' && (props.slideShowCurrentSlideIndex > 0)) {
@@ -58,15 +66,6 @@ const PresentationView = (props: PresentationViewProps) => {
             props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
         }
     }
-    useEffect(() => {
-        DrawItems(props.slideItems);
-        const body = document.querySelector('body');
-        if (body !== null) {
-            body.addEventListener("keydown", keysHandler);
-
-            return () => body.removeEventListener("keydown", keysHandler);
-        }
-    });
     return (
         <div className={styles.blackout}>
             <div className={styles.canvasArea}>
