@@ -47,7 +47,26 @@ const PresentationView = (props: PresentationViewProps) => {
         )
     }
     console.log(props.currentSlideIndex);
-    useEffect(() => DrawItems(props.slideItems));
+    function keysHandler(e: KeyboardEvent) {
+        console.log('hii')
+        if (e.code === 'ArrowLeft' && (props.slideShowCurrentSlideIndex > 0)) {
+            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
+            props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
+        }
+        if (e.code === 'ArrowRight' && (props.slideShowCurrentSlideIndex < props.countOfSlides - 1)) {
+            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
+            props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
+        }
+    }
+    useEffect(() => {
+        DrawItems(props.slideItems);
+        const body = document.querySelector('body');
+        if (body !== null) {
+            body.addEventListener("keydown", keysHandler);
+
+            return () => body.removeEventListener("keydown", keysHandler);
+        }
+    });
     return (
         <div className={styles.blackout}>
             <div className={styles.canvasArea}>
@@ -56,30 +75,24 @@ const PresentationView = (props: PresentationViewProps) => {
                 <div className={styles.arrows}>
                     {
                         props.slideShowCurrentSlideIndex === 0 ?
-                            <div id={'ArrowLeft'}
-                                className={`${styles.arrow} ${styles.arrowLeftDisabled}`}>
-                            </div>
+                            <div className={`${styles.arrow} ${styles.arrowLeftDisabled}`}></div>
                             :
-                            <div id={'ArrowLeft'}
-                                className={`${styles.arrow} ${styles.arrowLeft}`}
-                                onClick={() => {
-                                    props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
-                                    props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
-                                }}>
+                            <div className={`${styles.arrow} ${styles.arrowLeft}`}
+                                 onClick={() => {
+                                     props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
+                                     props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
+                                 }}>
                             </div>
                     }
                     {
                         props.slideShowCurrentSlideIndex === props.countOfSlides - 1 ?
-                            <div id={'ArrowRight'}
-                                className={`${styles.arrow} ${styles.arrowRightDisabled}`}>
-                            </div>
+                            <div className={`${styles.arrow} ${styles.arrowRightDisabled}`}></div>
                             :
-                            <div id={'ArrowRight'}
-                                className={`${styles.arrow} ${styles.arrowRight}`}
-                                onClick={() => {
-                                    props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
-                                    props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
-                                }}>
+                            <div className={`${styles.arrow} ${styles.arrowRight}`}
+                                 onClick={() => {
+                                     props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
+                                     props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
+                                 }}>
                             </div>
                     }
                 </div>
