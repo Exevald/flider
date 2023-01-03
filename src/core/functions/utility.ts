@@ -47,12 +47,15 @@ const CANVAS_SETTINGS = {
     height: 720,
 }
 
-
+const SIDEBAR_SETTINGS = {
+    width: 180,
+    height: 111,
+}
 
 function getRandomId(): Id {
     let id: Id = '';
-    let vocabulary = 'abdehkmnpswxzABDEFGHKMNPQRSTWXZ123456789';
-    let idLength = 32;
+    const vocabulary = 'abdehkmnpswxzABDEFGHKMNPQRSTWXZ123456789';
+    const idLength = 32;
 
     while (id.length < idLength) {
         id += vocabulary[Math.floor(Math.random() * vocabulary.length)];
@@ -87,6 +90,12 @@ function getBase64FromPicture(src: string, size: Area): Promise<string> {
 }
 
 export {
-    MAX_HISTORY_SIZE, COLOR_PICKER_COLORS, MAX_TITLE_SIZE, DROPDOWN_ANIMATION_TIME, CANVAS_SETTINGS, DEFAULT_STOCKS
+    MAX_HISTORY_SIZE,
+    COLOR_PICKER_COLORS,
+    MAX_TITLE_SIZE,
+    DROPDOWN_ANIMATION_TIME,
+    CANVAS_SETTINGS,
+    DEFAULT_STOCKS,
+    SIDEBAR_SETTINGS,
 };
 export {getRandomId, min, max, getBase64FromPicture};

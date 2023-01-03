@@ -1,7 +1,7 @@
 import {Point} from "../../../../core/types/types";
 
-const DrawImage = (imageSrc: string, coordinates: Point) => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+const DrawImage = (canvasId: string, imageSrc: string, coordinates: Point) => {
+    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
     const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
     const newImage = new Image();
     newImage.width = 500;

@@ -8,7 +8,7 @@ import {
     changeCurrentSlideState,
     setCurrentCursorPosition
 } from "../../../model/actionCreators";
-import {DrawItems} from "../SlideItem/SlidesItem";
+import {DrawSlideItems} from "../SlideItem/SlidesItem";
 import {CANVAS_SETTINGS, getBase64FromPicture} from "../../../core/functions/utility";
 import {useEffect} from "react";
 
@@ -42,16 +42,14 @@ type SlideAreaProps = ConnectedProps<typeof connector>
 
 const SlideArea = (props: SlideAreaProps) => {
     useEffect(() => {
-        DrawItems(props.slideItems);
+        DrawSlideItems(props.slideItems, "canvas");
     })
-    console.log(props.currentSlide);
     return (
         <div className={styles.slideArea}>
             <div
                 id={"slide"}
                 className={styles.slide}
                 style={{"background": props.bgColor}}
-                onLoad={() => DrawItems(props.slideItems)}
                 onClick={(event) => {
                     const slide = document.getElementById("slide");
                     if (slide) {

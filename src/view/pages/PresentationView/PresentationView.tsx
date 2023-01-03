@@ -6,7 +6,7 @@ import {AppDispatcher} from "../../../model/store";
 import {swipeSlideShowSlide, switchSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
 import {CANVAS_SETTINGS} from "../../../core/functions/utility";
-import {DrawItems} from "../../components/SlideItem/SlidesItem";
+import {DrawSlideItems} from "../../components/SlideItem/SlidesItem";
 import {useEffect} from "react";
 
 function mapStateToProps(state: Editor) {
@@ -34,6 +34,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PresentationViewProps = ConnectedProps<typeof connector>
 
 const PresentationView = (props: PresentationViewProps) => {
+    useEffect(() => DrawSlideItems(props.slideItems, "canvas"));
     const slidesIds = props.slides.map(slide => {
         return slide.id;
     });
@@ -46,8 +47,6 @@ const PresentationView = (props: PresentationViewProps) => {
             </div>
         )
     }
-    console.log(props.currentSlideIndex);
-    useEffect(() => DrawItems(props.slideItems));
     return (
         <div className={styles.blackout}>
             <div className={styles.canvasArea}>
