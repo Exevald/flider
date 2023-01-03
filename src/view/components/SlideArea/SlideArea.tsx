@@ -44,6 +44,7 @@ const SlideArea = (props: SlideAreaProps) => {
     useEffect(() => {
         DrawItems(props.slideItems);
     })
+    console.log(props.currentSlide);
     return (
         <div className={styles.slideArea}>
             <div
