@@ -1,5 +1,5 @@
 import Sidebar from "../Sidebar/Sidebar";
-import SlideArea from "../SlideArea/SlideArea";
+import Slide from "../Slide/SlideArea";
 import styles from "./WorkSpace.module.css";
 import {EditorType} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
@@ -12,6 +12,7 @@ function mapStateToProps(state: EditorType) {
         slidesCount: state.presentation.slides.length,
         currentSlideIds: state.presentation.selectedSlidesIds,
         currentSlide: state.presentation.slides[currentSlideIndex],
+        currentSlideBgColor: state.presentation.slides[currentSlideIndex].bgColor,
     }
 }
 
@@ -22,14 +23,17 @@ const WorkSpace = (props: WorkSpaceProps) => {
     return (
         <div className={styles.workspace}>
             <Sidebar></Sidebar>
-            <SlideArea
-                slideItems=
-                    {props.currentSlide.items.map((item) =>
-                        <li key={item.id}>
-                            <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={true}></SlideItem>
-                        </li>
-                    )}
-                background={"white"}></SlideArea>
+            <div className={styles.slideArea}>
+                <Slide
+                    slideItems=
+                        {props.currentSlide.items.map((item) =>
+                            <li key={item.id}
+                                className={styles.slideElement}>
+                                <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={true}></SlideItem>
+                            </li>
+                        )}
+                    background={props.currentSlideBgColor}></Slide>
+            </div>
         </div>
     )
 }

@@ -78,43 +78,41 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     return (
         <div className={styles.toolbar}>
             <ButtonIcon viewStyle={"createSlide"}
-                        onClick={() => props.createSlide()}/>
-
+                        onClick={() => props.createSlide()}
+            />
             <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}/>
             <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}/>
-
             {
                 (status === 1 || status === 4 || status === 0) && <>
-                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"textArea"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"textArea"} onClick={() => {
+                    }}/>
                     <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
                                 onClick={() => {
                                     showDropDownById('SelectorButton', 'ImageSelector')
                                 }
-                                }/> </>
+                                }/>
+                </>
             }
-
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
-
-
             {
                 (status !== 2 && status !== 4) &&
                 <ButtonIcon viewStyle={"figure"} id={'FigureButton'}
                             onClick={() => {
                                 showDropDownById('FigureButton', 'shapes')
                             }
-                            }></ButtonIcon>
+                            }/>
             }
-
             <DropDown id={'shapes'} viewStyle={"figureShapes"}/>
             <ButtonIcon viewStyle={"palette"} id={'PickerButton'}
                         onClick={() => {
                             showDropDownById('PickerButton', 'ColorPicker')
-                        }
-                        }/>
+                        }}
+            />
             <DropDown id={'ColorPicker'} viewStyle={'palette'}/>
-
             {
                 status !== 4 &&
                 <ButtonIcon viewStyle={"filler"} onClick={() => {
@@ -128,17 +126,23 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                 <ButtonIcon viewStyle={"stroke"} onClick={() => {
                 }}/>
             }
-
             {
                 (status === 0 || status === 2) && <>
-                    <ButtonIcon viewStyle={"bold"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"underline"} onClick={() => {}}/>
-                    <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}
+                    <ButtonIcon viewStyle={"bold"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"underline"} onClick={() => {
+                    }}/>
+                    <Button viewStyle={"fontArea"}
+                            iconStyle={"right"}
+                            iconSrc={SaveIcon}
+                            text={"Inter"}
                             onClick={() => {
-                            }}/> </>
+                            }}
+                    />
+                </>
             }
-
             {
                 status !== 1 && <FontSizeArea size={14}/>
             }

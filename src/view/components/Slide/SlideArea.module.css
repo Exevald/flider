@@ -1,11 +1,3 @@
-.slideArea {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: var(--ayanami-20);
-
-}
 .slide {
     max-width: 1280px;
     width: 100%;
