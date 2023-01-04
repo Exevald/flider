@@ -1,8 +1,14 @@
 import {Area, Id} from "../types/types";
+import styles from "../../view/components/DropDown/DropDown.module.css";
+import figureStyles from "./../../view/components/DropDown/DropDown.module.css"
 
 const COLOR_PICKER_COLORS = [
-    "white", "whitesmoke", "gray", "darkgray", "black",
-    "yellow", "orange", "darkorange", "red", "darkred"
+    "white", "whitesmoke", "darkgray", "gray", "black",
+    "yellow", "orange", "darkorange", "crimson", "red",
+    "chartreuse", "Lime", "limegreen", "green", "darkgreen",
+    "aquamarine", "cyan", "dodgerblue", "blue", "navy",
+    "navajowhite", "burlywood", "goldenrod", "saddlebrown", "maroon",
+    "plum", "violet", "magenta", "darkviolet", "purple"
 ];
 
 // надо менять ещё и в css стиле
@@ -34,10 +40,28 @@ const DEFAULT_STOCKS = [
         url: 'https://photogenica.ru'
     }
 ];
-const DEFAULT_FIGURES = [
-    'Rectangle', 'Triangle', 'Arc', 'Star'
-];
 
+// для новых фигур надо изменять модель и стили включительно!
+const DEFAULT_FIGURES = [
+    {
+        name: 'Rectangle',
+        modelId: 0
+    },
+    {
+        name: 'Triangle',
+        modelId: 1
+    },
+    {
+        name: 'Arc',
+        modelId: 2
+    },
+    {
+        name: 'Star',
+        modelId: 3
+    },
+];
+let DEFAULT_FIGURES_STYLES = [figureStyles.shapeRectangle, figureStyles.shapeArc, figureStyles.shapeTriangle,
+    figureStyles.shapesStar];
 
 const MAX_HISTORY_SIZE = 30;
 const MAX_TITLE_SIZE = 12;
@@ -96,6 +120,7 @@ export {
     DROPDOWN_ANIMATION_TIME,
     CANVAS_SETTINGS,
     DEFAULT_STOCKS,
-    SIDEBAR_SETTINGS,
+    DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,
+    SIDEBAR_SETTINGS
 };
 export {getRandomId, min, max, getBase64FromPicture};
