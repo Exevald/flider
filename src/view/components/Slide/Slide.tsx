@@ -1,4 +1,4 @@
-import styles from "./SlideArea.module.css"
+import styles from "./Slide.module.css"
 import {connect} from "react-redux";
 
 interface SlideAreaProps {

@@ -5,6 +5,8 @@ import {connect, ConnectedProps} from "react-redux";
 import {SIDEBAR_SETTINGS} from "../../../core/functions/utility";
 import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../../model/actionCreators";
 import {useEffect} from "react";
+import Slide from "../Slide/Slide";
+import SlideItem from "../SlideItem/SlideItem";
 
 interface SlidePreviewProps {
     id: string;
@@ -45,7 +47,6 @@ const SlidePreview = (props: SlidePreviewProps) => {
     let borderStyle = ''
     if (props.isSelected) {
         borderStyle = styles.slidePreviewSelected;
-
     }
     const slideId = parseInt(props.id) + 1;
     return (
@@ -65,9 +66,7 @@ const SlidePreview = (props: SlidePreviewProps) => {
             <p className={styles.slideIndex}>{slideId}</p>
             <div
                 className={`${styles.slidePreview} ${borderStyle}`}
-                style={{"backgroundColor": props.bgColor}}
             >
-                <canvas id={"sidebarCanvas"} width={SIDEBAR_SETTINGS.width} height={SIDEBAR_SETTINGS.height}></canvas>
             </div>
         </div>
     )
