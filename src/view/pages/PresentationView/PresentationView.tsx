@@ -39,7 +39,6 @@ const PresentationView = (props: PresentationViewProps) => {
         const body = document.querySelector('body');
         if (body !== null) {
             body.addEventListener("keydown", keysHandler);
-
             return () => body.removeEventListener("keydown", keysHandler);
         }
     });
@@ -56,7 +55,6 @@ const PresentationView = (props: PresentationViewProps) => {
         )
     }
     function keysHandler(e: KeyboardEvent) {
-        console.log('hii')
         if (e.code === 'ArrowLeft' && (props.slideShowCurrentSlideIndex > 0)) {
             props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
             props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
