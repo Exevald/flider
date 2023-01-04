@@ -3,10 +3,8 @@ import {Editor, Item} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {connect, ConnectedProps} from "react-redux";
 import {SIDEBAR_SETTINGS} from "../../../core/functions/utility";
-
 import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../../model/actionCreators";
 import {useEffect} from "react";
-import {DrawSlideItems} from "../SlideItem/SlidesItem";
 
 interface SlidePreviewProps {
     id: string;
@@ -50,7 +48,6 @@ const SlidePreview = (props: SlidePreviewProps) => {
 
     }
     const slideId = parseInt(props.id) + 1;
-    useEffect(() => {DrawSlideItems(props.slideItems, "sidebarCanvas")})
     return (
         <div className={styles.sidebarRow} onClick={(event) => {
             if (event.ctrlKey) {
