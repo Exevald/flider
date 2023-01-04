@@ -1,5 +1,5 @@
 import styles from "./Sidebar.module.css"
-import {Editor, Item} from "../../../core/types/types";
+import {EditorType, Item} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {connect, ConnectedProps} from "react-redux";
 import {SIDEBAR_SETTINGS} from "../../../core/functions/utility";
@@ -28,7 +28,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     }
 }
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
         slides: state.presentation.slides,

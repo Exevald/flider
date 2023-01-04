@@ -1,23 +1,23 @@
-import {Actions, Id, Item, ItemType, Point, ShapeType, Slide, SlideState} from "../core/types/types";
+import {Actions, IdType, Item, ItemType, PointType, ShapeType, SlideType, SlideState} from "../core/types/types";
 import {getRandomId, min, max} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
 
-function setBackgroundColorReducer(slide: Slide, backgroundColor: string): Slide {
-    const newSlide = deepClone(slide) as Slide;
+function setBackgroundColorReducer(slide: SlideType, backgroundColor: string): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
     return {
         ...newSlide,
         bgColor: backgroundColor
     }
 }
 
-function addFigureItemReducer(slide: Slide, shape: ShapeType, coordinates: Point, color: string): Slide {
-    const newSlide = deepClone(slide) as Slide;
+function addFigureItemReducer(slide: SlideType, shape: ShapeType, color: string): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
     const newItem: Item = {
         id: getRandomId(),
         coordinates: {
-            x: coordinates.x,
-            y: coordinates.y,
+            x: 500,
+            y: 500,
         },
         element: ItemType.Figure,
         space: {
@@ -68,39 +68,39 @@ function addFigureItemReducer(slide: Slide, shape: ShapeType, coordinates: Point
     return newSlide;
 }
 
-function changeCurrentSlideStateReducer(slide: Slide, newState: SlideState): Slide {
-    const newSlide = deepClone(slide) as Slide;
+function changeCurrentSlideStateReducer(slide: SlideType, newState: SlideState): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
     return {
         ...newSlide,
         currentState: newState,
     }
 }
 
-function changeCurrentFigureTypeReducer(slide: Slide, newFigureType: ShapeType): Slide {
-    const newSlide = deepClone(slide) as Slide;
+function changeCurrentFigureTypeReducer(slide: SlideType, newFigureType: ShapeType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
     return {
         ...newSlide,
         currentFigureType: newFigureType,
     }
 }
 
-function selectItemReducer(slide: Slide, itemId: Id): Slide {
-    const newSlide = deepClone(slide) as Slide;
+function selectItemReducer(slide: SlideType, itemId: IdType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
     return {
         ...newSlide,
         selectedItemsIds: [itemId],
     }
 }
 
-function selectManyItemsReducer(slide: Slide, itemId: Id): Slide {
-    const newSlide = deepClone(slide) as Slide;
+function selectManyItemsReducer(slide: SlideType, itemId: IdType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
     newSlide.selectedItemsIds.push(itemId);
     return newSlide
 }
 
-function addImageReducer(slide: Slide, imageSrc: string, coordinates: Point): Slide {
+function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointType): SlideType {
     console.log("imageReducer")
-    const newSlide = deepClone(slide) as Slide;
+    const newSlide = deepClone(slide) as SlideType;
     const newItem: Item = {
         id: getRandomId(),
         coordinates: {
@@ -121,20 +121,20 @@ function addImageReducer(slide: Slide, imageSrc: string, coordinates: Point): Sl
     return newSlide
 }
 
-function slideReducer(state: Slide, action: ActionType): Slide {
+function slideReducer(state: SlideType, action: ActionType): SlideType {
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
-            return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as Slide;
+            return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as SlideType;
         case Actions.CHANGE_CURRENT_FIGURE_TYPE:
-            return action.newCurrentFigureType !== undefined ? changeCurrentFigureTypeReducer(state, action.newCurrentFigureType) : deepClone(state) as Slide;
+            return action.newCurrentFigureType !== undefined ? changeCurrentFigureTypeReducer(state, action.newCurrentFigureType) : deepClone(state) as SlideType;
         case Actions.SET_BACKGROUND_COLOR:
-            return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as Slide;
+            return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as SlideType;
         case Actions.ADD_FIGURE_ITEM:
-            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.coordinates, action.addFigureParams.color) : deepClone(state) as Slide;
+            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.color) : deepClone(state) as SlideType;
         case Actions.ADD_IMAGE:
-            return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as Slide;
+            return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as SlideType;
         default:
-            return deepClone(state) as Slide;
+            return deepClone(state) as SlideType;
     }
 }
 

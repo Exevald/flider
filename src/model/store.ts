@@ -1,4 +1,4 @@
-import {Actions, Editor, ItemType, Point, ShapeType, SlideState} from "../core/types/types";
+import {Actions, EditorType, ItemType, PointType, ShapeType, SlideState} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
@@ -6,7 +6,7 @@ import {deleteSlides, openPresentation, redo, undo} from "./actionCreators";
 import {deepClone} from "../core/functions/deepClone";
 import {slideReducer} from "./slide";
 
-let initialState: Editor = {
+let initialState: EditorType = {
     presentation: {
         title: "Имя презентации",
         slides: [
@@ -42,12 +42,11 @@ type ActionType = {
     elementId?: string,
     addFigureParams?: {
         shape: ShapeType,
-        coordinates: Point,
         color: string,
     }
     addImageParams?: {
         imageSrc: string,
-        coordinates: Point,
+        coordinates: PointType,
     }
     changeAngleParams?: {
         angleShift: number
@@ -72,7 +71,7 @@ type ActionType = {
     urlSrc?: string,
     newWidth?: number,
     newColor?: string,
-    newEditor?: Editor,
+    newEditor?: EditorType,
     slideShowCurrentSlide?: number,
     direction?: string,
     clientX?: number,
@@ -93,7 +92,7 @@ function loadPresentation() {
             reader.readAsText(fileEditor);
             reader.onload = () => {
                 if (typeof reader.result === 'string') {
-                    const newEditor: Editor = deepClone(JSON.parse(reader.result)) as Editor;
+                    const newEditor: EditorType = deepClone(JSON.parse(reader.result)) as EditorType;
                     store.dispatch(openPresentation(newEditor));
                 }
             };
@@ -123,7 +122,7 @@ function addHotKeys() {
     })
 }
 
-function mainReducer(state: Editor = initialState, action: ActionType) {
+function mainReducer(state: EditorType = initialState, action: ActionType) {
     const savePresentation: boolean = action.type !== Actions.SAVE_PRESENTATION
     const actionUndo: boolean = action.type !== Actions.UNDO;
     const actionRedo: boolean = action.type !== Actions.REDO;
@@ -131,7 +130,7 @@ function mainReducer(state: Editor = initialState, action: ActionType) {
     const openPresentation: boolean = action.type !== Actions.OPEN_PRESENTATION
     const addActionInHistory: boolean = (actionUndo) && (actionRedo) && (actionCreatePresentation) && (savePresentation) && (openPresentation)
     const selectedSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0])
-    const newState: Editor = editorReducer(state, action);
+    const newState: EditorType = editorReducer(state, action);
 
     if (addActionInHistory) {
         newState.history = addActionToHistoryReducer(state);

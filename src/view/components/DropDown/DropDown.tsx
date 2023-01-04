@@ -7,6 +7,7 @@ import {
 } from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {
+    addFigureItem,
     changeCurrentColor,
     changeCurrentFigureType,
     changeCurrentSlideState,
@@ -14,7 +15,7 @@ import {
 } from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
-import {Editor, ShapeType, SlideState} from "../../../core/types/types";
+import {EditorType, ShapeType, SlideState} from "../../../core/types/types";
 
 interface DropDownCustomProps {
     id: string;
@@ -96,10 +97,11 @@ function handleClicks(e: MouseEvent) {
 
 type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor' | 'addFigure'
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
         currentSlide: state.presentation.slides[currentSlideIndex],
+        currentColor: state.presentation.currentColor,
     }
 }
 
@@ -122,8 +124,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
                 }
             }
         },
-        setCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
-        changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
+        addFigureItem: (shape: ShapeType, color: string) => dispatcher(addFigureItem(shape, color)),
     }
 }
 
@@ -197,7 +198,7 @@ const Stocks = () => {
     )
 }
 
-const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFigureType}: DropDownMergedProps) => {
+const DropDown = ({id, viewStyle, action, addFigureItem, currentColor}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "figureShapes":
@@ -206,8 +207,27 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                     figures.push(
                         <div className={`${styles.shapes} ${DEFAULT_FIGURES_STYLES[i]}`}
                              onClick={() => {
-                                 setCurrentSlideState(SlideState.DRAW_FIGURE);
-                                 changeCurrentFigureType(DEFAULT_FIGURES[i].modelId);
+                                 switch (DEFAULT_FIGURES[i].name) {
+                                     case "Rectangle": {
+                                         console.log("rect");
+                                         addFigureItem(ShapeType.Rectangle, currentColor);
+                                         break;
+                                     }
+                                     case "Triangle": {
+                                         console.log("tria");
+                                         addFigureItem(ShapeType.Triangle, currentColor);
+                                         break;
+                                     }
+                                     case "Arc": {
+                                         console.log("arc");
+                                         addFigureItem(ShapeType.Arc, currentColor);
+                                         break
+                                     }
+                                     case "Star": {
+                                         console.log("star");
+                                         break;
+                                     }
+                                 }
                                  removeOpenedDropDownById('shapes');
                              }}
                         />
@@ -238,7 +258,6 @@ const DropDown = ({id, viewStyle, action, setCurrentSlideState, changeCurrentFig
                             <Stocks/>
                             <Separator/>
                             <div className={styles.addImage} onClick={() => {
-                                setCurrentSlideState(SlideState.DRAW_IMAGE);
                                 removeOpenedDropDownById('ImageSelector');
                             }}>
                                 <p>Выбрать с компьютера</p>

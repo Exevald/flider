@@ -1,4 +1,4 @@
-import {Area, Id} from "../types/types";
+import {AreaType, IdType} from "../types/types";
 import styles from "../../view/components/DropDown/DropDown.module.css";
 import figureStyles from "./../../view/components/DropDown/DropDown.module.css"
 
@@ -48,11 +48,11 @@ const DEFAULT_FIGURES = [
         modelId: 0
     },
     {
-        name: 'Triangle',
+        name: 'Arc',
         modelId: 1
     },
     {
-        name: 'Arc',
+        name: 'Triangle',
         modelId: 2
     },
     {
@@ -76,8 +76,8 @@ const SIDEBAR_SETTINGS = {
     height: 111,
 }
 
-function getRandomId(): Id {
-    let id: Id = '';
+function getRandomId(): IdType {
+    let id: IdType = '';
     const vocabulary = 'abdehkmnpswxzABDEFGHKMNPQRSTWXZ123456789';
     const idLength = 32;
 
@@ -95,7 +95,7 @@ function max(a: number, b: number): number {
     return a > b ? a : b;
 }
 
-function getBase64FromPicture(src: string, size: Area): Promise<string> {
+function getBase64FromPicture(src: string, size: AreaType): Promise<string> {
     return new Promise((resolve) => {
         const img: HTMLImageElement = new Image(size.width, size.height);
         img.src = src;

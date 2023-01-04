@@ -4,7 +4,7 @@ import {Button, ButtonIcon} from "../Button/Button";
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
 import {AppDispatcher} from "../../../model/store";
 import {createSlide, undo, redo, setBackgroundColor} from "../../../model/actionCreators";
-import {Editor, Item, ItemType} from "../../../core/types/types";
+import {EditorType, Item, ItemType} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     }
 }
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
         currentSlide: state.presentation.slides[currentSlideIndex],
