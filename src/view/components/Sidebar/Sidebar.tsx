@@ -1,15 +1,13 @@
 import styles from "./Sidebar.module.css"
-import {EditorType, Item} from "../../../core/types/types";
+import {EditorType, Item, SlideItemSpaceType} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {connect, ConnectedProps} from "react-redux";
-import {SIDEBAR_SETTINGS} from "../../../core/functions/utility";
 import {deselectSlide, selectManySlides, selectSlide, switchSlide} from "../../../model/actionCreators";
-import {useEffect} from "react";
-import Slide from "../Slide/Slide";
+import {SidebarSlide} from "../Slide/Slide";
 import SlideItem from "../SlideItem/SlideItem";
 
 interface SlidePreviewProps {
-    id: string;
+    slideIndex: string;
     preview?: string;
     isSelected?: boolean;
     switchSlide: () => void;
@@ -18,6 +16,7 @@ interface SlidePreviewProps {
     selectManySlides: () => void;
     bgColor: string;
     slideItems: Array<Item>;
+    slideId: string,
 }
 
 
@@ -48,7 +47,7 @@ const SlidePreview = (props: SlidePreviewProps) => {
     if (props.isSelected) {
         borderStyle = styles.slidePreviewSelected;
     }
-    const slideId = parseInt(props.id) + 1;
+    const slideId = parseInt(props.slideIndex) + 1;
     return (
         <div className={styles.sidebarRow} onClick={(event) => {
             if (event.ctrlKey) {
@@ -64,9 +63,16 @@ const SlidePreview = (props: SlidePreviewProps) => {
             }
         }}>
             <p className={styles.slideIndex}>{slideId}</p>
-            <div
-                className={`${styles.slidePreview} ${borderStyle}`}
-            >
+            <div className={`${styles.slidePreview} ${borderStyle}`} style={{background: props.bgColor}}>
+            <SidebarSlide slideItems=
+                              {props.slideItems.map((item) =>
+                                  <li key={item.id}
+                                      className={styles.slideElement}>
+                                      <SlideItem slideId={props.slideId} itemId={item.id} active={false} slideItemSpace={SlideItemSpaceType.SideBar}></SlideItem>
+                                  </li>
+                              )}
+                          background={props.bgColor}
+            />
             </div>
         </div>
     )
@@ -79,7 +85,7 @@ const Sidebar = (props: SidebarProps) => {
         const isSelected = props.selectedSlideIds.includes(slide.id);
         slides.push(
             <SlidePreview
-                id={String(i)}
+                slideIndex={String(i)}
                 isSelected={isSelected}
                 switchSlide={() => props.switchSlide(slide.id)}
                 selectOneSlide={() => props.selectOneSlide(slide.id)}
@@ -87,6 +93,7 @@ const Sidebar = (props: SidebarProps) => {
                 deselectSlide={() => props.deselectSlide(slide.id)}
                 bgColor={slide.bgColor}
                 slideItems={props.slideItems}
+                slideId={props.slides[i].id}
             />
         )
     }

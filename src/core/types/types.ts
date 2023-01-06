@@ -51,6 +51,11 @@ type Item = {
     layer: number,
 }
 
+enum SlideItemSpaceType {
+    Slide,
+    SideBar,
+}
+
 enum ItemType {
     Figure,
     TextArea,
@@ -115,4 +120,4 @@ enum SlideState {
 }
 
 export type {ImageType, TextAreaType, FigureType, Item, SlideType, PresentationType, HistoryType, AreaType, PointType, IdType, EditorType};
-export {ShapeType, ItemType, Actions, SlideState};
+export {ShapeType, ItemType, Actions, SlideState, SlideItemSpaceType};

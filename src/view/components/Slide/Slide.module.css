@@ -3,9 +3,32 @@
     width: 100%;
     max-height: 720px;
     height: 100%;
-    background: var(--shinji);
+    background-color: var(--shinji);
     border: 1px solid var(--kaoru-60);
     filter: drop-shadow(4px 4px 4px var(--grey-shark));
     position: relative;
     overflow: hidden;
+}
+
+.sidebarSLide {
+    max-width: 180px;
+    width: 100%;
+    max-height: 111px;
+    height: 100%;
+    background-color: var(--shinji);
+    border: 1px solid var(--grey-shark);
+    position: relative;
+    overflow: hidden;
+    border-radius: 9px;
+    margin-top: 25px;
+    margin-left: 40px;
+}
+
+.sidebarSLide.slidePreviewSelected,
+.sidebarSLide.slidePreviewSelected:hover {
+    border: 3px solid var(--ayanami-default);
+}
+
+.sidebarSLide:hover {
+    border: 1px solid var(--kaoru-default);
 }

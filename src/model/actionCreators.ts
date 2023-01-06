@@ -115,12 +115,13 @@ function setCurrentCursorPosition(clientX: number, clientY: number) {
     }
 }
 
-function addFigureItem(shape: ShapeType, color: string) {
+function addFigureItem(shape: ShapeType, color: string, coordinates: PointType) {
     return {
         type: Actions.ADD_FIGURE_ITEM,
         addFigureParams: {
             shape,
             color,
+            coordinates,
         }
     }
 }

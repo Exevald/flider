@@ -11,13 +11,13 @@ function setBackgroundColorReducer(slide: SlideType, backgroundColor: string): S
     }
 }
 
-function addFigureItemReducer(slide: SlideType, shape: ShapeType, color: string): SlideType {
+function addFigureItemReducer(slide: SlideType, shape: ShapeType, color: string, coordinates: PointType): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     const newItem: Item = {
         id: getRandomId(),
         coordinates: {
-            x: 500,
-            y: 500,
+            x: coordinates.x,
+            y: coordinates.y,
         },
         element: ItemType.Figure,
         space: {
@@ -130,7 +130,7 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.SET_BACKGROUND_COLOR:
             return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as SlideType;
         case Actions.ADD_FIGURE_ITEM:
-            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.color) : deepClone(state) as SlideType;
+            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.color,  action.addFigureParams.coordinates) : deepClone(state) as SlideType;
         case Actions.ADD_IMAGE:
             return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as SlideType;
         default:

@@ -1,7 +1,7 @@
 import Sidebar from "../Sidebar/Sidebar";
 import Slide from "../Slide/Slide";
 import styles from "./WorkSpace.module.css";
-import {EditorType} from "../../../core/types/types";
+import {EditorType, SlideItemSpaceType} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import SlideItem from "../SlideItem/SlideItem";
 
@@ -29,7 +29,7 @@ const WorkSpace = (props: WorkSpaceProps) => {
                         {props.currentSlide.items.map((item) =>
                             <li key={item.id}
                                 className={styles.slideElement}>
-                                <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={false}></SlideItem>
+                                <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={false} slideItemSpace={SlideItemSpaceType.Slide}></SlideItem>
                             </li>
                         )}
                     background={props.currentSlideBgColor}></Slide>

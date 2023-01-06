@@ -1,8 +1,12 @@
-import {EditorType, Item, ItemType, ShapeType} from "../../../core/types/types";
+import {EditorType, Item, ItemType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
+
+interface SlideItemInitialProps {
+    slideItemSpace: SlideItemSpaceType
+}
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === customProps.slideId);
@@ -13,9 +17,11 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
 }
 
 const connector = connect(mapStateToProps, null);
-type SlidesItemProps = ConnectedProps<typeof connector>;
+type SlideItemCustomProps = ConnectedProps<typeof connector>;
 
-const SlideItem = ({slideItem, active}: SlidesItemProps) => {
+type SlideItemMergedProps = SlideItemInitialProps & SlideItemCustomProps;
+
+const SlideItem = ({slideItem, active, slideItemSpace}: SlideItemMergedProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
 
     type CornersType = {
@@ -49,6 +55,10 @@ const SlideItem = ({slideItem, active}: SlidesItemProps) => {
     }, [Number(slideItemRef.current?.style.width.substring(0, slideItemRef.current?.style.width.length - 2))
     ])
 
+    if (slideItemSpace === SlideItemSpaceType.SideBar) {
+
+    }
+
     if (slideItem === undefined) {
         return (<div></div>)
     }
@@ -59,17 +69,27 @@ const SlideItem = ({slideItem, active}: SlidesItemProps) => {
             return null;
         case ItemType.Figure: {
             if (slideItem.figure) {
+                let scaleXCoefficient = 1;
+                let scaleYCoefficient = 1;
+                let slideMarginLeft = 0;
+                let slideMarginTop = 0;
+                if (slideItemSpace === SlideItemSpaceType.SideBar) {
+                    scaleXCoefficient = 0.14;
+                    scaleYCoefficient = 0.15;
+                    slideMarginLeft = 40;
+                    slideMarginTop = 25;
+                }
                 return (
                     <div
                         ref={slideItemRef}
                         id={slideItem.id}
                         className={`${active ? styles.element_active : styles.element}`}
                         style={{
-                            'top': slideItem.coordinates.y,
-                            'left': slideItem.coordinates.x,
-                            'width': slideItem.space.width,
-                            'height': slideItem.space.height,
-                            'strokeWidth': slideItem.figure?.strokeWidth,
+                            'top': slideItem.coordinates.y * scaleYCoefficient + slideMarginTop,
+                            'left': slideItem.coordinates.x * scaleXCoefficient + slideMarginLeft,
+                            'width': slideItem.space.width * scaleXCoefficient,
+                            'height': slideItem.space.height * scaleYCoefficient,
+                            'strokeWidth': slideItem.figure?.strokeWidth * scaleXCoefficient,
                         }}
                     >
                         {

@@ -15,7 +15,7 @@ import {
 } from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
-import {EditorType, ShapeType, SlideState} from "../../../core/types/types";
+import {EditorType, FigureType, ShapeType, SlideState} from "../../../core/types/types";
 
 interface DropDownCustomProps {
     id: string;
@@ -124,7 +124,8 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
                 }
             }
         },
-        addFigureItem: (shape: ShapeType, color: string) => dispatcher(addFigureItem(shape, color)),
+        changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
+        changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
     }
 }
 
@@ -198,7 +199,7 @@ const Stocks = () => {
     )
 }
 
-const DropDown = ({id, viewStyle, action, addFigureItem, currentColor}: DropDownMergedProps) => {
+const DropDown = ({id, viewStyle, action, currentColor, changeCurrentSlideState, changeCurrentFigureType}: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "figureShapes":
@@ -207,23 +208,28 @@ const DropDown = ({id, viewStyle, action, addFigureItem, currentColor}: DropDown
                     figures.push(
                         <div className={`${styles.shapes} ${DEFAULT_FIGURES_STYLES[i]}`}
                              onClick={() => {
+                                 changeCurrentSlideState(SlideState.DRAW_FIGURE);
                                  switch (DEFAULT_FIGURES[i].name) {
                                      case "Rectangle": {
                                          console.log("rect");
-                                         addFigureItem(ShapeType.Rectangle, currentColor);
+                                         changeCurrentFigureType(ShapeType.Rectangle);
+                                         // addFigureItem(ShapeType.Rectangle, currentColor);
                                          break;
                                      }
                                      case "Triangle": {
                                          console.log("tria");
-                                         addFigureItem(ShapeType.Triangle, currentColor);
+                                         changeCurrentFigureType(ShapeType.Triangle);
+                                         // addFigureItem(ShapeType.Triangle, currentColor);
                                          break;
                                      }
                                      case "Arc": {
                                          console.log("arc");
-                                         addFigureItem(ShapeType.Arc, currentColor);
+                                         changeCurrentFigureType(ShapeType.Arc);
+                                         // addFigureItem(ShapeType.Arc, currentColor);
                                          break
                                      }
                                      case "Star": {
+                                         changeCurrentFigureType(ShapeType.Star);
                                          console.log("star");
                                          break;
                                      }
@@ -259,6 +265,7 @@ const DropDown = ({id, viewStyle, action, addFigureItem, currentColor}: DropDown
                             <Separator/>
                             <div className={styles.addImage} onClick={() => {
                                 removeOpenedDropDownById('ImageSelector');
+                                changeCurrentSlideState(SlideState.DRAW_IMAGE);
                             }}>
                                 <p>Выбрать с компьютера</p>
                             </div>
