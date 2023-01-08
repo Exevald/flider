@@ -209,31 +209,8 @@ const DropDown = ({id, viewStyle, action, currentColor, changeCurrentSlideState,
                         <div className={`${styles.shapes} ${DEFAULT_FIGURES_STYLES[i]}`}
                              onClick={() => {
                                  changeCurrentSlideState(SlideState.DRAW_FIGURE);
-                                 switch (DEFAULT_FIGURES[i].name) {
-                                     case "Rectangle": {
-                                         console.log("rect");
-                                         changeCurrentFigureType(ShapeType.Rectangle);
-                                         // addFigureItem(ShapeType.Rectangle, currentColor);
-                                         break;
-                                     }
-                                     case "Triangle": {
-                                         console.log("tria");
-                                         changeCurrentFigureType(ShapeType.Triangle);
-                                         // addFigureItem(ShapeType.Triangle, currentColor);
-                                         break;
-                                     }
-                                     case "Arc": {
-                                         console.log("arc");
-                                         changeCurrentFigureType(ShapeType.Arc);
-                                         // addFigureItem(ShapeType.Arc, currentColor);
-                                         break
-                                     }
-                                     case "Star": {
-                                         changeCurrentFigureType(ShapeType.Star);
-                                         console.log("star");
-                                         break;
-                                     }
-                                 }
+                                 changeCurrentFigureType(DEFAULT_FIGURES[i].modelId);
+                                 // addFigureItem(ShapeType.Rectangle, currentColor);
                                  removeOpenedDropDownById('shapes');
                              }}
                         />
