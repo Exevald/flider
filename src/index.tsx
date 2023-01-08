@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import {addHotKeys} from "./model/store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
-import {PresentationPage} from "./view/pages/PresentationPage/PresentationPage";
+import PresentationPage from "./view/pages/PresentationPage/PresentationPage";
 import MainMenu from "./view/pages/MainMenu/MainMenu";
 import PresentationView from "./view/pages/PresentationView/PresentationView";
 

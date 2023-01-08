@@ -68,7 +68,7 @@ const SlidePreview = (props: SlidePreviewProps) => {
                               {props.slideItems.map((item) =>
                                   <li key={item.id}
                                       className={styles.slideElement}>
-                                      <SlideItem slideId={props.slideId} itemId={item.id} active={false} slideItemSpace={SlideItemSpaceType.SideBar}></SlideItem>
+                                      <SlideItem slideId={props.slideId} itemId={item.id} active={false}></SlideItem>
                                   </li>
                               )}
                           background={props.bgColor}

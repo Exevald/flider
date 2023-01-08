@@ -1,11 +1,13 @@
-import {EditorType, Item, ItemType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
+import {EditorType, IdType, Item, ItemType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
+import {AppDispatcher} from "../../../model/store";
+import {selectItem} from "../../../model/actionCreators";
 
 interface SlideItemInitialProps {
-    slideItemSpace: SlideItemSpaceType
+    // slideItemSpace: SlideItemSpaceType
 }
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
@@ -13,17 +15,27 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
     return {
         slideItem: state.presentation.slides[currentSlideIndex].items.find(item => item.id === customProps.itemId),
         active: customProps.active,
+        selectedItemsIds: state.presentation.slides[currentSlideIndex].selectedItemsIds,
     }
 }
 
-const connector = connect(mapStateToProps, null);
+function mapDispatchToProps(dispatcher: AppDispatcher) {
+    return {
+        selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
+    }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type SlideItemCustomProps = ConnectedProps<typeof connector>;
 
 type SlideItemMergedProps = SlideItemInitialProps & SlideItemCustomProps;
 
-const SlideItem = ({slideItem, active, slideItemSpace}: SlideItemMergedProps) => {
+const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
-
+    const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
+    if (isSelected) {
+        active = true;
+    }
     type CornersType = {
         topLeft: React.RefObject<HTMLDivElement>,
         topRight: React.RefObject<HTMLDivElement>,
@@ -55,10 +67,6 @@ const SlideItem = ({slideItem, active, slideItemSpace}: SlideItemMergedProps) =>
     }, [Number(slideItemRef.current?.style.width.substring(0, slideItemRef.current?.style.width.length - 2))
     ])
 
-    if (slideItemSpace === SlideItemSpaceType.SideBar) {
-
-    }
-
     if (slideItem === undefined) {
         return (<div></div>)
     }
@@ -73,12 +81,6 @@ const SlideItem = ({slideItem, active, slideItemSpace}: SlideItemMergedProps) =>
                 let scaleYCoefficient = 1;
                 let slideMarginLeft = 0;
                 let slideMarginTop = 0;
-                if (slideItemSpace === SlideItemSpaceType.SideBar) {
-                    scaleXCoefficient = 0.14;
-                    scaleYCoefficient = 0.15;
-                    slideMarginLeft = 40;
-                    slideMarginTop = 25;
-                }
                 return (
                     <div
                         ref={slideItemRef}
@@ -110,7 +112,8 @@ const SlideItem = ({slideItem, active, slideItemSpace}: SlideItemMergedProps) =>
                             size={{
                                 width: itemWidth ? itemWidth : slideItem.space.width,
                                 height: itemHeight ? itemHeight : slideItem.space.height
-                            }}/>
+                            }}
+                        />
                     </div>
                 )
             } else {
@@ -120,4 +123,4 @@ const SlideItem = ({slideItem, active, slideItemSpace}: SlideItemMergedProps) =>
     }
 }
 
-export default connect(mapStateToProps, null)(SlideItem)
+export default connect(mapStateToProps, mapDispatchToProps)(SlideItem)

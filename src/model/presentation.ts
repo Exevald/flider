@@ -19,7 +19,7 @@ function createSlideReducer(presentation: PresentationType): PresentationType {
         items: [],
         bgColor: "white",
         selectedItemsIds: [],
-        currentState: SlideState.SELECT_AREA,
+        currentState: SlideState.SELECT_ITEM,
         currentFigureType: ShapeType.Rectangle,
     });
     return {

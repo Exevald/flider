@@ -2,13 +2,13 @@ import {AreaType, FigureType, ShapeType} from "../../../../core/types/types";
 import {connect} from "react-redux";
 
 interface FigureProps {
-    figure: FigureType,
-    size: AreaType
+    figure: FigureType;
+    size: AreaType;
 }
 
 const Circle = ({
                     figure,
-                    size
+                    size,
                 }: FigureProps) => {
     const width: number = size.width !== 0 ? (size.width - figure.strokeWidth) / 2 : figure.strokeWidth;
     const height: number = size.height !== 0 ? (size.height - figure.strokeWidth) / 2 : figure.strokeWidth;
@@ -33,7 +33,7 @@ const Circle = ({
 
 const Rectangle = ({
                        figure,
-                       size
+                       size,
                    }: FigureProps) => {
     const width: number = size.width !== 0 ? size.width - figure.strokeWidth : figure.strokeWidth;
     const height: number = size.height !== 0 ? size.height - figure.strokeWidth : figure.strokeWidth;
@@ -58,7 +58,7 @@ const Rectangle = ({
 
 const Triangle = ({
                       figure,
-                      size
+                      size,
                   }: FigureProps) => {
     const width: number = size.width + figure.strokeWidth;
     const height: number = size.height + figure.strokeWidth;
@@ -81,7 +81,7 @@ const Triangle = ({
 
 const Figure = ({
                     figure,
-                    size
+                    size,
                 }: FigureProps) => {
     switch (figure.shape) {
         case ShapeType.Rectangle:

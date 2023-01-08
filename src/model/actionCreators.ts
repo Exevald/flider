@@ -1,4 +1,4 @@
-import {EditorType, ItemType, PointType, ShapeType, SlideState} from "../core/types/types";
+import {EditorType, IdType, ItemType, PointType, ShapeType, SlideState} from "../core/types/types";
 import {Actions} from "../core/types/types";
 
 function createPresentation() {
@@ -150,6 +150,27 @@ function changeCurrentFigureType(newCurrentFigureType: ShapeType) {
     }
 }
 
+function selectItem(itemId: IdType) {
+    return {
+        type: Actions.SELECT_ITEM,
+        itemId: itemId,
+    }
+}
+
+function selectManyItems(itemId: IdType) {
+    return {
+        type: Actions.SELECT_MANY_ITEMS,
+        itemId: itemId,
+    }
+}
+
+function deselectItems(itemId: IdType) {
+    return {
+        type: Actions.DESELECT_ITEMS,
+        itemId: itemId,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -172,4 +193,7 @@ export {
     changeCurrentSlideState,
     changeCurrentFigureType,
     addImageItem,
+    selectItem,
+    selectManyItems,
+    deselectItems,
 }

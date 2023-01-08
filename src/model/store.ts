@@ -15,7 +15,7 @@ let initialState: EditorType = {
                 items: [],
                 bgColor: "white",
                 selectedItemsIds: ["0"],
-                currentState: SlideState.SELECT_AREA,
+                currentState: SlideState.SELECT_ITEM,
                 currentFigureType: ShapeType.NoShape,
             },
         ],
@@ -39,7 +39,7 @@ type ActionType = {
     orderShift?: number,
     backgroundColor?: string,
     element?: string,
-    elementId?: string,
+    itemId?: string,
     addFigureParams?: {
         shape: ShapeType,
         color: string,

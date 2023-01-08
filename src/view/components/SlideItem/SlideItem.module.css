@@ -11,10 +11,6 @@
     box-sizing: content-box;
 }
 
-.element_active:hover {
-    cursor: pointer;
-}
-
 .point {
     width: 10px;
     height: 10px;

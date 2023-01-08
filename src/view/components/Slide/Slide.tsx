@@ -1,11 +1,11 @@
 import styles from "./Slide.module.css"
 import {connect, ConnectedProps} from "react-redux";
-import {EditorType, PointType, ShapeType, SlideState} from "../../../core/types/types";
+import {EditorType, IdType, PointType, ShapeType, SlideState} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
     addImageItem,
-    changeCurrentSlideState,
+    changeCurrentSlideState, deselectItems, selectItem, selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
 
@@ -21,6 +21,8 @@ function mapStateToProps(state: EditorType) {
         currentFigureType: state.presentation.slides[currentSlideIndex].currentFigureType,
         currentSlideId: state.presentation.slides[currentSlideIndex].id,
         currentColor: state.presentation.currentColor,
+        modelSlideItems: state.presentation.slides[currentSlideIndex].items,
+        selectedItemsIds: state.presentation.slides[currentSlideIndex].selectedItemsIds,
     }
 }
 
@@ -29,6 +31,9 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         addFigureItem: (shape: ShapeType, color: string, coordinates: PointType) => dispatcher(addFigureItem(shape, color, coordinates)),
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         addImageItem: (imageSrc: string, coordinates: PointType) => dispatcher(addImageItem(imageSrc, coordinates)),
+        selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
+        selectManyItems: (itemId: IdType) => dispatcher(selectManyItems(itemId)),
+        deselectItems: (itemId: IdType) => dispatcher(deselectItems(itemId)),
     }
 }
 
@@ -46,6 +51,11 @@ const Slide = ({
                    currentSlideId,
                    currentColor,
                    changeCurrentSlideState,
+                   modelSlideItems,
+                   selectedItemsIds,
+                   selectItem,
+                   selectManyItems,
+                   deselectItems,
                }: SlideMergedProps) => {
     return (
         <div className={styles.slide}
@@ -63,7 +73,7 @@ const Slide = ({
                                      x: slideClientX,
                                      y: slideClientY
                                  });
-                                 changeCurrentSlideState(SlideState.SELECT_AREA);
+                                 changeCurrentSlideState(SlideState.SELECT_ITEM);
                                  break;
                              }
                              case ShapeType.Triangle: {
@@ -71,7 +81,7 @@ const Slide = ({
                                      x: slideClientX,
                                      y: slideClientY
                                  });
-                                 changeCurrentSlideState(SlideState.SELECT_AREA);
+                                 changeCurrentSlideState(SlideState.SELECT_ITEM);
                                  break;
                              }
                              case ShapeType.Arc: {
@@ -79,7 +89,7 @@ const Slide = ({
                                      x: slideClientX,
                                      y: slideClientY
                                  });
-                                 changeCurrentSlideState(SlideState.SELECT_AREA);
+                                 changeCurrentSlideState(SlideState.SELECT_ITEM);
                                  break;
                              }
                          }
@@ -100,10 +110,32 @@ const Slide = ({
                          }
                          inputFile.click();
                          inputFile.remove();
-                         changeCurrentSlideState(SlideState.SELECT_AREA);
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break;
                      }
-                     case SlideState.SELECT_AREA: {
+                     case SlideState.SELECT_ITEM: {
+                         const slide = document.getElementById(currentSlideId) as HTMLElement;
+                         const slideClientX = event.clientX - slide.offsetLeft;
+                         const slideClientY = event.clientY - slide.offsetTop;
+                         for (let i = 0; i < modelSlideItems.length; i++) {
+                             let slideItem = modelSlideItems[i];
+                             let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                             let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
+                                 slideClientX <= slideItem.coordinates.x + slideItem.space.width;
+                             let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
+                                 slideClientY <= slideItem.coordinates.y + slideItem.space.height;
+                             if (checkHorizontalClick && checkVerticalClick) {
+                                 if (!isSelected) {
+                                     if (event.ctrlKey) {
+                                         selectManyItems(slideItem.id);
+                                     } else {
+                                         selectItem(slideItem.id);
+                                     }
+                                 } else {
+                                     deselectItems(slideItem.id);
+                                 }
+                             }
+                         }
                          break;
                      }
                  }

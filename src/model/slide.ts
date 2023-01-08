@@ -98,6 +98,12 @@ function selectManyItemsReducer(slide: SlideType, itemId: IdType): SlideType {
     return newSlide
 }
 
+function deselectItemsReducer(slide: SlideType, itemId: IdType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    newSlide.selectedItemsIds = [];
+    return newSlide
+}
+
 function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointType): SlideType {
     console.log("imageReducer")
     const newSlide = deepClone(slide) as SlideType;
@@ -130,9 +136,15 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.SET_BACKGROUND_COLOR:
             return action.backgroundColor !== undefined ? setBackgroundColorReducer(state, action.backgroundColor) : deepClone(state) as SlideType;
         case Actions.ADD_FIGURE_ITEM:
-            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.color,  action.addFigureParams.coordinates) : deepClone(state) as SlideType;
+            return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.color, action.addFigureParams.coordinates) : deepClone(state) as SlideType;
         case Actions.ADD_IMAGE:
             return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as SlideType;
+        case Actions.SELECT_ITEM:
+            return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
+        case Actions.SELECT_MANY_ITEMS:
+            return action.itemId !== undefined ? selectManyItemsReducer(state, action.itemId) : deepClone(state) as SlideType;
+        case Actions.DESELECT_ITEMS:
+            return action.itemId !== undefined ? deselectItemsReducer(state, action.itemId) : deepClone(state) as SlideType;
         default:
             return deepClone(state) as SlideType;
     }
