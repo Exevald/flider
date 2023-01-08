@@ -1,15 +1,14 @@
 import styles from "./PresentationView.module.css"
 import {Link} from "react-router-dom";
 import {connect, ConnectedProps} from "react-redux";
-import {Editor} from "../../../core/types/types";
+import {EditorType} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {swipeSlideShowSlide, switchSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
 import {CANVAS_SETTINGS} from "../../../core/functions/utility";
-import {DrawSlideItems} from "../../components/SlideItem/SlidesItem";
 import {useEffect} from "react";
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
         slides: state.presentation.slides,
@@ -35,7 +34,6 @@ type PresentationViewProps = ConnectedProps<typeof connector>
 
 const PresentationView = (props: PresentationViewProps) => {
     useEffect(() => {
-        DrawSlideItems(props.slideItems, "canvas");
         const body = document.querySelector('body');
         if (body !== null) {
             body.addEventListener("keydown", keysHandler);

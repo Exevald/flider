@@ -4,7 +4,7 @@ import {Button, ButtonIcon} from "../Button/Button";
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
 import {AppDispatcher} from "../../../model/store";
 import {createSlide, undo, redo, setBackgroundColor} from "../../../model/actionCreators";
-import {Editor, Item, ItemType} from "../../../core/types/types";
+import {EditorType, Item, ItemType} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     }
 }
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
     return {
         currentSlide: state.presentation.slides[currentSlideIndex],
@@ -78,43 +78,41 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     return (
         <div className={styles.toolbar}>
             <ButtonIcon viewStyle={"createSlide"}
-                        onClick={() => props.createSlide()}/>
-
+                        onClick={() => props.createSlide()}
+            />
             <ButtonIcon viewStyle={"undo"} onClick={() => props.undo()}/>
             <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}/>
-
             {
                 (status === 1 || status === 4 || status === 0) && <>
-                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"textArea"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"textArea"} onClick={() => {
+                    }}/>
                     <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
                                 onClick={() => {
                                     showDropDownById('SelectorButton', 'ImageSelector')
                                 }
-                                }/> </>
+                                }/>
+                </>
             }
-
             <DropDown id={'ImageSelector'} viewStyle={'imageSelector'}></DropDown>
-
-
             {
                 (status !== 2 && status !== 4) &&
                 <ButtonIcon viewStyle={"figure"} id={'FigureButton'}
                             onClick={() => {
                                 showDropDownById('FigureButton', 'shapes')
                             }
-                            }></ButtonIcon>
+                            }/>
             }
-
             <DropDown id={'shapes'} viewStyle={"figureShapes"}/>
             <ButtonIcon viewStyle={"palette"} id={'PickerButton'}
                         onClick={() => {
                             showDropDownById('PickerButton', 'ColorPicker')
-                        }
-                        }/>
+                        }}
+            />
             <DropDown id={'ColorPicker'} viewStyle={'palette'}/>
-
             {
                 status !== 4 &&
                 <ButtonIcon viewStyle={"filler"} onClick={() => {
@@ -128,17 +126,23 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                 <ButtonIcon viewStyle={"stroke"} onClick={() => {
                 }}/>
             }
-
             {
                 (status === 0 || status === 2) && <>
-                    <ButtonIcon viewStyle={"bold"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"underline"} onClick={() => {}}/>
-                    <Button viewStyle={"fontArea"} iconStyle={"right"} iconSrc={SaveIcon} text={"Inter"}
+                    <ButtonIcon viewStyle={"bold"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
+                    }}/>
+                    <ButtonIcon viewStyle={"underline"} onClick={() => {
+                    }}/>
+                    <Button viewStyle={"fontArea"}
+                            iconStyle={"right"}
+                            iconSrc={SaveIcon}
+                            text={"Inter"}
                             onClick={() => {
-                            }}/> </>
+                            }}
+                    />
+                </>
             }
-
             {
                 status !== 1 && <FontSizeArea size={14}/>
             }

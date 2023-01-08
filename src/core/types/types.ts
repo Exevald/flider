@@ -1,54 +1,59 @@
-type Id = string;
+type IdType = string;
 
-type Point = {
+type PointType = {
     x: number,
     y: number,
 }
 
-type Area = {
+type AreaType = {
     width: number,
     height: number,
 }
 
-type History = {
-    undoStack: Array<Presentation>,
-    redoStack: Array<Presentation>,
+type HistoryType = {
+    undoStack: Array<PresentationType>,
+    redoStack: Array<PresentationType>,
 }
 
-type Editor = {
-    presentation: Presentation,
-    history: History,
+type EditorType = {
+    presentation: PresentationType,
+    history: HistoryType,
     slideShowStatus: boolean,
     slideShowCurrentSlideIndex: number,
     currentClientX: number,
     currentClientY: number,
 }
 
-type Presentation = {
-    slides: Array<Slide>,
+type PresentationType = {
+    slides: Array<SlideType>,
     title: string,
-    selectedSlidesIds: Array<Id>,
+    selectedSlidesIds: Array<IdType>,
     currentColor: string,
 }
 
-type Slide = {
-    id: Id,
+type SlideType = {
+    id: IdType,
     items: Array<Item>,
     bgColor: string,
-    selectedItemsIds: Array<Id>,
+    selectedItemsIds: Array<IdType>,
     currentState: SlideState,
     currentFigureType: ShapeType,
 }
 
 type Item = {
-    id: Id,
-    coordinates: Point,
+    id: IdType,
+    coordinates: PointType,
     element: ItemType,
-    space: Area,
-    figure?: Figure,
-    textArea?: TextArea,
-    image?: Image,
+    space: AreaType,
+    figure?: FigureType,
+    textArea?: TextAreaType,
+    image?: ImageType,
     layer: number,
+}
+
+enum SlideItemSpaceType {
+    Slide,
+    SideBar,
 }
 
 enum ItemType {
@@ -65,21 +70,21 @@ enum ShapeType {
     NoShape
 }
 
-type Figure = {
+type FigureType = {
     shape: ShapeType,
     fillColor: string,
     strokeColor: string,
     strokeWidth: number
 }
 
-type TextArea = {
+type TextAreaType = {
     fontFamily: string,
     fontSize: number,
     fontColor: string,
     value: string,
 }
 
-type Image = {
+type ImageType = {
     src: string
 }
 
@@ -114,5 +119,5 @@ enum SlideState {
     INIT_CURRENT_CURSOR_POSITION = "INIT_CURRENT_CURSOR_POSITION",
 }
 
-export type {Image, TextArea, Figure, Item, Slide, Presentation, History, Area, Point, Id, Editor};
-export {ShapeType, ItemType, Actions, SlideState};
+export type {ImageType, TextAreaType, FigureType, Item, SlideType, PresentationType, HistoryType, AreaType, PointType, IdType, EditorType};
+export {ShapeType, ItemType, Actions, SlideState, SlideItemSpaceType};

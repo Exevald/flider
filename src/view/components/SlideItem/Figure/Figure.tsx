@@ -1,80 +1,121 @@
-import {Point, ShapeType} from "../../../../core/types/types";
-import {Area} from "../../../../core/types/types";
+import {AreaType, FigureType, ShapeType} from "../../../../core/types/types";
+import {connect} from "react-redux";
 
-const DrawRectangle = (canvasId: string, coordinates: Point, figureArea: Area, color: string) => {
-    if (canvasId !== null) {
-        const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-        const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
-        canvasContext.fillStyle = color;
-        canvasContext.fillRect(coordinates.x, coordinates.y, figureArea.width, figureArea.height);
-    }
+interface FigureProps {
+    figure: FigureType,
+    size: AreaType
 }
 
-const DrawArc = (canvasId: string, coordinates: Point, figureArea: Area, color: string) => {
-    if (canvasId !== null) {
-        console.log(canvasId)
-        const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-        const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
-        canvasContext.fillStyle = color;
-        canvasContext.arc(coordinates.x, coordinates.y, figureArea.width, 0, Math.PI * 2);
-        canvasContext.fill();
-    }
+const Circle = ({
+                    figure,
+                    size
+                }: FigureProps) => {
+    const width: number = size.width !== 0 ? (size.width - figure.strokeWidth) / 2 : figure.strokeWidth;
+    const height: number = size.height !== 0 ? (size.height - figure.strokeWidth) / 2 : figure.strokeWidth;
+    return (
+        <svg
+            width={size.width + figure.strokeWidth}
+            height={size.height + figure.strokeWidth}
+        >
+            <ellipse
+                rx={width}
+                ry={height}
+                cx={size.width / 2}
+                cy={size.height / 2}
+                fill={figure.fillColor}
+                stroke={figure.strokeColor}
+                strokeWidth={figure.strokeWidth}
+            >
+            </ellipse>
+        </svg>
+    )
 }
 
-const DrawTriangle = (canvasId: string, coordinates: Point, figureArea: Area, color: string) => {
-    if (canvasId !== null) {
-        const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-        const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
-        canvasContext.fillStyle = color;
-        canvasContext.beginPath();
-        canvasContext.moveTo(coordinates.x, coordinates.y + figureArea.height);
-        canvasContext.lineTo(coordinates.x + figureArea.width / 2, coordinates.y);
-        canvasContext.lineTo(coordinates.x + figureArea.width, coordinates.y + figureArea.height);
-        canvasContext.lineTo(coordinates.x, coordinates.y + figureArea.height);
-        canvasContext.closePath();
-        canvasContext.fill();
-    }
+const Rectangle = ({
+                       figure,
+                       size
+                   }: FigureProps) => {
+    const width: number = size.width !== 0 ? size.width - figure.strokeWidth : figure.strokeWidth;
+    const height: number = size.height !== 0 ? size.height - figure.strokeWidth : figure.strokeWidth;
+    return (
+        <svg
+            width={size.width + figure.strokeWidth}
+            height={size.height + figure.strokeWidth}
+        >
+            <rect
+                x={figure.strokeWidth / 2}
+                y={figure.strokeWidth / 2}
+                width={width}
+                height={height}
+                fill={figure.fillColor}
+                stroke={figure.strokeColor}
+                strokeWidth={figure.strokeWidth}
+            >
+            </rect>
+        </svg>
+    )
 }
 
-const DrawStar = (canvasId: string, coordinates: Point, figureArea: Area, color: string) => {
-    if (canvasId !== null) {
-        const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-        const canvasContext = canvas.getContext("2d") as CanvasRenderingContext2D;
-        canvasContext.fillStyle = color;
-        const starHeight = figureArea.height * 0.905;
-        const startX = coordinates.x;
-        const startY = coordinates.y + 0.381 * starHeight;
-        canvasContext.beginPath();
-        canvasContext.moveTo(startX, startY);
-        canvasContext.lineTo(figureArea.width * 0.384 + startX, startY);
-        canvasContext.lineTo(coordinates.x + figureArea.width / 2, coordinates.y);
-        canvasContext.lineTo(coordinates.x + figureArea.width * 0.616, startY);
-        canvasContext.lineTo(coordinates.x + figureArea.width, startY);
-        const currY = starHeight * 0.619;
-        const currX = figureArea.width * 0.692;
-        canvasContext.lineTo(coordinates.x + currX, coordinates.y + currY);
-        canvasContext.lineTo(coordinates.x + figureArea.width * 0.808, coordinates.y + starHeight);
-        canvasContext.lineTo(coordinates.x + figureArea.width / 2, coordinates.y + starHeight * 0.765);
-        canvasContext.lineTo(coordinates.x + figureArea.width * 0.192, coordinates.y + starHeight);
-        canvasContext.lineTo(coordinates.x + figureArea.width - currX, coordinates.y + currY);
-        canvasContext.lineTo(startX, startY);
-        canvasContext.lineTo(figureArea.width * 0.384 + startX, startY);
-        canvasContext.closePath();
-        canvasContext.fill();
-    }
+const Triangle = ({
+                      figure,
+                      size
+                  }: FigureProps) => {
+    const width: number = size.width + figure.strokeWidth;
+    const height: number = size.height + figure.strokeWidth;
+    const points: string = String(figure.strokeWidth) + ', ' + String(height - figure.strokeWidth * 2) + ' ' + String(width / 2) + ',' + String(figure.strokeWidth) + ' ' + String(width - figure.strokeWidth) + ',' + String(height - figure.strokeWidth * 2)
+    return (
+        <svg
+            width={width}
+            height={height}
+        >
+            <polygon
+                points={points}
+                fill={figure.fillColor}
+                stroke={figure.strokeColor}
+                strokeWidth={figure.strokeWidth}
+            >
+            </polygon>
+        </svg>
+    )
 }
 
-const DrawFigure = (canvasId: string, shape: ShapeType, coordinates: Point, figureArea: Area, color: string) => {
-    switch (shape) {
+const Figure = ({
+                    figure,
+                    size
+                }: FigureProps) => {
+    switch (figure.shape) {
         case ShapeType.Rectangle:
-            return DrawRectangle(canvasId, coordinates, figureArea, color);
+            return (
+                <Rectangle
+                    figure={figure}
+                    size={size}
+                />
+            )
+
         case ShapeType.Arc:
-            return DrawArc(canvasId, coordinates, figureArea, color);
+            return (
+                <Circle
+                    figure={figure}
+                    size={size}
+                />
+            )
+
         case ShapeType.Triangle:
-            return DrawTriangle(canvasId, coordinates, figureArea, color);
+            return (
+                <Triangle
+                    figure={figure}
+                    size={size}
+                />
+            )
+        case ShapeType.NoShape:
+            return (
+                <div></div>
+            )
         case ShapeType.Star:
-            return DrawStar(canvasId, coordinates, figureArea, color)
+            return (
+                <div></div>
+            )
     }
 }
 
-export {DrawFigure}
+export default connect()(Figure)

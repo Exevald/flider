@@ -8,7 +8,7 @@ import {Button} from "../Button/Button";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
 
-import {Editor} from "../../../core/types/types";
+import {EditorType} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
 import {setTitle} from "../../../model/actionCreators";
@@ -30,7 +30,7 @@ const LogoArea = () => {
     )
 }
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     return {
         title: state.presentation.title
     }

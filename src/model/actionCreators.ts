@@ -1,4 +1,4 @@
-import {Editor, ItemType, Point, ShapeType, SlideState} from "../core/types/types";
+import {EditorType, ItemType, PointType, ShapeType, SlideState} from "../core/types/types";
 import {Actions} from "../core/types/types";
 
 function createPresentation() {
@@ -13,7 +13,7 @@ function savePresentation() {
     }
 }
 
-function openPresentation(newEditor: Editor) {
+function openPresentation(newEditor: EditorType) {
     return {
         type: Actions.OPEN_PRESENTATION,
         newEditor
@@ -115,19 +115,18 @@ function setCurrentCursorPosition(clientX: number, clientY: number) {
     }
 }
 
-function addFigureItem(shape: ShapeType, coordinates: Point, color: string) {
+function addFigureItem(shape: ShapeType, color: string, coordinates: PointType) {
     return {
         type: Actions.ADD_FIGURE_ITEM,
         addFigureParams: {
             shape,
-            coordinates,
             color,
+            coordinates,
         }
     }
 }
 
-function addImageItem(imageSrc: string, coordinates: Point) {
-    console.log("action")
+function addImageItem(imageSrc: string, coordinates: PointType) {
     return {
         type: Actions.ADD_IMAGE,
         addImageParams: {

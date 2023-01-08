@@ -35,7 +35,6 @@
     height: 111px;
     border: 1px solid var(--grey-shark);
     background-color: var(--shinji);
-    border-radius: 9px;
     margin-top: 25px;
     margin-left: 40px;
 }
@@ -45,8 +44,11 @@
     border: 3px solid var(--ayanami-default);
 }
 
-
-
 .slidePreview:hover {
     border: 1px solid var(--kaoru-default);
+}
+
+.slideElement {
+    list-style-type: none;
+    pointer-events: none;
 }

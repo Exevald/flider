@@ -4,11 +4,11 @@ import logoImage from "./Logo.svg"
 import {Button} from "../../components/Button/Button";
 import {createPresentation} from "../../../model/actionCreators";
 import {connect} from "react-redux";
-import {Editor} from "../../../core/types/types";
+import {EditorType} from "../../../core/types/types";
 import {AppDispatcher, loadPresentation} from "../../../model/store";
 import {ConnectedProps} from "react-redux/es/exports";
 
-function mapStateToProps(state: Editor) {
+function mapStateToProps(state: EditorType) {
     return {
         presentation: state.presentation
     }
