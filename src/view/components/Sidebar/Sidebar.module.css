@@ -35,12 +35,13 @@
     height: 101.25px;
     border: 1px solid var(--grey-shark);
     background-color: var(--shinji);
-    margin-top: 25px;
-    margin-left: 40px;
+    margin: 26px 3px 3px 43px;
+    overflow: hidden;
 }
 
 .slidePreview.slidePreviewSelected,
 .slidePreview.slidePreviewSelected:hover {
+    margin: 25px 0 0 40px;
     border: 3px solid var(--ayanami-default);
 }
 
