@@ -156,7 +156,7 @@ const Slide = ({
 
 const SidebarSlide = (props: SlideInitialProps) => {
     return (
-        <ul style={{transform: "scale(0.1, 0.1)"}}>{props.slideItems}</ul>
+        <ul style={{transform: "scale(0.14)", marginLeft: -137}}>{props.slideItems}</ul>
     )
 }
 
