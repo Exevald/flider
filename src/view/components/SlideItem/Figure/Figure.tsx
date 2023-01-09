@@ -109,7 +109,7 @@ const Figure = ({
             )
         case ShapeType.NoShape:
             return (
-                <div></div>
+                <></>
             )
         case ShapeType.Star:
             return (
