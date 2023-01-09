@@ -37,6 +37,7 @@
     background-color: var(--shinji);
     margin: 26px 3px 3px 43px;
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .slidePreview.slidePreviewSelected,

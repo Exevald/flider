@@ -7,7 +7,7 @@ import Slide, {SidebarSlide} from "../Slide/Slide";
 import SlideItem from "../SlideItem/SlideItem";
 
 interface SlidePreviewProps {
-    slides: Array <SlideType>
+    slides: Array<SlideType>
     slideIndex: number;
     preview?: string;
     isSelected?: boolean;
@@ -63,15 +63,16 @@ const SlidePreview = (props: SlidePreviewProps) => {
         }}>
             <p className={styles.slideIndex}>{slideId}</p>
             <div className={`${styles.slidePreview} ${borderStyle}`} style={{background: props.bgColor}}>
-            <SidebarSlide slideItems=
-                              {props.slides[props.slideIndex].items.map((item) =>
-                                  <li key={item.id}
-                                      className={styles.slideElement}>
-                                      <SlideItem slideId={props.slideId} itemId={item.id} active={false}></SlideItem>
-                                  </li>
-                              )}
-                          background={props.bgColor}
-            />
+                <SidebarSlide slideItems=
+                                  {props.slides[props.slideIndex].items.map((item) =>
+                                      <li key={item.id}
+                                          className={styles.slideElement}>
+                                          <SlideItem slideId={props.slideId} itemId={item.id}
+                                                     active={false}></SlideItem>
+                                      </li>
+                                  )}
+                              background={props.bgColor}
+                />
             </div>
         </div>
     )

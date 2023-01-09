@@ -171,6 +171,14 @@ function deselectItems(itemId: IdType) {
     }
 }
 
+function moveItem(newX: number, newY: number) {
+    return {
+        type: Actions.MOVE_ITEM,
+        newX: newX,
+        newY: newY,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -196,4 +204,5 @@ export {
     selectItem,
     selectManyItems,
     deselectItems,
+    moveItem,
 }

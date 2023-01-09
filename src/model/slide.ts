@@ -105,7 +105,6 @@ function deselectItemsReducer(slide: SlideType, itemId: IdType): SlideType {
 }
 
 function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointType): SlideType {
-    console.log("imageReducer")
     const newSlide = deepClone(slide) as SlideType;
     const newItem: Item = {
         id: getRandomId(),
@@ -127,6 +126,24 @@ function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointT
     return newSlide
 }
 
+function moveItemReducer(slide: SlideType, newX: number, newY: number): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (newSlide.selectedItemsIds.includes(slideItem.id)) {
+            const newSlideItem: Item = {
+                ...slideItem,
+                coordinates: {
+                    x: newX,
+                    y: newY,
+                }
+            }
+            newSlide.items.splice(i, 1, newSlideItem);
+        }
+    }
+    return newSlide
+}
+
 function slideReducer(state: SlideType, action: ActionType): SlideType {
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
@@ -145,6 +162,8 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
             return action.itemId !== undefined ? selectManyItemsReducer(state, action.itemId) : deepClone(state) as SlideType;
         case Actions.DESELECT_ITEMS:
             return action.itemId !== undefined ? deselectItemsReducer(state, action.itemId) : deepClone(state) as SlideType;
+        case Actions.MOVE_ITEM:
+            return action.moveItemCoordinates !== undefined ? moveItemReducer(state, action.moveItemCoordinates.newX, action.moveItemCoordinates.newY) : deepClone(state) as SlideType
         default:
             return deepClone(state) as SlideType;
     }
