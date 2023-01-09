@@ -7,6 +7,8 @@ import {swipeSlideShowSlide, switchSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
 import {CANVAS_SETTINGS} from "../../../core/functions/utility";
 import {useEffect} from "react";
+import SlideItem from "../../components/SlideItem/SlideItem";
+import Slide from "../../components/Slide/Slide";
 
 function mapStateToProps(state: EditorType) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
@@ -36,24 +38,38 @@ const PresentationView = (props: PresentationViewProps) => {
     useEffect(() => {
         const body = document.querySelector('body');
         if (body !== null) {
-            body.addEventListener("keydown", keysHandler);
-            return () => body.removeEventListener("keydown", keysHandler);
+            body.requestFullscreen().then();
+            body.addEventListener('fullscreenchange', fullscreenHandler);
+            body.addEventListener('keydown', keysHandler);
+            body.addEventListener('click', clicksHandler);
+            return () => {
+                body.addEventListener('fullscreenchange', fullscreenHandler);
+                body.removeEventListener('keydown', keysHandler);
+                body.removeEventListener('click', clicksHandler);
+            }
         }
     });
     const slidesIds = props.slides.map(slide => {
         return slide.id;
     });
-    let slides = [];
-    for (let i = 0; i < props.slides.length; i++) {
-        let slide = props.slides[i];
-        slides.push(
-            <div className={styles.canvas} style={{"backgroundColor": slide.bgColor}}>
-                <canvas id={"canvas"} width={CANVAS_SETTINGS.width} height={CANVAS_SETTINGS.height}></canvas>
-            </div>
-        )
+    let slide =
+        <div className={styles.svgArea}>
+            <Slide slideItems=
+                       {props.currentSlide.items.map((item) =>
+                           <li key={item.id}
+                               className={styles.slideElement}>
+                               <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={false}></SlideItem>
+                           </li>
+                       )}
+                   background={props.currentSlide.bgColor}></Slide>
+        </div>;
+    function fullscreenHandler() {
+        const linker = document.getElementById('goToEditButton');
+        if (linker !== null && !document.fullscreenElement) {
+            linker.click();
+        }
     }
     function keysHandler(e: KeyboardEvent) {
-        const linker = document.getElementById('goToEditButton');
         if (e.code === 'ArrowLeft' && (props.slideShowCurrentSlideIndex > 0)) {
             props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
             props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
@@ -62,40 +78,18 @@ const PresentationView = (props: PresentationViewProps) => {
             props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
             props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
         }
-        if (e.code === 'Escape' && linker !== null) {
-            // переход на редактирование
-            linker.click();
+    }
+    function clicksHandler() {
+        if (props.slideShowCurrentSlideIndex < props.countOfSlides - 1) {
+            props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
+            props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
         }
     }
     return (
         <div className={styles.blackout}>
-            <div className={styles.canvasArea}>
-                {slides[props.currentSlideIndex]}
+            <div className={styles.svgArea}>
+                {slide}
                 <p className={styles.slideNumberText}>{props.slideShowCurrentSlideIndex + 1}</p>
-                <div className={styles.arrows}>
-                    {
-                        props.slideShowCurrentSlideIndex === 0 ?
-                            <div className={`${styles.arrow} ${styles.arrowLeftDisabled}`}></div>
-                            :
-                            <div className={`${styles.arrow} ${styles.arrowLeft}`}
-                                 onClick={() => {
-                                     props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
-                                     props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
-                                 }}>
-                            </div>
-                    }
-                    {
-                        props.slideShowCurrentSlideIndex === props.countOfSlides - 1 ?
-                            <div className={`${styles.arrow} ${styles.arrowRightDisabled}`}></div>
-                            :
-                            <div className={`${styles.arrow} ${styles.arrowRight}`}
-                                 onClick={() => {
-                                     props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
-                                     props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
-                                 }}>
-                            </div>
-                    }
-                </div>
                 <Link to={"/presentation"}>
                     <Button viewStyle={"goToEditor"} id={"goToEditButton"} onClick={() => {
                     }} text={"Продолжить редактирование презентации"}/>
