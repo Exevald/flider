@@ -1,7 +1,8 @@
 .blackout {
     width: 100vw;
     height: 100vh;
-    background-color: var(--grey-shark);
+    background-color: black;
+    color: white;
 }
 
 .slideNumberText {
@@ -21,8 +22,6 @@
 
 .canvas {
     margin-top: 20px;
-    width: 1280px;
-    height: 720px;
 }
 
 .arrows {

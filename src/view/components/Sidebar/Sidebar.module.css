@@ -1,6 +1,6 @@
 .sidebar {
     height: 86.7vh;
-    width: 17vw;
+    width: 300px;
     border-right: 1px solid var(--kaoru-default);
     display: flex;
     flex-direction: column;
@@ -32,7 +32,7 @@
 
 .slidePreview {
     width: 180px;
-    height: 111px;
+    height: 101.25px;
     border: 1px solid var(--grey-shark);
     background-color: var(--shinji);
     margin-top: 25px;
