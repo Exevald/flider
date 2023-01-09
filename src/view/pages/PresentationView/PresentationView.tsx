@@ -53,6 +53,7 @@ const PresentationView = (props: PresentationViewProps) => {
         )
     }
     function keysHandler(e: KeyboardEvent) {
+        const linker = document.getElementById('goToEditButton');
         if (e.code === 'ArrowLeft' && (props.slideShowCurrentSlideIndex > 0)) {
             props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "left");
             props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex - 1]);
@@ -60,6 +61,10 @@ const PresentationView = (props: PresentationViewProps) => {
         if (e.code === 'ArrowRight' && (props.slideShowCurrentSlideIndex < props.countOfSlides - 1)) {
             props.swipeSlideShowSlide(props.slideShowCurrentSlideIndex, "right");
             props.switchSlide(slidesIds[props.slideShowCurrentSlideIndex + 1]);
+        }
+        if (e.code === 'Escape' && linker !== null) {
+            // переход на редактирование
+            linker.click();
         }
     }
     return (
@@ -92,7 +97,7 @@ const PresentationView = (props: PresentationViewProps) => {
                     }
                 </div>
                 <Link to={"/presentation"}>
-                    <Button viewStyle={"goToEditor"} onClick={() => {
+                    <Button viewStyle={"goToEditor"} id={"goToEditButton"} onClick={() => {
                     }} text={"Продолжить редактирование презентации"}/>
                 </Link>
             </div>
