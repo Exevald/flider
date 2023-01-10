@@ -5,7 +5,7 @@ import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
     addImageItem,
-    changeCurrentSlideState, deselectItems, selectItem, selectManyItems
+    changeCurrentSlideState, deselectItems, moveItem, selectItem, selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
 
@@ -34,6 +34,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         selectManyItems: (itemId: IdType) => dispatcher(selectManyItems(itemId)),
         deselectItems: (itemId: IdType) => dispatcher(deselectItems(itemId)),
+        moveItems: (newX: number, newY: number) => dispatcher(moveItem(newX, newY)),
     }
 }
 
@@ -56,7 +57,10 @@ const Slide = ({
                    selectItem,
                    selectManyItems,
                    deselectItems,
+                   moveItems,
                }: SlideMergedProps) => {
+    let ifPressed = false;
+    let beginMoving = false;
     return (
         <div className={styles.slide}
              style={{"background": background}}
@@ -117,35 +121,50 @@ const Slide = ({
              }
              }
              onMouseDown={(event) => {
-                switch (currentSlideState) {
-                    case SlideState.SELECT_ITEM: {
-                        const slide = document.getElementById(currentSlideId) as HTMLElement;
-                        const slideClientX = event.clientX - slide.offsetLeft;
-                        const slideClientY = event.clientY - slide.offsetTop;
-                        for (let i = 0; i < modelSlideItems.length; i++) {
-                            let slideItem = modelSlideItems[i];
-                            let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                            let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
-                                slideClientX <= slideItem.coordinates.x + slideItem.space.width;
-                            let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
-                                slideClientY <= slideItem.coordinates.y + slideItem.space.height;
-                            if (checkHorizontalClick && checkVerticalClick) {
-                                if (!isSelected) {
-                                    if (event.ctrlKey) {
-                                        selectManyItems(slideItem.id);
-                                    } else {
-                                        selectItem(slideItem.id);
-                                    }
-                                } else {
-                                    deselectItems(slideItem.id);
-                                }
-                            } else if (isSelected && !event.ctrlKey) {
-                                deselectItems(slideItem.id);
-                            }
-                        }
-                        break;
-                    }
-                }
+                 ifPressed = true;
+                 switch (currentSlideState) {
+                     case SlideState.SELECT_ITEM: {
+                         const slide = document.getElementById(currentSlideId) as HTMLElement;
+                         const slideClientX = event.clientX - slide.offsetLeft;
+                         const slideClientY = event.clientY - slide.offsetTop;
+                         for (let i = 0; i < modelSlideItems.length; i++) {
+                             let slideItem = modelSlideItems[i];
+                             let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                             let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
+                                 slideClientX <= slideItem.coordinates.x + slideItem.space.width;
+                             let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
+                                 slideClientY <= slideItem.coordinates.y + slideItem.space.height;
+                             if (checkHorizontalClick && checkVerticalClick) {
+                                 if (!isSelected) {
+                                     if (event.ctrlKey) {
+                                         selectManyItems(slideItem.id);
+                                     } else {
+                                         selectItem(slideItem.id);
+                                     }
+                                 } else {
+                                     // deselectItems(slideItem.id);
+                                 }
+                             } else if (isSelected && !event.ctrlKey) {
+                                 deselectItems(slideItem.id);
+                             }
+                         }
+                         break;
+                     }
+                 }
+             }}
+             onMouseUp={(event) => {
+                 if (beginMoving) {
+                     const slide = document.getElementById(currentSlideId) as HTMLElement;
+                     const slideClientX = event.clientX - slide.offsetLeft;
+                     const slideClientY = event.clientY - slide.offsetTop;
+                     moveItems(slideClientX, slideClientY);
+                 }
+                 ifPressed = false;
+             }}
+             onMouseMove={(event) => {
+                 if (ifPressed) {
+                     beginMoving = true;
+                 }
              }}>
             <ul>{slideItems}</ul>
         </div>

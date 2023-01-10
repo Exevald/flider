@@ -172,10 +172,13 @@ function deselectItems(itemId: IdType) {
 }
 
 function moveItem(newX: number, newY: number) {
+    console.log("action")
     return {
         type: Actions.MOVE_ITEM,
-        newX: newX,
-        newY: newY,
+        moveItemCoordinates: {
+            newX: newX,
+            newY: newY,
+        }
     }
 }
 

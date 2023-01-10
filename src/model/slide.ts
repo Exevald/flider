@@ -127,6 +127,7 @@ function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointT
 }
 
 function moveItemReducer(slide: SlideType, newX: number, newY: number): SlideType {
+    console.log("here")
     const newSlide = deepClone(slide) as SlideType;
     for (let i = 0; i < newSlide.items.length; i++) {
         const slideItem = newSlide.items[i];

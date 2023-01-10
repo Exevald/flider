@@ -117,6 +117,7 @@ enum Actions {
 }
 
 enum SlideState {
+    NO_ACTION = "NO_ACTION",
     SELECT_ITEM = "SELECT_ITEM",
     DRAW_FIGURE = "DRAW_FIGURE",
     DRAW_IMAGE = "DRAW_IMAGE",
