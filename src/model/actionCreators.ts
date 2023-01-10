@@ -171,13 +171,24 @@ function deselectItems(itemId: IdType) {
     }
 }
 
-function moveItem(newX: number, newY: number) {
-    console.log("action")
+function moveItem(shiftX: number, shiftY: number) {
     return {
         type: Actions.MOVE_ITEM,
         moveItemCoordinates: {
-            newX: newX,
-            newY: newY,
+            shiftX: shiftX,
+            shiftY: shiftY,
+        }
+    }
+}
+
+function scaleItem(shiftX: number, shiftY: number, newWidth: number, newHeight: number) {
+    return {
+        type: Actions.SCALE_ITEM,
+        scaleItemParams: {
+            shiftX: shiftX,
+            shiftY: shiftY,
+            newWidth: newWidth,
+            newHeight: newHeight,
         }
     }
 }
@@ -208,4 +219,5 @@ export {
     selectManyItems,
     deselectItems,
     moveItem,
+    scaleItem,
 }
