@@ -146,9 +146,7 @@ const Slide = ({
                         break;
                     }
                 }
-             } 
-             }>
-
+             }}>
             <ul>{slideItems}</ul>
         </div>
     )
