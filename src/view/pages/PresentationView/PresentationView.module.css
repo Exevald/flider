@@ -9,56 +9,15 @@
     margin-top: 15px;
     font-family: 'Inter', sans-serif;
     font-size: 20px;
+    color: gray;
 }
 
-.canvasArea {
+.svgArea {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.canvas {
-    margin-top: 20px;
-}
-
-.arrows {
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.arrow {
-    margin: 10px;
-    width: 58px;
-    height: 45px;
-}
-
-.arrowLeft {
-    background: no-repeat url("arrows/SwipeLeftDefaultIcon.svg");
-}
-
-.arrowLeft:hover {
-    background: no-repeat url("arrows/SwipeLeftHoverIcon.svg");
-    cursor: pointer;
-}
-
-.arrowLeftDisabled {
-    background: no-repeat url("arrows/SwipeLeftDisabledIcon.svg");
-}
-
-.arrowRight {
-    background: no-repeat url("arrows/SwipeRightDefaultIcon.svg");
-}
-
-.arrowRight:hover {
-    background: no-repeat url("arrows/SwipeRightHoverIcon.svg");
-    cursor: pointer;
-}
-
-.arrowRightDisabled {
-    background: no-repeat url("arrows/SwipeRightDisabledIcon.svg");
+    border: none;
 }

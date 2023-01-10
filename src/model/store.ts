@@ -49,12 +49,9 @@ type ActionType = {
         imageSrc: string,
         coordinates: PointType,
     }
-    changeAngleParams?: {
-        angleShift: number
-    },
-    changePositionCoordinates?: {
-        xShift: number,
-        yShift: number
+    moveItemCoordinates?: {
+        newX: number,
+        newY: number
     },
     ChangeSizeParams?: {
         newWidth: number,

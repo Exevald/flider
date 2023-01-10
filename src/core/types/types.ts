@@ -113,13 +113,14 @@ enum Actions {
     SELECT_ITEM = "SELECT_ITEM",
     SELECT_MANY_ITEMS = "SELECT_MANY_ITEMS",
     DESELECT_ITEMS = "DESELECT_ITEMS",
+    MOVE_ITEM = "MOVE_ITEM",
 }
 
 enum SlideState {
     SELECT_ITEM = "SELECT_ITEM",
     DRAW_FIGURE = "DRAW_FIGURE",
     DRAW_IMAGE = "DRAW_IMAGE",
-    INIT_CURRENT_CURSOR_POSITION = "INIT_CURRENT_CURSOR_POSITION",
+    MOVE_ITEM = "MOVE_ITEM",
 }
 
 export type {ImageType, TextAreaType, FigureType, Item, SlideType, PresentationType, HistoryType, AreaType, PointType, IdType, EditorType};
