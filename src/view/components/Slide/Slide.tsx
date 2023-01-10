@@ -277,7 +277,6 @@ const Slide = ({
                          break;
                      }
                  }
-                 // console.log(currentSlideState);
              }}>
             <ul>{slideItems}</ul>
         </div>
