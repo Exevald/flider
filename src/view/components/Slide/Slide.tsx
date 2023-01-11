@@ -107,6 +107,7 @@ const Slide = ({
              style={{"background": background}}
              id={currentSlideId}
              onClick={(event) => {
+                 console.log("slideState: ", currentSlideState)
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
@@ -159,6 +160,7 @@ const Slide = ({
                          break;
                      }
                      case SlideState.DRAW_TEXT: {
+                         console.log("ahahaha")
                          addTextItem(
                              'Inter',
                              14,

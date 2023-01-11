@@ -28,7 +28,7 @@ function mapStateToProps(state: EditorType) {
     }
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type ToolbarProps = ConnectedProps<typeof connector>
 
 //заглушка
@@ -90,7 +90,7 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                     <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
                     }}/>
                     <ButtonIcon viewStyle={"textArea"} onClick={() => {
-                        props.changeCurrentSlideState(SlideState.DRAW_TEXT)
+                        props.changeCurrentSlideState(SlideState.DRAW_TEXT);
                     }}/>
                     <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
                                 onClick={() => {

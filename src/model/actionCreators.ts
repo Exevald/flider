@@ -137,9 +137,9 @@ function addImageItem(imageSrc: string, coordinates: PointType) {
 }
 
 function addTextItem(fontFamily: string, fontSize: number,
-                 fontColor: string,
-                 value: string,
-                 coordinates: PointType) {
+                     fontColor: string,
+                     value: string,
+                     coordinates: PointType) {
     return {
         type: Actions.DRAW_TEXT,
         addTextParams: {
