@@ -22,6 +22,7 @@ function mapStateToProps(state: EditorType) {
         currentFigureType: state.presentation.slides[currentSlideIndex].currentFigureType,
         currentSlideId: state.presentation.slides[currentSlideIndex].id,
         currentColor: state.presentation.currentColor,
+        currentFontSize: state.presentation.currentFontSize,
         modelSlideItems: state.presentation.slides[currentSlideIndex].items,
         selectedItemsIds: state.presentation.slides[currentSlideIndex].selectedItemsIds,
     }
@@ -119,6 +120,7 @@ const Slide = ({
                    currentFigureType,
                    currentSlideId,
                    currentColor,
+                   currentFontSize,
                    changeCurrentSlideState,
                    modelSlideItems,
                    selectedItemsIds,
@@ -294,9 +296,9 @@ const Slide = ({
                      case SlideState.DRAW_TEXT: {
                          addTextItem(
                              'Inter',
-                             14,
+                             currentFontSize,
                              currentColor,
-                             'hello',
+                             'Введите что-нибудь',
                              {x: slideClientX, y: slideClientY});
                          changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break

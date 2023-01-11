@@ -4,7 +4,7 @@ import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
-import {changeTextItem, selectItem} from "../../../model/actionCreators";
+import {changeCurrentFontSize, changeTextItem, selectItem} from "../../../model/actionCreators";
 import TextArea from "../TextArea/TextArea";
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
@@ -13,6 +13,7 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
         slideItem: state.presentation.slides[currentSlideIndex].items.find(item => item.id === customProps.itemId),
         active: customProps.active,
         selectedItemsIds: state.presentation.slides[currentSlideIndex].selectedItemsIds,
+        currentFontSize: state.presentation.currentFontSize,
     }
 }
 
@@ -21,13 +22,14 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         changeTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
             dispatcher(changeTextItem(font, size, color, value, coordinates)),
+        changeFontSize: (size: string) => dispatcher(changeCurrentFontSize(size))
     }
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type SlideItemProps = ConnectedProps<typeof connector>;
 
-const SlideItem = ({slideItem,changeTextItem, active, selectedItemsIds}: SlideItemProps) => {
+const SlideItem = ({slideItem, changeTextItem, changeFontSize, currentFontSize, active, selectedItemsIds}: SlideItemProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
@@ -94,8 +96,8 @@ const SlideItem = ({slideItem,changeTextItem, active, selectedItemsIds}: SlideIt
                     }
                     {
                         (slideItem.textArea) &&
-                        <TextArea placeholder={slideItem.textArea.value} type={'slideItem'}
-                                  value={slideItem.textArea.value}
+                        <textarea placeholder={slideItem.textArea.value}
+                                  className={styles.textArea}
                                   style={{
                                       fontFamily: slideItem.textArea.fontFamily,
                                       fontSize: slideItem.textArea.fontSize,
@@ -107,12 +109,13 @@ const SlideItem = ({slideItem,changeTextItem, active, selectedItemsIds}: SlideIt
                                               slideItem.textArea.fontFamily,
                                               slideItem.textArea.fontSize,
                                               slideItem.textArea.fontColor,
-                                              value,
+                                              slideItem.textArea.value,
                                               slideItem.coordinates
                                           )
                                       }
                                       active = false
                                   }}
+                                  autoCorrect={'on'}
                         />
                     }
                 </div>
