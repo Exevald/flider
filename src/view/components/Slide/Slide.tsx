@@ -4,7 +4,7 @@ import {EditorType, IdType, Item, PointType, ShapeType, SlideState} from "../../
 import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
-    addImageItem,
+    addImageItem, addTextItem,
     changeCurrentSlideState, deselectItems, moveItem, scaleItem, selectItem, selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
@@ -32,6 +32,8 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         addFigureItem: (shape: ShapeType, color: string, coordinates: PointType) => dispatcher(addFigureItem(shape, color, coordinates)),
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         addImageItem: (imageSrc: string, coordinates: PointType) => dispatcher(addImageItem(imageSrc, coordinates)),
+        addTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
+            dispatcher(addTextItem(font, size, color, value, coordinates)),
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         selectManyItems: (itemId: IdType) => dispatcher(selectManyItems(itemId)),
         deselectItems: (itemId: IdType) => dispatcher(deselectItems(itemId)),
@@ -86,6 +88,7 @@ const Slide = ({
                    slideItems,
                    background,
                    addFigureItem,
+                   addTextItem,
                    currentSlideState,
                    currentFigureType,
                    currentSlideId,
@@ -154,6 +157,16 @@ const Slide = ({
                          inputFile.remove();
                          changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break;
+                     }
+                     case SlideState.DRAW_TEXT: {
+                         addTextItem(
+                             'Inter',
+                             14,
+                             currentColor,
+                             'hello',
+                             {x: slideClientX, y: slideClientY});
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
+                         break
                      }
                  }
              }}
