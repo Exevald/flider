@@ -1,5 +1,5 @@
 import {Actions, IdType, Item, ItemType, PointType, ShapeType, SlideType, SlideState} from "../core/types/types";
-import {getRandomId, min, max} from "../core/functions/utility";
+import {getRandomId, min, max, setNewLayer} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
 
@@ -21,10 +21,10 @@ function addFigureItemReducer(slide: SlideType, shape: ShapeType, color: string,
         },
         element: ItemType.Figure,
         space: {
-            width: 100,
-            height: 100,
+            width: 0,
+            height: 0,
         },
-        layer: 1,
+        layer: setNewLayer(),
     }
     switch (shape) {
         case ShapeType.Rectangle: {
@@ -153,25 +153,19 @@ function addTextReducer(slide: SlideType,
         layer: 1
     }
     newSlide.items.push(newTextItem);
-    console.log(newTextItem);
     return newSlide
 }
-function changeTextReducer(slide: SlideType,
-                        font: string = 'Inter',
-                        size: number = 14,
-                        color: string = 'black',
-                        value: string = 'Example'): SlideType {
+
+function moveItemReducer(slide: SlideType, shiftX: number, shiftY: number): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     for (let i = 0; i < newSlide.items.length; i++) {
         const slideItem = newSlide.items[i];
         if (newSlide.selectedItemsIds.includes(slideItem.id)) {
             const newSlideItem: Item = {
                 ...slideItem,
-                textArea: {
-                    fontFamily: font,
-                    fontSize: size,
-                    fontColor: color,
-                    value: value
+                coordinates: {
+                    x: shiftX,
+                    y: shiftY,
                 }
             }
             newSlide.items.splice(i, 1, newSlideItem);
@@ -180,7 +174,7 @@ function changeTextReducer(slide: SlideType,
     return newSlide
 }
 
-function moveItemReducer(slide: SlideType, newX: number, newY: number): SlideType {
+function scaleItemReducer(slide: SlideType, shiftX: number, shiftY: number, newWidth: number, newHeight: number): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     for (let i = 0; i < newSlide.items.length; i++) {
         const slideItem = newSlide.items[i];
@@ -188,8 +182,12 @@ function moveItemReducer(slide: SlideType, newX: number, newY: number): SlideTyp
             const newSlideItem: Item = {
                 ...slideItem,
                 coordinates: {
-                    x: newX,
-                    y: newY,
+                    x: shiftX,
+                    y: shiftY,
+                },
+                space: {
+                    width: newWidth,
+                    height: newHeight,
                 }
             }
             newSlide.items.splice(i, 1, newSlideItem);
@@ -199,8 +197,6 @@ function moveItemReducer(slide: SlideType, newX: number, newY: number): SlideTyp
 }
 
 function slideReducer(state: SlideType, action: ActionType): SlideType {
-    console.log(state.currentState, action)
-    console.log(action.addTextParams)
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
             return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as SlideType;
@@ -217,11 +213,6 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
                 addTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
                     action.addTextParams.fontColor, action.addTextParams.value, {x: action.clientX, y: action.clientY})
                 : deepClone(state) as SlideType;
-        case Actions.CHANGE_TEXT:
-            return action.addTextParams !== undefined ?
-                changeTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
-                    action.addTextParams.fontColor, action.addTextParams.value)
-                : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
         case Actions.SELECT_MANY_ITEMS:
@@ -229,7 +220,9 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.DESELECT_ITEMS:
             return action.itemId !== undefined ? deselectItemsReducer(state, action.itemId) : deepClone(state) as SlideType;
         case Actions.MOVE_ITEM:
-            return action.moveItemCoordinates !== undefined ? moveItemReducer(state, action.moveItemCoordinates.newX, action.moveItemCoordinates.newY) : deepClone(state) as SlideType
+            return action.moveItemCoordinates !== undefined ? moveItemReducer(state, action.moveItemCoordinates.shiftX, action.moveItemCoordinates.shiftY) : deepClone(state) as SlideType;
+        case Actions.SCALE_ITEM:
+            return action.scaleItemParams !== undefined ? scaleItemReducer(state, action.scaleItemParams.shiftX, action.scaleItemParams.shiftY, action.scaleItemParams.newWidth, action.scaleItemParams.newHeight) : deepClone(state) as SlideType;
         default:
             return deepClone(state) as SlideType;
     }

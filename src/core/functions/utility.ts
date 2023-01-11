@@ -87,6 +87,12 @@ function getRandomId(): IdType {
     return id;
 }
 
+let layer = 1;
+function setNewLayer(): number {
+    layer++
+    return layer - 1
+}
+
 function min(a: number, b: number): number {
     return a < b ? a : b;
 }
@@ -123,4 +129,4 @@ export {
     DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,
     SIDEBAR_SETTINGS
 };
-export {getRandomId, min, max, getBase64FromPicture};
+export {getRandomId, min, max, getBase64FromPicture, setNewLayer};

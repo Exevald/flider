@@ -7,10 +7,6 @@ import {AppDispatcher} from "../../../model/store";
 import {changeTextItem, selectItem} from "../../../model/actionCreators";
 import TextArea from "../TextArea/TextArea";
 
-interface SlideItemInitialProps {
-    // slideItemSpace: SlideItemSpaceType
-}
-
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === customProps.slideId);
     return {
@@ -29,11 +25,9 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type SlideItemCustomProps = ConnectedProps<typeof connector>;
+type SlideItemProps = ConnectedProps<typeof connector>;
 
-type SlideItemMergedProps = SlideItemInitialProps & SlideItemCustomProps;
-
-const SlideItem = ({slideItem, changeTextItem, active, selectedItemsIds}: SlideItemMergedProps) => {
+const SlideItem = ({slideItem,changeTextItem, active, selectedItemsIds}: SlideItemProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
@@ -119,7 +113,6 @@ const SlideItem = ({slideItem, changeTextItem, active, selectedItemsIds}: SlideI
                                   }}
                         />
                     }
-
                 </div>
             );
         case ItemType.Image:

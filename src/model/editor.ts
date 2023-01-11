@@ -32,7 +32,6 @@ function swipeSlideShowSlideReducer(editor: EditorType, slideIndex: number, dire
             newSlideIndex = editor.presentation.slides.length - 1;
         }
     } else if (direction === "left") {
-        console.log("left")
         newSlideIndex--;
         if (newSlideIndex < 0) {
             newSlideIndex = 0;
