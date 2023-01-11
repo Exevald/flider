@@ -85,10 +85,6 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
             <ButtonIcon viewStyle={"redo"} onClick={() => props.redo()}/>
             {
                 (status === 1 || status === 4 || status === 0) && <>
-                    <ButtonIcon viewStyle={"selectArea"} onClick={() => {
-                    }}/>
-                    <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
-                    }}/>
                     <ButtonIcon viewStyle={"textArea"} onClick={() => {
                         props.changeCurrentSlideState(SlideState.DRAW_TEXT);
                     }}/>
