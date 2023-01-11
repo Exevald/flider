@@ -76,6 +76,10 @@ type SlideMergedProps = SlideInitialProps & SlideCustomProps;
 
 let ifPressed = false;
 let beginMoving = false;
+let slideArea = {
+    width: 1280,
+    height: 720,
+}
 let startMouseX = 0;
 let startMouseY = 0;
 let startFigureX = 0;
@@ -83,6 +87,7 @@ let startFigureY = 0;
 let startFigureWidth = 0;
 let startFigureHeight = 0;
 let currentCorner = CornerType.None;
+let mouseUp = true;
 
 const Slide = ({
                    slideItems,
@@ -107,192 +112,208 @@ const Slide = ({
              style={{"background": background}}
              id={currentSlideId}
              onMouseMove={(event) => {
-                if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
-                    const slide = document.getElementById(currentSlideId) as HTMLElement;
-                    startMouseX = event.clientX - slide.offsetLeft;
-                    startMouseY = event.clientY - slide.offsetTop;
-                    for (let i = 0; i < modelSlideItems.length; i++) {
-                        let slideItem = modelSlideItems[i];
-                        let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                        if (isSelected) {
-                            startFigureX = slideItem.coordinates.x;
-                            startFigureY = slideItem.coordinates.y;
-                        }
-                    }
-                } else {
-                    const slide = document.getElementById(currentSlideId) as HTMLElement;
-                    let slideClientX = event.clientX - slide.offsetLeft;
-                    let slideClientY = event.clientY - slide.offsetTop;
-                    let shiftX = slideClientX - startMouseX;
-                    let shiftY = slideClientY - startMouseY;
-                    moveItems(startFigureX + shiftX, startFigureY + shiftY);
-                }
-                if (ifPressed) {
-                    beginMoving = true;
-                }
-                switch (currentSlideState) {
-                    case SlideState.SCALE_ITEM: {
-                        const slide = document.getElementById(currentSlideId) as HTMLElement;
-                        const slideClientX = event.clientX - slide.offsetLeft;
-                        const slideClientY = event.clientY - slide.offsetTop;
-                        if (currentCorner == CornerType.None) {
-                            let maxLayer = -1;
-                            let newFigure = modelSlideItems[0];
-                            for (let i = 0; i < modelSlideItems.length; i++) {
-                                let slideItem = modelSlideItems[i];
-                                deselectItems(slideItem.id);
-                                if (slideItem.layer > maxLayer) {
-                                    newFigure = slideItem
-                                }
-                            }
-                            selectItem(newFigure.id);
-                            currentCorner = CornerType.BottomRight;
-                            startMouseX = event.clientX - slide.offsetLeft;
-                            startMouseY = event.clientY - slide.offsetTop;
-                            startFigureX = newFigure.coordinates.x;
-                            startFigureY = newFigure.coordinates.y;
-                            startFigureWidth = newFigure.space.width;
-                            startFigureHeight = newFigure.space.height;
-                            break;
-                        }
-                        for (let i = 0; i < modelSlideItems.length; i++) {
-                            let slideItem = modelSlideItems[i];
-                            const slideClientX = event.clientX - slide.offsetLeft;
-                            const slideClientY = event.clientY - slide.offsetTop;
-                            let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                            if (isSelected) {
-                                switch (currentCorner) {
-                                    case CornerType.TopLeft: {
-                                        let shiftX = slideClientX - startMouseX;
-                                        let shiftY = slideClientY - startMouseY;
-                                        scaleItem(startFigureX + shiftX, startFigureY + shiftY, startFigureWidth - shiftX, startFigureHeight - shiftY);
-                                        break;
-                                    }
-                                    case CornerType.TopRight: {
-                                        let shiftX = slideClientX - startMouseX;
-                                        let shiftY = slideClientY - startMouseY;
-                                        scaleItem(startFigureX, startFigureY + shiftY, startFigureWidth + shiftX, startFigureHeight - shiftY);
-                                        break;
-                                    }
-                                    case CornerType.BottomLeft: {
-                                        let shiftX = slideClientX - startMouseX;
-                                        let shiftY = slideClientY - startMouseY;
-                                        scaleItem(startFigureX + shiftX, startFigureY, startFigureWidth - shiftX, startFigureHeight + shiftY);
-                                        break;
-                                    }
-                                    case CornerType.BottomRight: {
-                                        let shiftX = slideClientX - startMouseX;
-                                        let shiftY = slideClientY - startMouseY;
-                                        scaleItem(startFigureX, startFigureY, startFigureWidth + shiftX, startFigureHeight + shiftY);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-        onMouseDown={(event) => {
-            const slide = document.getElementById(currentSlideId) as HTMLElement;
-            const slideClientX = event.clientX - slide.offsetLeft;
-            const slideClientY = event.clientY - slide.offsetTop;
-            if (currentSlideState !== SlideState.SCALE_ITEM) {
-                for (let i = 0; i < modelSlideItems.length; i++) {
-                    let slideItem = modelSlideItems[i];
-                    let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                    if (isSelected) {
-                        if (getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem) !== CornerType.None) {
-                            startMouseX = event.clientX - slide.offsetLeft;
-                            startMouseY = event.clientY - slide.offsetTop;
-                            startFigureX = slideItem.coordinates.x;
-                            startFigureY = slideItem.coordinates.y;
-                            startFigureWidth = slideItem.space.width;
-                            startFigureHeight = slideItem.space.height;
-                            currentCorner = getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem);
-                            changeCurrentSlideState(SlideState.SCALE_ITEM);
-                        }
-                    }
-                }
-            }
-            switch (currentSlideState) {
-                case SlideState.DRAW_TEXT: {
-                    addTextItem(
-                        'Inter',
-                        14,
-                        currentColor,
-                        'hello',
-                        {x: slideClientX, y: slideClientY});
-                    changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    break
-                }
-                case SlideState.SELECT_ITEM: {
-                    const slide = document.getElementById(currentSlideId) as HTMLElement;
-                    const slideClientX = event.clientX - slide.offsetLeft;
-                    const slideClientY = event.clientY - slide.offsetTop;
-                    for (let i = 0; i < modelSlideItems.length; i++) {
-                        let slideItem = modelSlideItems[i];
-                        let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                        let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
-                            slideClientX <= slideItem.coordinates.x + slideItem.space.width;
-                        let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
-                            slideClientY <= slideItem.coordinates.y + slideItem.space.height;
-                        if (checkHorizontalClick && checkVerticalClick) {
-                            ifPressed = true;
-                            if (!isSelected) {
-                                if (event.ctrlKey) {
-                                    selectManyItems(slideItem.id);
-                                } else {
-                                    selectItem(slideItem.id);
-                                }
-                            }
-                        } else if (isSelected && !event.ctrlKey) {
-                            deselectItems(slideItem.id);
-                        }
-                    }
-                    break;
-                }
-                case SlideState.DRAW_FIGURE: {
-                    switch (currentFigureType) {
-                        case ShapeType.Rectangle: {
-                            addFigureItem(ShapeType.Rectangle, currentColor, {
-                                x: slideClientX,
-                                y: slideClientY
-                            });
-                            changeCurrentSlideState(SlideState.SCALE_ITEM);
-                            break;
-                        }
-                        case ShapeType.Triangle: {
-                            addFigureItem(ShapeType.Triangle, currentColor, {
-                                x: slideClientX,
-                                y: slideClientY
-                            });
-                            changeCurrentSlideState(SlideState.SCALE_ITEM);
-                            break;
-                        }
-                        case ShapeType.Arc: {
-                            addFigureItem(ShapeType.Arc, currentColor, {
-                                x: slideClientX,
-                                y: slideClientY
-                            });
-                            changeCurrentSlideState(SlideState.SCALE_ITEM);
-                            break;
-                        }
-                    }
-                    currentCorner = CornerType.None;
-                    break;
-                }
-            }
-        }}
-        onKeyDown={(event) => {
-            let CurrKey = event.key;
-            switch (CurrKey) {
-                case "PageUp": {
-                    break;
-                }
-            }
-        }}
+                 const slide = document.getElementById(currentSlideId) as HTMLElement;
+                 const slideClientX = event.clientX - slide.offsetLeft;
+                 const slideClientY = event.clientY - slide.offsetTop;
+                 console.log(slideClientX, slideClientY)
+                 if (!mouseUp) {
+                     if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
+                         const slide = document.getElementById(currentSlideId) as HTMLElement;
+                         startMouseX = event.clientX - slide.offsetLeft;
+                         startMouseY = event.clientY - slide.offsetTop;
+                         for (let i = 0; i < modelSlideItems.length; i++) {
+                             let slideItem = modelSlideItems[i];
+                             let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                             if (isSelected) {
+                                 startFigureX = slideItem.coordinates.x;
+                                 startFigureY = slideItem.coordinates.y;
+                             }
+                         }
+                     } else {
+                         const slide = document.getElementById(currentSlideId) as HTMLElement;
+                         let slideClientX = event.clientX - slide.offsetLeft;
+                         let slideClientY = event.clientY - slide.offsetTop;
+                         let shiftX = slideClientX - startMouseX;
+                         let shiftY = slideClientY - startMouseY;
+                         moveItems(startFigureX + shiftX, startFigureY + shiftY);
+                     }
+                     if (ifPressed) {
+                         beginMoving = true;
+                     }
+                     switch (currentSlideState) {
+                         case SlideState.SCALE_ITEM: {
+                             const slide = document.getElementById(currentSlideId) as HTMLElement;
+                             if (currentCorner == CornerType.None) {
+                                 let maxLayer = -1;
+                                 let newFigure = modelSlideItems[0];
+                                 for (let i = 0; i < modelSlideItems.length; i++) {
+                                     let slideItem = modelSlideItems[i];
+                                     deselectItems(slideItem.id);
+                                     if (slideItem.layer > maxLayer) {
+                                         newFigure = slideItem
+                                     }
+                                 }
+                                 selectItem(newFigure.id);
+                                 currentCorner = CornerType.BottomRight;
+                                 startMouseX = event.clientX - slide.offsetLeft;
+                                 startMouseY = event.clientY - slide.offsetTop;
+                                 startFigureX = newFigure.coordinates.x;
+                                 startFigureY = newFigure.coordinates.y;
+                                 startFigureWidth = newFigure.space.width;
+                                 startFigureHeight = newFigure.space.height;
+                                 break;
+                             }
+                             for (let i = 0; i < modelSlideItems.length; i++) {
+                                 let slideItem = modelSlideItems[i];
+                                 const slideClientX = event.clientX - slide.offsetLeft;
+                                 const slideClientY = event.clientY - slide.offsetTop;
+                                 let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                                 if (isSelected) {
+                                     switch (currentCorner) {
+                                         case CornerType.TopLeft: {
+                                             let shiftX = slideClientX - startMouseX;
+                                             let shiftY = slideClientY - startMouseY;
+                                             scaleItem(startFigureX + shiftX, startFigureY + shiftY, startFigureWidth - shiftX, startFigureHeight - shiftY);
+                                             break;
+                                         }
+                                         case CornerType.TopRight: {
+                                             let shiftX = slideClientX - startMouseX;
+                                             let shiftY = slideClientY - startMouseY;
+                                             scaleItem(startFigureX, startFigureY + shiftY, startFigureWidth + shiftX, startFigureHeight - shiftY);
+                                             break;
+                                         }
+                                         case CornerType.BottomLeft: {
+                                             let shiftX = slideClientX - startMouseX;
+                                             let shiftY = slideClientY - startMouseY;
+                                             scaleItem(startFigureX + shiftX, startFigureY, startFigureWidth - shiftX, startFigureHeight + shiftY);
+                                             break;
+                                         }
+                                         case CornerType.BottomRight: {
+                                             let shiftX = slideClientX - startMouseX;
+                                             let shiftY = slideClientY - startMouseY;
+                                             scaleItem(startFigureX, startFigureY, startFigureWidth + shiftX, startFigureHeight + shiftY);
+                                             break;
+                                         }
+                                     }
+                                 }
+                             }
+                             break;
+                         }
+                     }
+                 }
+                 if ((slideClientX < 0 || slideClientX > slideArea.width) || (slideClientY < 0 || slideClientY > slideArea.height)) {
+                     if (currentSlideState !== SlideState.DRAW_FIGURE) {
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
+                     }
+                     ifPressed = false;
+                     beginMoving = false;
+                     mouseUp = true;
+                 }
+             }
+             }
+             onMouseDown={(event) => {
+                 mouseUp = false;
+                 const slide = document.getElementById(currentSlideId) as HTMLElement;
+                 const slideClientX = event.clientX - slide.offsetLeft;
+                 const slideClientY = event.clientY - slide.offsetTop;
+                 if (currentSlideState !== SlideState.SCALE_ITEM) {
+                     for (let i = 0; i < modelSlideItems.length; i++) {
+                         let slideItem = modelSlideItems[i];
+                         let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                         if (isSelected) {
+                             if (getSelectionCorner({
+                                 x: slideClientX,
+                                 y: slideClientY
+                             }, slideItem) !== CornerType.None) {
+                                 startMouseX = event.clientX - slide.offsetLeft;
+                                 startMouseY = event.clientY - slide.offsetTop;
+                                 startFigureX = slideItem.coordinates.x;
+                                 startFigureY = slideItem.coordinates.y;
+                                 startFigureWidth = slideItem.space.width;
+                                 startFigureHeight = slideItem.space.height;
+                                 currentCorner = getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem);
+                                 changeCurrentSlideState(SlideState.SCALE_ITEM);
+                             }
+                         }
+                     }
+                 }
+                 switch (currentSlideState) {
+                     case SlideState.DRAW_TEXT: {
+                         addTextItem(
+                             'Inter',
+                             14,
+                             currentColor,
+                             'hello',
+                             {x: slideClientX, y: slideClientY});
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
+                         break
+                     }
+                     case SlideState.SELECT_ITEM: {
+                         const slide = document.getElementById(currentSlideId) as HTMLElement;
+                         const slideClientX = event.clientX - slide.offsetLeft;
+                         const slideClientY = event.clientY - slide.offsetTop;
+                         for (let i = 0; i < modelSlideItems.length; i++) {
+                             let slideItem = modelSlideItems[i];
+                             let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                             let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
+                                 slideClientX <= slideItem.coordinates.x + slideItem.space.width;
+                             let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
+                                 slideClientY <= slideItem.coordinates.y + slideItem.space.height;
+                             if (checkHorizontalClick && checkVerticalClick) {
+                                 ifPressed = true;
+                                 if (!isSelected) {
+                                     if (event.ctrlKey) {
+                                         selectManyItems(slideItem.id);
+                                     } else {
+                                         selectItem(slideItem.id);
+                                     }
+                                 }
+                             } else if (isSelected && !event.ctrlKey) {
+                                 deselectItems(slideItem.id);
+                             }
+                         }
+                         break;
+                     }
+                     case SlideState.DRAW_FIGURE: {
+                         switch (currentFigureType) {
+                             case ShapeType.Rectangle: {
+                                 addFigureItem(ShapeType.Rectangle, currentColor, {
+                                     x: slideClientX,
+                                     y: slideClientY
+                                 });
+                                 changeCurrentSlideState(SlideState.SCALE_ITEM);
+                                 break;
+                             }
+                             case ShapeType.Triangle: {
+                                 addFigureItem(ShapeType.Triangle, currentColor, {
+                                     x: slideClientX,
+                                     y: slideClientY
+                                 });
+                                 changeCurrentSlideState(SlideState.SCALE_ITEM);
+                                 break;
+                             }
+                             case ShapeType.Arc: {
+                                 addFigureItem(ShapeType.Arc, currentColor, {
+                                     x: slideClientX,
+                                     y: slideClientY
+                                 });
+                                 changeCurrentSlideState(SlideState.SCALE_ITEM);
+                                 break;
+                             }
+                         }
+                         currentCorner = CornerType.None;
+                         break;
+                     }
+                 }
+             }}
+             onKeyDown={(event) => {
+                 let CurrKey = event.key;
+                 switch (CurrKey) {
+                     case "PageUp": {
+                         break;
+                     }
+                 }
+             }}
              onMouseUp={() => {
                  if (currentSlideState !== SlideState.DRAW_FIGURE) {
                      changeCurrentSlideState(SlideState.SELECT_ITEM);

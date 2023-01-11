@@ -11,7 +11,7 @@ import {
     changeCurrentSlideState,
     fillFigure, strokeFigure
 } from "../../../model/actionCreators";
-import {EditorType, Item, ItemType, SlideState} from "../../../core/types/types";
+import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
@@ -19,7 +19,6 @@ import DropDown from "../DropDown/DropDown";
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type ToolbarProps = ConnectedProps<typeof connector>
 
-//заглушка
 interface fontSizeProps {
     size: number;
 }
@@ -40,7 +39,6 @@ const FontSizeArea = ({size}: fontSizeProps) => {
     )
 }
 
-// заглушка, чтобы отображать поля по статусам
 enum Statuses {
     default,
     noItems,

@@ -138,7 +138,7 @@ enum SlideState {
     DRAW_IMAGE = "DRAW_IMAGE",
     MOVE_ITEM = "MOVE_ITEM",
     DRAW_TEXT = "DRAW_TEXT",
-    SCALE_ITEM = "SCALE_ITEM"
+    SCALE_ITEM = "SCALE_ITEM",
 }
 
 export type {ImageType, TextAreaType, FigureType, Item, SlideType, PresentationType, HistoryType, AreaType, PointType, IdType, EditorType};
