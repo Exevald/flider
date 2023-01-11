@@ -12,10 +12,16 @@
 }
 .textArea,
 .textArea:active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: auto;
     height: auto;
     border: none;
-    padding: 5px;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+    
+    margin: 5px;
 }
 
 .point {
