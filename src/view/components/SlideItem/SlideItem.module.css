@@ -10,11 +10,13 @@
     border: 2px solid var(--ayanami-dark);
     box-sizing: content-box;
 }
-.textArea {
+.textArea,
+.textArea:active {
     width: auto;
     height: auto;
     border: none;
 }
+
 .point {
     width: 10px;
     height: 10px;

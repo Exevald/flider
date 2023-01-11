@@ -1,10 +1,10 @@
-import {EditorType, IdType, Item, ItemType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
+import {EditorType, IdType, Item, ItemType, PointType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
-import {selectItem} from "../../../model/actionCreators";
+import {changeTextItem, selectItem} from "../../../model/actionCreators";
 import TextArea from "../TextArea/TextArea";
 
 interface SlideItemInitialProps {
@@ -23,6 +23,8 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
+        changeTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
+            dispatcher(changeTextItem(font, size, color, value, coordinates)),
     }
 }
 
@@ -31,7 +33,7 @@ type SlideItemCustomProps = ConnectedProps<typeof connector>;
 
 type SlideItemMergedProps = SlideItemInitialProps & SlideItemCustomProps;
 
-const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) => {
+const SlideItem = ({slideItem, changeTextItem, active, selectedItemsIds}: SlideItemMergedProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
@@ -97,11 +99,27 @@ const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) 
                         </div>
                     }
                     {
-                        slideItem.textArea !== undefined &&
-                        <TextArea placeholder={''} type={'slideItem'} value={slideItem.textArea.value}
-                                  onKeyUp={(value) => {}}
+                        (slideItem.textArea && slideItem.textArea.fontFamily && slideItem.textArea.fontSize
+                            && slideItem.textArea.fontColor) &&
+                        <TextArea placeholder={slideItem.textArea.value} type={'slideItem'}
+                                  style={{
+                                      fontFamily: slideItem.textArea.fontFamily,
+                                      fontSize: slideItem.textArea.fontSize,
+                                      color: slideItem.textArea.fontColor,
+                                  }}
+                                  onKeyUp={(value) => {
+                                      /*changeTextItem(
+                                          slideItem.textArea.fontFamily,
+                                          slideItem.textArea.fontSize,
+                                          slideItem.textArea.fontColor,
+                                          value,
+                                          slideItem.coordinates
+                                      )*/
+                                      active = false
+                                  }}
                         />
                     }
+
                 </div>
             );
         case ItemType.Image:
