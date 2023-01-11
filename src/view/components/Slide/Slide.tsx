@@ -115,7 +115,6 @@ const Slide = ({
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
-                 console.log(slideClientX, slideClientY)
                  if (!mouseUp) {
                      if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
                          const slide = document.getElementById(currentSlideId) as HTMLElement;

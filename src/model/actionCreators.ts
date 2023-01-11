@@ -148,7 +148,8 @@ function addTextItem(fontFamily: string, fontSize: number,
             fontFamily,
             fontSize,
             fontColor,
-            value
+            value,
+            coordinates,
         }
     }
 }
@@ -160,7 +161,7 @@ function changeTextItem(fontFamily: string, fontSize: number, fontColor: string,
             fontSize,
             fontColor,
             value,
-            coordinates
+            coordinates,
         }
     }
 }

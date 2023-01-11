@@ -67,7 +67,8 @@ type ActionType = {
         fontFamily: string,
         fontSize: number,
         fontColor: string,
-        value: string
+        value: string,
+        coordinates: PointType,
     }
     moveItemCoordinates?: {
         shiftX: number,
