@@ -69,6 +69,23 @@ function getSelectionCorner(coordinates: PointType, item: Item): CornerType {
     }
 }
 
+function initEventsListeners(): void {
+    window.addEventListener("mousemove", onMouseMove);
+}
+
+function onMouseMove(event: MouseEvent) {
+    let currX = event.clientX - offsetLeft;
+    let currY = event.clientY - offsetTop;
+    if ((currX < 0 || currX > slideArea.width) || (currY < 0 || currY > slideArea.height)) {
+        needToChange = true;
+        ifPressed = false;
+        beginMoving = false;
+        mouseUp = true;
+    }
+}
+
+initEventsListeners();
+
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type SlideCustomProps = ConnectedProps<typeof connector>
 
@@ -76,9 +93,11 @@ type SlideMergedProps = SlideInitialProps & SlideCustomProps;
 
 let ifPressed = false;
 let beginMoving = false;
+let needToChange = false;
 let slideArea = {
     width: 1280,
     height: 720,
+
 }
 let startMouseX = 0;
 let startMouseY = 0;
@@ -88,6 +107,8 @@ let startFigureWidth = 0;
 let startFigureHeight = 0;
 let currentCorner = CornerType.None;
 let mouseUp = true;
+let offsetTop: number; 
+let offsetLeft: number;
 
 const Slide = ({
                    slideItems,
@@ -115,6 +136,7 @@ const Slide = ({
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
+                 console.log(slide.offsetLeft, slide.offsetTop)
                  switch (currentSlideState) {
                      case SlideState.DRAW_IMAGE: {
                          const inputFile = document.createElement('input');
@@ -150,7 +172,10 @@ const Slide = ({
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
-                 console.log(slideClientX, slideClientY)
+                 if (needToChange) {
+                    changeCurrentSlideState(SlideState.SELECT_ITEM);
+                    needToChange = false;
+                 }
                  if (!mouseUp) {
                      if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
                          const slide = document.getElementById(currentSlideId) as HTMLElement;
@@ -236,14 +261,6 @@ const Slide = ({
                          }
                      }
                  }
-                 if ((slideClientX < 0 || slideClientX > slideArea.width) || (slideClientY < 0 || slideClientY > slideArea.height)) {
-                     if (currentSlideState !== SlideState.DRAW_FIGURE) {
-                         changeCurrentSlideState(SlideState.SELECT_ITEM);
-                     }
-                     ifPressed = false;
-                     beginMoving = false;
-                     mouseUp = true;
-                 }
              }
              }
              onMouseDown={(event) => {
@@ -251,6 +268,8 @@ const Slide = ({
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
+                 offsetTop = slide.offsetTop;
+                 offsetLeft = slide.offsetLeft;
                  if (currentSlideState !== SlideState.SCALE_ITEM) {
                      for (let i = 0; i < modelSlideItems.length; i++) {
                          let slideItem = modelSlideItems[i];
