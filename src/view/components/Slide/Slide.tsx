@@ -320,8 +320,9 @@ const Slide = ({
                  }
                  ifPressed = false;
                  beginMoving = false;
+                 mouseUp = true;
              }}
-             >
+        >
             <div>{slideItems}</div>
         </div>
     )
