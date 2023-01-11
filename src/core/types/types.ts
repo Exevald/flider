@@ -15,6 +15,11 @@ type HistoryType = {
     redoStack: Array<PresentationType>,
 }
 
+type Buffers = {
+    slideBuffer: Array<SlideType>;
+    itemBuffer: Array<Item>
+}
+
 type EditorType = {
     presentation: PresentationType,
     history: HistoryType,
@@ -22,6 +27,7 @@ type EditorType = {
     slideShowCurrentSlideIndex: number,
     currentClientX: number,
     currentClientY: number,
+    buffers: Buffers
 }
 
 type PresentationType = {
@@ -120,6 +126,8 @@ enum Actions {
     FILL_FIGURE = "FILL_FIGURE",
     STROKE_FIGURE = "STROKE_FIGURE",
     DELETE_ITEM = "DELETE_ITEM",
+    COPY = "COPY",
+    PASTE = "PASTE",
 }
 
 enum SlideState {

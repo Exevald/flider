@@ -229,6 +229,18 @@ function deleteItems() {
     }
 }
 
+function copy() {
+    return {
+        type: Actions.COPY,
+    }
+}
+
+function paste() {
+    return {
+        type: Actions.PASTE,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -260,4 +272,6 @@ export {
     fillFigure,
     strokeFigure,
     deleteItems,
+    copy,
+    paste,
 }

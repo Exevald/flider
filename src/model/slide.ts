@@ -255,7 +255,6 @@ function strokeFigureReducer(slide: SlideType, newColor: string): SlideType {
     return newSlide
 }
 
-
 function slideReducer(state: SlideType, action: ActionType): SlideType {
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:

@@ -11,7 +11,7 @@ import {
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
-import {deleteItems, deleteSlides, openPresentation, redo, undo} from "./actionCreators";
+import {copy, deleteItems, deleteSlides, openPresentation, paste, redo, undo} from "./actionCreators";
 import {deepClone} from "../core/functions/deepClone";
 import {slideReducer} from "./slide";
 
@@ -35,6 +35,10 @@ let initialState: EditorType = {
     history: {
         undoStack: [],
         redoStack: []
+    },
+    buffers: {
+        slideBuffer: [],
+        itemBuffer: []
     },
     slideShowStatus: false,
     slideShowCurrentSlideIndex: 0,
@@ -123,20 +127,25 @@ function addHotKeys() {
         const redoHotKey: boolean = (event.ctrlKey) && (event.code === "KeyY");
         const copyHotKey: boolean = (event.ctrlKey) && (event.code === "KeyC");
         const pasteHotKey: boolean = (event.ctrlKey) && (event.code === "KeyV");
-        const deleteKey: boolean = (event.code === "Delete");
-        const backspaceKey: boolean = (event.code === "Backspace");
-
+        const deleteHotKey: boolean = (event.code === "Delete");
+        const backspaceHotKey: boolean = (event.code === "Backspace");
         if (undoHotKey) {
             store.dispatch(undo())
         }
         if (redoHotKey) {
             store.dispatch(redo())
         }
-        if (deleteKey) {
+        if (deleteHotKey) {
             store.dispatch(deleteSlides())
         }
-        if (backspaceKey) {
+        if (backspaceHotKey) {
             store.dispatch(deleteItems())
+        }
+        if (copyHotKey) {
+            store.dispatch(copy())
+        }
+        if (pasteHotKey) {
+            store.dispatch(paste())
         }
     })
 }
