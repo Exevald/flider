@@ -1,4 +1,13 @@
-import {Actions, AreaType, EditorType, ItemType, PointType, ShapeType, SlideState} from "../core/types/types";
+import {
+    Actions,
+    AreaType,
+    EditorType,
+    ItemType,
+    PointType,
+    ShapeType,
+    SlideState,
+    TextAreaType
+} from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
 import {legacy_createStore as createStore} from 'redux'
@@ -48,6 +57,13 @@ type ActionType = {
     addImageParams?: {
         imageSrc: string,
         coordinates: PointType,
+    }
+    addTextParams?: {
+        fontFamily: string,
+        fontSize: number,
+        fontColor: string,
+        value: string,
+        coordinates: PointType
     }
     moveItemCoordinates?: {
         newX: number,

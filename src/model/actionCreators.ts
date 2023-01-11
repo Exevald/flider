@@ -136,6 +136,22 @@ function addImageItem(imageSrc: string, coordinates: PointType) {
     }
 }
 
+function addText(fontFamily: string, fontSize: number,
+                 fontColor: string,
+                 value: string,
+                 coordinates: PointType) {
+    return {
+        type: Actions.DRAW_TEXT,
+        addTextParams: {
+            fontFamily,
+            fontSize,
+            fontColor,
+            value,
+            coordinates
+        }
+    }
+}
+
 function changeCurrentSlideState(newSlideState: SlideState) {
     return {
         type: Actions.CHANGE_CURRENT_SLIDE_STATE,
@@ -201,6 +217,7 @@ export {
     changeCurrentSlideState,
     changeCurrentFigureType,
     addImageItem,
+    addText,
     selectItem,
     selectManyItems,
     deselectItems,

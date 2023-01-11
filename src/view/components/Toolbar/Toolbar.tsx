@@ -3,8 +3,8 @@ import styles from "./Toolbar.module.css"
 import {Button, ButtonIcon} from "../Button/Button";
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
 import {AppDispatcher} from "../../../model/store";
-import {createSlide, undo, redo, setBackgroundColor} from "../../../model/actionCreators";
-import {EditorType, Item, ItemType} from "../../../core/types/types";
+import {createSlide, undo, redo, setBackgroundColor, changeCurrentSlideState} from "../../../model/actionCreators";
+import {EditorType, Item, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
@@ -14,7 +14,8 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         createSlide: () => dispatcher(createSlide()),
         undo: () => dispatcher(undo()),
         redo: () => dispatcher(redo()),
-        setBgColor: (color: string) => dispatcher(setBackgroundColor(color))
+        setBgColor: (color: string) => dispatcher(setBackgroundColor(color)),
+        changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState))
     }
 }
 
@@ -89,6 +90,7 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                     <ButtonIcon viewStyle={"selectArrow"} onClick={() => {
                     }}/>
                     <ButtonIcon viewStyle={"textArea"} onClick={() => {
+                        props.changeCurrentSlideState(SlideState.DRAW_TEXT)
                     }}/>
                     <ButtonIcon viewStyle={"image"} id={'SelectorButton'}
                                 onClick={() => {

@@ -72,7 +72,33 @@ const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) 
     }
     switch (slideItem.element) {
         case ItemType.TextArea:
-            return null;
+            active = true;
+            return <div
+                ref={slideItemRef}
+                id={slideItem.id}
+                className={`${active ? styles.element_active : styles.element}`}
+                style={{
+                    top: slideItem.coordinates.y,
+                    left: slideItem.coordinates.x,
+                }}
+            >
+                {
+                    active &&
+                    <div className={styles.points_container}>
+                        <div className={`${styles.point} ${styles.point_top_left}`} ref={topLeftRef}
+                             id='top-left'></div>
+                        <div className={`${styles.point} ${styles.point_top_right}`} ref={topRightRef}
+                             id='top-right'></div>
+                        <div className={`${styles.point} ${styles.point_bottom_left}`} ref={bottomLeftRef}
+                             id='bottom-left'></div>
+                        <div className={`${styles.point} ${styles.point_bottom_right}`} ref={bottomRightRef}
+                             id='bottom-right'></div>
+                    </div>
+                }
+                {
+                    slideItem.textArea !== undefined && <text>{slideItem.textArea.value}</text>
+                }
+            </div>;
         case ItemType.Image:
             return null;
         case ItemType.Figure: {

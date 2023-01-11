@@ -210,7 +210,6 @@ const DropDown = ({id, viewStyle, action, currentColor, changeCurrentSlideState,
                              onClick={() => {
                                  changeCurrentSlideState(SlideState.DRAW_FIGURE);
                                  changeCurrentFigureType(DEFAULT_FIGURES[i].modelId);
-                                 // addFigureItem(ShapeType.Rectangle, currentColor);
                                  removeOpenedDropDownById('shapes');
                              }}
                         />

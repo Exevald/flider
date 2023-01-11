@@ -4,7 +4,7 @@ import {EditorType, IdType, PointType, ShapeType, SlideState} from "../../../cor
 import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
-    addImageItem,
+    addImageItem, addText,
     changeCurrentSlideState, deselectItems, selectItem, selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
@@ -31,6 +31,8 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         addFigureItem: (shape: ShapeType, color: string, coordinates: PointType) => dispatcher(addFigureItem(shape, color, coordinates)),
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         addImageItem: (imageSrc: string, coordinates: PointType) => dispatcher(addImageItem(imageSrc, coordinates)),
+        addText: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
+            dispatcher(addText(font, size, color, value, coordinates)),
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         selectManyItems: (itemId: IdType) => dispatcher(selectManyItems(itemId)),
         deselectItems: (itemId: IdType) => dispatcher(deselectItems(itemId)),
@@ -112,6 +114,16 @@ const Slide = ({
                          inputFile.remove();
                          changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break;
+                     }
+                     case SlideState.DRAW_TEXT: {
+                         addText(
+                             'Inter',
+                             14,
+                             currentColor,
+                             'hello',
+                             {x: slideClientX, y: slideClientY});
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
+                         break
                      }
                  }
              }
