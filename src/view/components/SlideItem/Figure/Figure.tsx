@@ -1,6 +1,7 @@
 import {AreaType, FigureType, ShapeType} from "../../../../core/types/types";
 import {connect} from "react-redux";
 
+
 interface FigureProps {
     figure: FigureType;
     size: AreaType;

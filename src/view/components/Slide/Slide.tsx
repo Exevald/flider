@@ -76,6 +76,10 @@ type SlideMergedProps = SlideInitialProps & SlideCustomProps;
 
 let ifPressed = false;
 let beginMoving = false;
+let slideArea = {
+    width: 1280,
+    height: 720,
+}
 let startMouseX = 0;
 let startMouseY = 0;
 let startFigureX = 0;
@@ -83,6 +87,7 @@ let startFigureY = 0;
 let startFigureWidth = 0;
 let startFigureHeight = 0;
 let currentCorner = CornerType.None;
+let mouseUp = true;
 
 const Slide = ({
                    slideItems,
@@ -171,7 +176,11 @@ const Slide = ({
                  }
              }}
              onMouseMove={(event) => {
-                console.log(currentSlideState)
+                const slide = document.getElementById(currentSlideId) as HTMLElement;
+                const slideClientX = event.clientX - slide.offsetLeft;
+                const slideClientY = event.clientY - slide.offsetTop;
+                console.log(slideClientX, slideClientY)
+                if (!mouseUp) {
                 if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
                     const slide = document.getElementById(currentSlideId) as HTMLElement;
                     startMouseX = event.clientX - slide.offsetLeft;
@@ -183,7 +192,6 @@ const Slide = ({
                             startFigureX = slideItem.coordinates.x;
                             startFigureY = slideItem.coordinates.y;
                         }
-                        // console.log(slideItem.space.width, slideItem.space.height);
                     }
                 } else {
                     const slide = document.getElementById(currentSlideId) as HTMLElement;
@@ -202,10 +210,8 @@ const Slide = ({
                         const slideClientX = event.clientX - slide.offsetLeft;
                         const slideClientY = event.clientY - slide.offsetTop;
                         if (currentCorner == CornerType.None) {
-                            console.log("asasasasas")
                             let maxLayer = -1;
                             let newFigure = modelSlideItems[0];
-                            console.log(modelSlideItems.length);
                             for (let i = 0; i < modelSlideItems.length; i++) {
                                 let slideItem = modelSlideItems[i];
                                 deselectItems(slideItem.id);
@@ -214,7 +220,6 @@ const Slide = ({
                                 }
                             }
                             selectItem(newFigure.id);
-                            console.log(newFigure.layer);
                             currentCorner = CornerType.BottomRight;
                             startMouseX = event.clientX - slide.offsetLeft;
                             startMouseY = event.clientY - slide.offsetTop;
@@ -222,7 +227,6 @@ const Slide = ({
                             startFigureY = newFigure.coordinates.y;
                             startFigureWidth = newFigure.space.width;
                             startFigureHeight = newFigure.space.height;
-                            console.log(startMouseX, startFigureY, startFigureWidth, startFigureHeight)
                             break;
                         }
                         for (let i = 0; i < modelSlideItems.length; i++) {
@@ -235,7 +239,6 @@ const Slide = ({
                                     case CornerType.TopLeft: {
                                         let shiftX = slideClientX - startMouseX;
                                         let shiftY = slideClientY - startMouseY;
-                                        console.log("aaa")
                                         scaleItem(startFigureX + shiftX, startFigureY + shiftY, startFigureWidth - shiftX, startFigureHeight - shiftY);
                                         break;
                                     }
@@ -254,8 +257,6 @@ const Slide = ({
                                     case CornerType.BottomRight: {
                                         let shiftX = slideClientX - startMouseX;
                                         let shiftY = slideClientY - startMouseY;
-                                        console.log(slideClientX, slideClientY)
-                                        console.log(shiftX, shiftY)
                                         scaleItem(startFigureX, startFigureY, startFigureWidth + shiftX, startFigureHeight + shiftY);
                                         break;
                                     }
@@ -265,10 +266,18 @@ const Slide = ({
                         break;
                     }
                 }
-                console.log()
             }
-        }
+            if ((slideClientX < 0 || slideClientX > slideArea.width) || (slideClientY < 0 || slideClientY > slideArea.height)) {
+                if (currentSlideState !== SlideState.DRAW_FIGURE) {
+                    changeCurrentSlideState(SlideState.SELECT_ITEM);
+                }
+                ifPressed = false;
+                beginMoving = false;
+                mouseUp = true;
+            }}
+    }
         onMouseDown={(event) => {
+            mouseUp = false;
             const slide = document.getElementById(currentSlideId) as HTMLElement;
             const slideClientX = event.clientX - slide.offsetLeft;
             const slideClientY = event.clientY - slide.offsetTop;
@@ -309,7 +318,6 @@ const Slide = ({
                                     selectManyItems(slideItem.id);
                                 } else {
                                     selectItem(slideItem.id);
-                                    console.log(slideItem.layer);
                                 }
                             }
                         } else if (isSelected && !event.ctrlKey) {
@@ -346,26 +354,38 @@ const Slide = ({
                         }
                     }
                     currentCorner = CornerType.None;
-                    console.log(currentCorner) 
                     break;
                 }
             }
         }}
-        onKeyDown={(event) => {
-            let CurrKey = event.key;
-            switch (CurrKey) {
-                case "PageUp": {
-                    
-                    break;
-                }
-            }
-        }}
+        // onKeyDown={(event) => {
+        //     let CurrKey = event.key;
+        //     switch (CurrKey) {
+        //         case "PageUp": {
+        //             let temp;
+        //             for (let i = 0; i < modelSlideItems.length; i++) {
+        //                 let slideItem = modelSlideItems[i];
+        //                 let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+        //                 if (isSelected) {
+        //                     temp = i
+        //                 }
+        //             }
+        //             if (temp && temp < modelSlideItems.length) {
+        //                 let tempItem = modelSlideItems[temp + 1];
+        //                 modelSlideItems[temp + 1] = modelSlideItems[temp];
+        //                 modelSlideItems[temp] = tempItem;
+        //             }        
+        //             break;
+        //         }
+        //     }
+        // }}
              onMouseUp={() => {
                  if (currentSlideState !== SlideState.DRAW_FIGURE) {
                      changeCurrentSlideState(SlideState.SELECT_ITEM);
                  }
                  ifPressed = false;
                  beginMoving = false;
+                 mouseUp = true;
              }}
              >
             <ul>{slideItems}</ul>
