@@ -8,6 +8,7 @@ import {
     changeCurrentSlideState, deselectItems, moveItem, scaleItem, selectItem, selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
+import SlideItem from "../SlideItem/SlideItem";
 
 interface SlideInitialProps {
     slideItems: Array<JSX.Element>;
@@ -156,54 +157,130 @@ const Slide = ({
                      }
                  }
              }}
-             onMouseDown={(event) => {
-                 const slide = document.getElementById(currentSlideId) as HTMLElement;
-                 const slideClientX = event.clientX - slide.offsetLeft;
-                 const slideClientY = event.clientY - slide.offsetTop;
-                 for (let i = 0; i < modelSlideItems.length; i++) {
-                     let slideItem = modelSlideItems[i];
-                     let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                     if (isSelected) {
-                         if (getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem) !== CornerType.None) {
-                             startMouseX = event.clientX - slide.offsetLeft;
-                             startMouseY = event.clientY - slide.offsetTop;
-                             startFigureX = slideItem.coordinates.x;
-                             startFigureY = slideItem.coordinates.y;
-                             startFigureWidth = slideItem.space.width;
-                             startFigureHeight = slideItem.space.height;
-                             changeCurrentSlideState(SlideState.SCALE_ITEM);
-                         }
-                     }
-                 }
-                 switch (currentSlideState) {
-                     case SlideState.SELECT_ITEM: {
-                         const slide = document.getElementById(currentSlideId) as HTMLElement;
-                         const slideClientX = event.clientX - slide.offsetLeft;
-                         const slideClientY = event.clientY - slide.offsetTop;
-                         for (let i = 0; i < modelSlideItems.length; i++) {
-                             let slideItem = modelSlideItems[i];
-                             let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                             let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
-                                 slideClientX <= slideItem.coordinates.x + slideItem.space.width;
-                             let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
-                                 slideClientY <= slideItem.coordinates.y + slideItem.space.height;
-                             if (checkHorizontalClick && checkVerticalClick) {
-                                 ifPressed = true;
-                                 if (!isSelected) {
-                                     if (event.ctrlKey) {
-                                         selectManyItems(slideItem.id);
-                                     } else {
-                                         selectItem(slideItem.id);
-                                     }
-                                 }
-                             } else if (isSelected && !event.ctrlKey) {
-                                 deselectItems(slideItem.id);
-                             }
-                         }
-                         break;
-                     }
-                 }
-             }}
+             onMouseMove={(event) => {
+                if (!beginMoving) {
+                    const slide = document.getElementById(currentSlideId) as HTMLElement;
+                    startMouseX = event.clientX - slide.offsetLeft;
+                    startMouseY = event.clientY - slide.offsetTop;
+                    for (let i = 0; i < modelSlideItems.length; i++) {
+                        let slideItem = modelSlideItems[i];
+                        let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                        if (isSelected) {
+                            startFigureX = slideItem.coordinates.x;
+                            startFigureY = slideItem.coordinates.y;
+                        }
+                        console.log(slideItem.space.width, slideItem.space.height);
+                    }
+                } else {
+                    const slide = document.getElementById(currentSlideId) as HTMLElement;
+                    let slideClientX = event.clientX - slide.offsetLeft;
+                    let slideClientY = event.clientY - slide.offsetTop;
+                    let shiftX = slideClientX - startMouseX;
+                    let shiftY = slideClientY - startMouseY;
+                    moveItems(startFigureX + shiftX, startFigureY + shiftY);
+                }
+                if (ifPressed) {
+                    beginMoving = true;
+                }
+                switch (currentSlideState) {
+                    case SlideState.SCALE_ITEM: {
+                        const slide = document.getElementById(currentSlideId) as HTMLElement;
+                        const slideClientX = event.clientX - slide.offsetLeft;
+                        const slideClientY = event.clientY - slide.offsetTop;
+                        for (let i = 0; i < modelSlideItems.length; i++) {
+                            let slideItem = modelSlideItems[i];
+                            let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                            if (isSelected) {
+                                switch (currentCorner) {
+                                    case CornerType.TopLeft: {
+                                        let shiftX = slideClientX - startMouseX;
+                                        let shiftY = slideClientY - startMouseY;
+                                        slideItem.coordinates.x = startFigureX + shiftX;
+                                        slideItem.coordinates.y = startFigureY + shiftY;
+                                        slideItem.space.width = startFigureWidth - shiftX;
+                                        slideItem.space.height = startFigureHeight - shiftY;
+                                        console.log("aaa")
+                                        scaleItem(startFigureX + shiftX, startFigureY + shiftY, startFigureWidth - shiftX, startFigureHeight - shiftY);
+                                        break;
+                                    }
+                                    case CornerType.TopRight: {
+                                        let shiftX = slideClientX - startMouseX;
+                                        let shiftY = slideClientY - startMouseY;
+                                        scaleItem(startFigureX, startFigureY + shiftY, startFigureWidth + shiftX, startFigureHeight - shiftY);
+                                        break;
+                                    }
+                                    case CornerType.BottomLeft: {
+                                        let shiftX = slideClientX - startMouseX;
+                                        let shiftY = slideClientY - startMouseY;
+                                        scaleItem(startFigureX + shiftX, startFigureY, startFigureWidth - shiftX, startFigureHeight + shiftY);
+                                        break;
+                                    }
+                                    case CornerType.BottomRight: {
+                                        let shiftX = slideClientX - startMouseX;
+                                        let shiftY = slideClientY - startMouseY;
+                                        scaleItem(startFigureX, startFigureY, startFigureWidth + shiftX, startFigureHeight + shiftY);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+                console.log()
+            }
+        }
+        onMouseDown={(event) => {
+            const slide = document.getElementById(currentSlideId) as HTMLElement;
+            const slideClientX = event.clientX - slide.offsetLeft;
+            const slideClientY = event.clientY - slide.offsetTop;
+            if (currentSlideState !== SlideState.SCALE_ITEM) {
+                for (let i = 0; i < modelSlideItems.length; i++) {
+                    let slideItem = modelSlideItems[i];
+                    let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                    if (isSelected) {
+                        if (getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem) !== CornerType.None) {
+                            startMouseX = event.clientX - slide.offsetLeft;
+                            startMouseY = event.clientY - slide.offsetTop;
+                            startFigureX = slideItem.coordinates.x;
+                            startFigureY = slideItem.coordinates.y;
+                            startFigureWidth = slideItem.space.width;
+                            startFigureHeight = slideItem.space.height;
+                            currentCorner = getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem);
+                            changeCurrentSlideState(SlideState.SCALE_ITEM);
+                        }
+                    }
+                }
+            }
+            switch (currentSlideState) {
+                case SlideState.SELECT_ITEM: {
+                    const slide = document.getElementById(currentSlideId) as HTMLElement;
+                    const slideClientX = event.clientX - slide.offsetLeft;
+                    const slideClientY = event.clientY - slide.offsetTop;
+                    for (let i = 0; i < modelSlideItems.length; i++) {
+                        let slideItem = modelSlideItems[i];
+                        let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                        let checkHorizontalClick = slideItem.coordinates.x <= slideClientX &&
+                            slideClientX <= slideItem.coordinates.x + slideItem.space.width;
+                        let checkVerticalClick = slideItem.coordinates.y <= slideClientY &&
+                            slideClientY <= slideItem.coordinates.y + slideItem.space.height;
+                        if (checkHorizontalClick && checkVerticalClick) {
+                            ifPressed = true;
+                            if (!isSelected) {
+                                if (event.ctrlKey) {
+                                    selectManyItems(slideItem.id);
+                                } else {
+                                    selectItem(slideItem.id);
+                                }
+                            }
+                        } else if (isSelected && !event.ctrlKey) {
+                            deselectItems(slideItem.id);
+                        }
+                    }
+                    break;
+                }
+            }
+        }}
              onMouseUp={() => {
                  if (currentSlideState !== SlideState.DRAW_FIGURE) {
                      changeCurrentSlideState(SlideState.SELECT_ITEM);
@@ -211,73 +288,7 @@ const Slide = ({
                  ifPressed = false;
                  beginMoving = false;
              }}
-             onMouseMove={(event) => {
-                 if (!beginMoving) {
-                     const slide = document.getElementById(currentSlideId) as HTMLElement;
-                     startMouseX = event.clientX - slide.offsetLeft;
-                     startMouseY = event.clientY - slide.offsetTop;
-                     for (let i = 0; i < modelSlideItems.length; i++) {
-                         let slideItem = modelSlideItems[i];
-                         let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                         if (isSelected) {
-                             startFigureX = slideItem.coordinates.x;
-                             startFigureY = slideItem.coordinates.y;
-                         }
-                     }
-                 } else {
-                     const slide = document.getElementById(currentSlideId) as HTMLElement;
-                     let slideClientX = event.clientX - slide.offsetLeft;
-                     let slideClientY = event.clientY - slide.offsetTop;
-                     let shiftX = slideClientX - startMouseX;
-                     let shiftY = slideClientY - startMouseY;
-                     moveItems(startFigureX + shiftX, startFigureY + shiftY);
-                 }
-                 if (ifPressed) {
-                     beginMoving = true;
-                 }
-                 switch (currentSlideState) {
-                     case SlideState.SCALE_ITEM: {
-                         const slide = document.getElementById(currentSlideId) as HTMLElement;
-                         const slideClientX = event.clientX - slide.offsetLeft;
-                         const slideClientY = event.clientY - slide.offsetTop;
-                         for (let i = 0; i < modelSlideItems.length; i++) {
-                             let slideItem = modelSlideItems[i];
-                             let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
-                             currentCorner = getSelectionCorner({x: slideClientX, y: slideClientY}, slideItem);
-                             if (isSelected) {
-                                 switch (currentCorner) {
-                                     case CornerType.TopLeft: {
-                                         let shiftX = slideClientX - startMouseX;
-                                         let shiftY = slideClientY - startMouseY;
-                                         scaleItem(startFigureX + shiftX, startFigureY + shiftY, startFigureWidth - shiftX, startFigureHeight - shiftY);
-                                         break;
-                                     }
-                                     case CornerType.TopRight: {
-                                         let shiftX = slideClientX - startMouseX;
-                                         let shiftY = slideClientY - startMouseY;
-                                         scaleItem(startFigureX, startFigureY + shiftY, startFigureWidth + shiftX, startFigureHeight - shiftY);
-                                         break;
-                                     }
-                                     case CornerType.BottomLeft: {
-                                         let shiftX = slideClientX - startMouseX;
-                                         let shiftY = slideClientY - startMouseY;
-                                         scaleItem(startFigureX + shiftX, startFigureY, startFigureWidth - shiftX, startFigureHeight + shiftY);
-                                         break;
-                                     }
-                                     case CornerType.BottomRight: {
-                                         let shiftX = slideClientX - startMouseX;
-                                         let shiftY = slideClientY - startMouseY;
-                                         scaleItem(startFigureX, startFigureY, startFigureWidth + shiftX, startFigureHeight + shiftY);
-                                         break;
-                                     }
-
-                                 }
-                             }
-                         }
-                         break;
-                     }
-                 }
-             }}>
+             >
             <ul>{slideItems}</ul>
         </div>
     )
