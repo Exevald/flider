@@ -1,5 +1,5 @@
 import {Actions, IdType, Item, ItemType, PointType, ShapeType, SlideType, SlideState} from "../core/types/types";
-import {getRandomId, min, max} from "../core/functions/utility";
+import {getRandomId, min, max, setNewLayer} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
 
@@ -21,10 +21,10 @@ function addFigureItemReducer(slide: SlideType, shape: ShapeType, color: string,
         },
         element: ItemType.Figure,
         space: {
-            width: 100,
-            height: 100,
+            width: 0,
+            height: 0,
         },
-        layer: 1,
+        layer: setNewLayer(),
     }
     switch (shape) {
         case ShapeType.Rectangle: {
@@ -199,7 +199,7 @@ function scaleItemReducer(slide: SlideType, shiftX: number, shiftY: number, newW
 
 function slideReducer(state: SlideType, action: ActionType): SlideType {
     console.log(state.currentState, action)
-    console.log(action.addTextParams)
+    // console.log(action.addTextParams)
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
             return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as SlideType;
