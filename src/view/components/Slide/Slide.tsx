@@ -107,40 +107,10 @@ const Slide = ({
              style={{"background": background}}
              id={currentSlideId}
              onClick={(event) => {
-                 console.log("slideState: ", currentSlideState)
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
                  switch (currentSlideState) {
-                    //  case SlideState.DRAW_FIGURE: {
-                    //      switch (currentFigureType) {
-                    //          case ShapeType.Rectangle: {
-                    //              addFigureItem(ShapeType.Rectangle, currentColor, {
-                    //                  x: slideClientX,
-                    //                  y: slideClientY
-                    //              });
-                    //              changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    //              break;
-                    //          }
-                    //          case ShapeType.Triangle: {
-                    //              addFigureItem(ShapeType.Triangle, currentColor, {
-                    //                  x: slideClientX,
-                    //                  y: slideClientY
-                    //              });
-                    //              changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    //              break;
-                    //          }
-                    //          case ShapeType.Arc: {
-                    //              addFigureItem(ShapeType.Arc, currentColor, {
-                    //                  x: slideClientX,
-                    //                  y: slideClientY
-                    //              });
-                    //              changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    //              break;
-                    //          }
-                    //      }
-                    //      break;
-                    //  }
                      case SlideState.DRAW_IMAGE: {
                          const inputFile = document.createElement('input');
                          inputFile.type = 'file';
@@ -160,7 +130,6 @@ const Slide = ({
                          break;
                      }
                      case SlideState.DRAW_TEXT: {
-                         console.log("ahahaha")
                          addTextItem(
                              'Inter',
                              14,
@@ -173,7 +142,6 @@ const Slide = ({
                  }
              }}
              onMouseMove={(event) => {
-                console.log(currentSlideState)
                 if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
                     const slide = document.getElementById(currentSlideId) as HTMLElement;
                     startMouseX = event.clientX - slide.offsetLeft;
@@ -185,7 +153,6 @@ const Slide = ({
                             startFigureX = slideItem.coordinates.x;
                             startFigureY = slideItem.coordinates.y;
                         }
-                        // console.log(slideItem.space.width, slideItem.space.height);
                     }
                 } else {
                     const slide = document.getElementById(currentSlideId) as HTMLElement;
@@ -204,10 +171,8 @@ const Slide = ({
                         const slideClientX = event.clientX - slide.offsetLeft;
                         const slideClientY = event.clientY - slide.offsetTop;
                         if (currentCorner == CornerType.None) {
-                            console.log("asasasasas")
                             let maxLayer = -1;
                             let newFigure = modelSlideItems[0];
-                            console.log(modelSlideItems.length);
                             for (let i = 0; i < modelSlideItems.length; i++) {
                                 let slideItem = modelSlideItems[i];
                                 deselectItems(slideItem.id);
@@ -216,7 +181,6 @@ const Slide = ({
                                 }
                             }
                             selectItem(newFigure.id);
-                            console.log(newFigure.layer);
                             currentCorner = CornerType.BottomRight;
                             startMouseX = event.clientX - slide.offsetLeft;
                             startMouseY = event.clientY - slide.offsetTop;
@@ -224,7 +188,6 @@ const Slide = ({
                             startFigureY = newFigure.coordinates.y;
                             startFigureWidth = newFigure.space.width;
                             startFigureHeight = newFigure.space.height;
-                            console.log(startMouseX, startFigureY, startFigureWidth, startFigureHeight)
                             break;
                         }
                         for (let i = 0; i < modelSlideItems.length; i++) {
@@ -237,7 +200,6 @@ const Slide = ({
                                     case CornerType.TopLeft: {
                                         let shiftX = slideClientX - startMouseX;
                                         let shiftY = slideClientY - startMouseY;
-                                        console.log("aaa")
                                         scaleItem(startFigureX + shiftX, startFigureY + shiftY, startFigureWidth - shiftX, startFigureHeight - shiftY);
                                         break;
                                     }
@@ -256,8 +218,6 @@ const Slide = ({
                                     case CornerType.BottomRight: {
                                         let shiftX = slideClientX - startMouseX;
                                         let shiftY = slideClientY - startMouseY;
-                                        console.log(slideClientX, slideClientY)
-                                        console.log(shiftX, shiftY)
                                         scaleItem(startFigureX, startFigureY, startFigureWidth + shiftX, startFigureHeight + shiftY);
                                         break;
                                     }
@@ -267,7 +227,6 @@ const Slide = ({
                         break;
                     }
                 }
-                console.log()
             }
         }
         onMouseDown={(event) => {
@@ -311,7 +270,6 @@ const Slide = ({
                                     selectManyItems(slideItem.id);
                                 } else {
                                     selectItem(slideItem.id);
-                                    console.log(slideItem.layer);
                                 }
                             }
                         } else if (isSelected && !event.ctrlKey) {
@@ -348,7 +306,6 @@ const Slide = ({
                         }
                     }
                     currentCorner = CornerType.None;
-                    console.log(currentCorner) 
                     break;
                 }
             }
@@ -357,7 +314,6 @@ const Slide = ({
             let CurrKey = event.key;
             switch (CurrKey) {
                 case "PageUp": {
-                    
                     break;
                 }
             }

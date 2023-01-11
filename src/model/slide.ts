@@ -153,7 +153,6 @@ function addTextReducer(slide: SlideType,
         layer: 1
     }
     newSlide.items.push(newTextItem);
-    console.log(newTextItem);
     return newSlide
 }
 
@@ -198,8 +197,6 @@ function scaleItemReducer(slide: SlideType, shiftX: number, shiftY: number, newW
 }
 
 function slideReducer(state: SlideType, action: ActionType): SlideType {
-    console.log(state.currentState, action)
-    // console.log(action.addTextParams)
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
             return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as SlideType;
