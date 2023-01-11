@@ -1,10 +1,11 @@
-import {EditorType, IdType, Item, ItemType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
+import {EditorType, IdType, Item, ItemType, PointType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
-import {selectItem} from "../../../model/actionCreators";
+import {changeTextItem, selectItem} from "../../../model/actionCreators";
+import TextArea from "../TextArea/TextArea";
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === customProps.slideId);
@@ -18,13 +19,15 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
+        changeTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
+            dispatcher(changeTextItem(font, size, color, value, coordinates)),
     }
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type SlideItemProps = ConnectedProps<typeof connector>;
 
-const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemProps) => {
+const SlideItem = ({slideItem,changeTextItem, active, selectedItemsIds}: SlideItemProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
@@ -62,7 +65,7 @@ const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemProps) => {
     ])
 
     if (slideItem === undefined) {
-        return (<div></div>)
+        return (<></>)
     }
     switch (slideItem.element) {
         case ItemType.TextArea:
@@ -90,7 +93,27 @@ const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemProps) => {
                         </div>
                     }
                     {
-                        slideItem.textArea !== undefined && <text>{slideItem.textArea.value}</text>
+                        (slideItem.textArea) &&
+                        <TextArea placeholder={slideItem.textArea.value} type={'slideItem'}
+                                  value={slideItem.textArea.value}
+                                  style={{
+                                      fontFamily: slideItem.textArea.fontFamily,
+                                      fontSize: slideItem.textArea.fontSize,
+                                      color: slideItem.textArea.fontColor,
+                                  }}
+                                  onKeyUp={(value) => {
+                                      if (slideItem.textArea !== undefined) {
+                                          changeTextItem(
+                                              slideItem.textArea.fontFamily,
+                                              slideItem.textArea.fontSize,
+                                              slideItem.textArea.fontColor,
+                                              value,
+                                              slideItem.coordinates
+                                          )
+                                      }
+                                      active = false
+                                  }}
+                        />
                     }
                 </div>
             );

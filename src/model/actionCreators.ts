@@ -142,6 +142,19 @@ function addTextItem(fontFamily: string, fontSize: number,
                      coordinates: PointType) {
     return {
         type: Actions.DRAW_TEXT,
+        clientX: coordinates.x,
+        clientY: coordinates.y,
+        addTextParams: {
+            fontFamily,
+            fontSize,
+            fontColor,
+            value
+        }
+    }
+}
+function changeTextItem(fontFamily: string, fontSize: number, fontColor: string, value: string, coordinates: PointType) {
+    return {
+        type: Actions.CHANGE_TEXT,
         addTextParams: {
             fontFamily,
             fontSize,
@@ -264,6 +277,7 @@ export {
     changeCurrentFigureType,
     addImageItem,
     addTextItem,
+    changeTextItem,
     selectItem,
     selectManyItems,
     deselectItems,
