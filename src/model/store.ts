@@ -66,14 +66,14 @@ type ActionType = {
         coordinates: PointType
     }
     moveItemCoordinates?: {
-        shiftX: number,
-        shiftY: number
+        newX: number,
+        newY: number
     },
-    scaleItemParams?: {
-        shiftX: number,
-        shiftY: number,
+    ChangeSizeParams?: {
         newWidth: number,
         newHeight: number,
+        xShift: number,
+        yShift: number
     },
     ChangeTextParams?: {
         font?: string

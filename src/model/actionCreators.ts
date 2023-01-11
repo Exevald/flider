@@ -187,25 +187,11 @@ function deselectItems(itemId: IdType) {
     }
 }
 
-function moveItem(shiftX: number, shiftY: number) {
+function moveItem(newX: number, newY: number) {
     return {
         type: Actions.MOVE_ITEM,
-        moveItemCoordinates: {
-            shiftX: shiftX,
-            shiftY: shiftY,
-        }
-    }
-}
-
-function scaleItem(shiftX: number, shiftY: number, newWidth: number, newHeight: number) {
-    return {
-        type: Actions.SCALE_ITEM,
-        scaleItemParams: {
-            shiftX: shiftX,
-            shiftY: shiftY,
-            newWidth: newWidth,
-            newHeight: newHeight,
-        }
+        newX: newX,
+        newY: newY,
     }
 }
 
@@ -236,5 +222,4 @@ export {
     selectManyItems,
     deselectItems,
     moveItem,
-    scaleItem,
 }

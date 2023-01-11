@@ -12,8 +12,8 @@
 }
 
 .point {
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     background: var(--shinji);
     border: 1px solid var(--ayanami-dark);
     box-sizing: border-box;

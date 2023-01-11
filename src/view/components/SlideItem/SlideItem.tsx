@@ -6,6 +6,10 @@ import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
 import {selectItem} from "../../../model/actionCreators";
 
+interface SlideItemInitialProps {
+    // slideItemSpace: SlideItemSpaceType
+}
+
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === customProps.slideId);
     return {
@@ -22,9 +26,11 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type SlideItemProps = ConnectedProps<typeof connector>;
+type SlideItemCustomProps = ConnectedProps<typeof connector>;
 
-const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemProps) => {
+type SlideItemMergedProps = SlideItemInitialProps & SlideItemCustomProps;
+
+const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
