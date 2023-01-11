@@ -132,7 +132,6 @@ function addTextReducer(slide: SlideType,
                         color: string = 'black',
                         value: string = 'Example',
                         coordinates: PointType): SlideType {
-    console.log('add text')
     const newSlide = deepClone(slide) as SlideType;
     const newTextItem: Item = {
         id: getRandomId(),

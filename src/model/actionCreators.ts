@@ -136,7 +136,7 @@ function addImageItem(imageSrc: string, coordinates: PointType) {
     }
 }
 
-function addText(fontFamily: string, fontSize: number,
+function addTextItem(fontFamily: string, fontSize: number,
                  fontColor: string,
                  value: string,
                  coordinates: PointType) {
@@ -217,7 +217,7 @@ export {
     changeCurrentSlideState,
     changeCurrentFigureType,
     addImageItem,
-    addText,
+    addTextItem,
     selectItem,
     selectManyItems,
     deselectItems,

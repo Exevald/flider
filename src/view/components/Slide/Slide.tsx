@@ -4,7 +4,7 @@ import {EditorType, IdType, PointType, ShapeType, SlideState} from "../../../cor
 import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
-    addImageItem, addText,
+    addImageItem, addTextItem,
     changeCurrentSlideState, deselectItems, selectItem, selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
@@ -31,8 +31,8 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         addFigureItem: (shape: ShapeType, color: string, coordinates: PointType) => dispatcher(addFigureItem(shape, color, coordinates)),
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         addImageItem: (imageSrc: string, coordinates: PointType) => dispatcher(addImageItem(imageSrc, coordinates)),
-        addText: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
-            dispatcher(addText(font, size, color, value, coordinates)),
+        addTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
+            dispatcher(addTextItem(font, size, color, value, coordinates)),
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         selectManyItems: (itemId: IdType) => dispatcher(selectManyItems(itemId)),
         deselectItems: (itemId: IdType) => dispatcher(deselectItems(itemId)),
@@ -48,6 +48,7 @@ const Slide = ({
                    slideItems,
                    background,
                    addFigureItem,
+                   addTextItem,
                    currentSlideState,
                    currentFigureType,
                    currentSlideId,
@@ -116,7 +117,7 @@ const Slide = ({
                          break;
                      }
                      case SlideState.DRAW_TEXT: {
-                         addText(
+                         addTextItem(
                              'Inter',
                              14,
                              currentColor,
