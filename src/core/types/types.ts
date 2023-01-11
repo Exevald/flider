@@ -29,6 +29,7 @@ type PresentationType = {
     title: string,
     selectedSlidesIds: Array<IdType>,
     currentColor: string,
+    currentFontSize: number,
 }
 
 type SlideType = {
@@ -116,6 +117,9 @@ enum Actions {
     DESELECT_ITEMS = "DESELECT_ITEMS",
     MOVE_ITEM = "MOVE_ITEM",
     SCALE_ITEM = "SCALE_ITEM",
+    FILL_FIGURE = "FILL_FIGURE",
+    STROKE_FIGURE = "STROKE_FIGURE",
+    DELETE_ITEM = "DELETE_ITEM",
 }
 
 enum SlideState {
@@ -125,7 +129,7 @@ enum SlideState {
     DRAW_IMAGE = "DRAW_IMAGE",
     MOVE_ITEM = "MOVE_ITEM",
     DRAW_TEXT = "DRAW_TEXT",
-    SCALE_ITEM = "SCALE_ITEM"
+    SCALE_ITEM = "SCALE_ITEM",
 }
 
 export type {ImageType, TextAreaType, FigureType, Item, SlideType, PresentationType, HistoryType, AreaType, PointType, IdType, EditorType};

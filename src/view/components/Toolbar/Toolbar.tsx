@@ -3,30 +3,18 @@ import styles from "./Toolbar.module.css"
 import {Button, ButtonIcon} from "../Button/Button";
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
 import {AppDispatcher} from "../../../model/store";
-import {createSlide, undo, redo, setBackgroundColor, changeCurrentSlideState} from "../../../model/actionCreators";
+import {
+    createSlide,
+    undo,
+    redo,
+    setBackgroundColor,
+    changeCurrentSlideState,
+    fillFigure, strokeFigure
+} from "../../../model/actionCreators";
 import {EditorType, Item, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
-
-function mapDispatchToProps(dispatcher: AppDispatcher) {
-    return {
-        createSlide: () => dispatcher(createSlide()),
-        undo: () => dispatcher(undo()),
-        redo: () => dispatcher(redo()),
-        setBgColor: (color: string) => dispatcher(setBackgroundColor(color)),
-        changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState))
-    }
-}
-
-function mapStateToProps(state: EditorType) {
-    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
-    return {
-        currentSlide: state.presentation.slides[currentSlideIndex],
-        slides: state.presentation.slides,
-        currentColor: state.presentation.currentColor,
-    }
-}
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type ToolbarProps = ConnectedProps<typeof connector>
@@ -52,7 +40,6 @@ const FontSizeArea = ({size}: fontSizeProps) => {
     )
 }
 
-// заглушка, чтобы отображать поля по статусам
 enum Statuses {
     default,
     noItems,
@@ -70,9 +57,9 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     let figureSelected = false;
     props.currentSlide.selectedItemsIds.forEach(id => {
             if (props.currentSlide.items.find(item => item.id === id)?.element === ItemType.Figure) {
-                textSelected = false;
+                textSelected = true;
             } else if (props.currentSlide.items.find(item => item.id === id)?.element === ItemType.TextArea) {
-                figureSelected = false;
+                figureSelected = true;
             }
         }
     )
@@ -116,36 +103,57 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                 <ButtonIcon viewStyle={"filler"} onClick={() => {
                     if (!textSelected && !figureSelected) {
                         props.setBgColor(props.currentColor)
+                    } else {
+                        props.fillFigure(props.currentColor);
                     }
                 }}/>
             }
             {
                 status !== 1 &&
-                <ButtonIcon viewStyle={"stroke"} onClick={() => {
-                }}/>
+                <ButtonIcon viewStyle={"stroke"} onClick={() => props.strokeFigure(props.currentColor)}/>
             }
             {
                 (status === 0 || status === 2) && <>
                     <ButtonIcon viewStyle={"bold"} onClick={() => {
                     }}/>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
-                    }}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
                     <ButtonIcon viewStyle={"underline"} onClick={() => {
                     }}/>
                     <Button viewStyle={"fontArea"}
                             iconStyle={"right"}
                             iconSrc={SaveIcon}
                             text={"Inter"}
-                            onClick={() => {
-                            }}
+                            onClick={() => {}}
                     />
                 </>
             }
             {
-                status !== 1 && <FontSizeArea size={14}/>
+                status !== 1 && <FontSizeArea size={props.currentFontSize}/>
             }
         </div>
     )
+}
+
+function mapStateToProps(state: EditorType) {
+    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
+    return {
+        currentSlide: state.presentation.slides[currentSlideIndex],
+        slides: state.presentation.slides,
+        currentColor: state.presentation.currentColor,
+        currentFontSize: state.presentation.currentFontSize,
+    }
+}
+
+function mapDispatchToProps(dispatcher: AppDispatcher) {
+    return {
+        createSlide: () => dispatcher(createSlide()),
+        undo: () => dispatcher(undo()),
+        redo: () => dispatcher(redo()),
+        setBgColor: (color: string) => dispatcher(setBackgroundColor(color)),
+        changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
+        fillFigure: (newColor: string) => dispatcher(fillFigure(newColor)),
+        strokeFigure: (newColor: string) => dispatcher(strokeFigure(newColor)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar)

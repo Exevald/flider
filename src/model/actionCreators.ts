@@ -209,6 +209,26 @@ function scaleItem(shiftX: number, shiftY: number, newWidth: number, newHeight: 
     }
 }
 
+function fillFigure(newColor: string) {
+    return {
+        type: Actions.FILL_FIGURE,
+        newColor: newColor,
+    }
+}
+
+function strokeFigure(newColor: string) {
+    return {
+        type: Actions.STROKE_FIGURE,
+        newColor: newColor,
+    }
+}
+
+function deleteItems() {
+    return {
+        type: Actions.DELETE_ITEM,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -237,4 +257,7 @@ export {
     deselectItems,
     moveItem,
     scaleItem,
+    fillFigure,
+    strokeFigure,
+    deleteItems,
 }
