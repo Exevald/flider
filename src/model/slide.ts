@@ -126,6 +126,37 @@ function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointT
     return newSlide
 }
 
+function addTextReducer(slide: SlideType,
+                        font: string = 'Inter',
+                        size: number = 14,
+                        color: string = 'black',
+                        value: string = 'Example',
+                        coordinates: PointType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    const newTextItem: Item = {
+        id: getRandomId(),
+        coordinates: {
+            x: coordinates.x,
+            y: coordinates.y,
+        },
+        element: ItemType.TextArea,
+        textArea: {
+            fontFamily: font,
+            fontSize: size,
+            fontColor: color,
+            value: value
+        },
+        space: {
+            width: 100,
+            height: 100,
+        },
+        layer: 1
+    }
+    newSlide.items.push(newTextItem);
+    console.log(newTextItem);
+    return newSlide
+}
+
 function moveItemReducer(slide: SlideType, shiftX: number, shiftY: number): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     for (let i = 0; i < newSlide.items.length; i++) {
@@ -167,6 +198,8 @@ function scaleItemReducer(slide: SlideType, shiftX: number, shiftY: number, newW
 }
 
 function slideReducer(state: SlideType, action: ActionType): SlideType {
+    console.log(state.currentState, action)
+    console.log(action.addTextParams)
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
             return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as SlideType;
@@ -178,6 +211,11 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
             return action.addFigureParams !== undefined ? addFigureItemReducer(state, action.addFigureParams.shape, action.addFigureParams.color, action.addFigureParams.coordinates) : deepClone(state) as SlideType;
         case Actions.ADD_IMAGE:
             return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as SlideType;
+        case Actions.DRAW_TEXT:
+            return action.addTextParams !== undefined ?
+                addTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
+                    action.addTextParams.fontColor, action.addTextParams.value, action.addTextParams.coordinates)
+                : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
         case Actions.SELECT_MANY_ITEMS:
