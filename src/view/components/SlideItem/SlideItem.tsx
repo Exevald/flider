@@ -5,6 +5,7 @@ import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
 import {selectItem} from "../../../model/actionCreators";
+import TextArea from "../TextArea/TextArea";
 
 interface SlideItemInitialProps {
     // slideItemSpace: SlideItemSpaceType
@@ -68,7 +69,7 @@ const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) 
     ])
 
     if (slideItem === undefined) {
-        return (<div></div>)
+        return (<></>)
     }
     switch (slideItem.element) {
         case ItemType.TextArea:
@@ -96,7 +97,10 @@ const SlideItem = ({slideItem, active, selectedItemsIds}: SlideItemMergedProps) 
                         </div>
                     }
                     {
-                        slideItem.textArea !== undefined && <text>{slideItem.textArea.value}</text>
+                        slideItem.textArea !== undefined &&
+                        <TextArea placeholder={''} type={'slideItem'} value={slideItem.textArea.value}
+                                  onKeyUp={(value) => {}}
+                        />
                     }
                 </div>
             );
