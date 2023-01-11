@@ -151,6 +151,17 @@ function addTextItem(fontFamily: string, fontSize: number,
         }
     }
 }
+function changeTextItem(fontFamily: string, fontSize: number, fontColor: string, value: string) {
+    return {
+        type: Actions.CHANGE_TEXT,
+        addTextParams: {
+            fontFamily,
+            fontSize,
+            fontColor,
+            value
+        }
+    }
+}
 
 function changeCurrentSlideState(newSlideState: SlideState) {
     return {

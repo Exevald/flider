@@ -156,6 +156,29 @@ function addTextReducer(slide: SlideType,
     console.log(newTextItem);
     return newSlide
 }
+function changeTextReducer(slide: SlideType,
+                        font: string = 'Inter',
+                        size: number = 14,
+                        color: string = 'black',
+                        value: string = 'Example'): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (newSlide.selectedItemsIds.includes(slideItem.id)) {
+            const newSlideItem: Item = {
+                ...slideItem,
+                textArea: {
+                    fontFamily: font,
+                    fontSize: size,
+                    fontColor: color,
+                    value: value
+                }
+            }
+            newSlide.items.splice(i, 1, newSlideItem);
+        }
+    }
+    return newSlide
+}
 
 function moveItemReducer(slide: SlideType, newX: number, newY: number): SlideType {
     const newSlide = deepClone(slide) as SlideType;
@@ -193,6 +216,11 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
             return action.addTextParams !== undefined ?
                 addTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
                     action.addTextParams.fontColor, action.addTextParams.value, action.addTextParams.coordinates)
+                : deepClone(state) as SlideType;
+        case Actions.CHANGE_TEXT:
+            return action.addTextParams !== undefined ?
+                changeTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
+                    action.addTextParams.fontColor, action.addTextParams.value)
                 : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
