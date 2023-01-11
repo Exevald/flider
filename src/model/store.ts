@@ -97,6 +97,7 @@ type ActionType = {
     clientY?: number,
     newSlideState?: SlideState,
     newCurrentFigureType?: ShapeType,
+    newFontState?: string,
 }
 
 function loadPresentation() {

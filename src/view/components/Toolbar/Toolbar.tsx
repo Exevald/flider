@@ -9,7 +9,7 @@ import {
     redo,
     setBackgroundColor,
     changeCurrentSlideState,
-    fillFigure, strokeFigure
+    fillFigure, strokeFigure, changeCurrentFontSize
 } from "../../../model/actionCreators";
 import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
@@ -18,26 +18,6 @@ import DropDown from "../DropDown/DropDown";
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type ToolbarProps = ConnectedProps<typeof connector>
-
-interface fontSizeProps {
-    size: number;
-}
-
-const FontSizeArea = ({size}: fontSizeProps) => {
-    return (
-        <div className={styles.fontSizeArea}>
-            <div className={styles.sizeAdjuster} onClick={() => {
-            }}>–
-            </div>
-            <div className={styles.vertSeparator}></div>
-            <div className={styles.fontAdjuster}>{size}</div>
-            <div className={styles.vertSeparator}></div>
-            <div className={styles.sizeAdjuster} onClick={() => {
-            }}>+
-            </div>
-        </div>
-    )
-}
 
 enum Statuses {
     default,
@@ -115,19 +95,30 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                 (status === 0 || status === 2) && <>
                     <ButtonIcon viewStyle={"bold"} onClick={() => {
                     }}/>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
+                    }}/>
                     <ButtonIcon viewStyle={"underline"} onClick={() => {
                     }}/>
                     <Button viewStyle={"fontArea"}
                             iconStyle={"right"}
                             iconSrc={SaveIcon}
                             text={"Inter"}
-                            onClick={() => {}}
+                            onClick={() => {
+                            }}
                     />
                 </>
             }
             {
-                status !== 1 && <FontSizeArea size={props.currentFontSize}/>
+                status !== 1 &&
+                <div className={styles.fontSizeArea}>
+                    <div className={styles.sizeAdjuster} onClick={() => props.changeCurrentFontSize("minus")}>–
+                    </div>
+                    <div className={styles.vertSeparator}></div>
+                    <div className={styles.fontAdjuster}>{props.currentFontSize}</div>
+                    <div className={styles.vertSeparator}></div>
+                    <div className={styles.sizeAdjuster} onClick={() => props.changeCurrentFontSize("plus")}>+
+                    </div>
+                </div>
             }
         </div>
     )
@@ -152,6 +143,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         fillFigure: (newColor: string) => dispatcher(fillFigure(newColor)),
         strokeFigure: (newColor: string) => dispatcher(strokeFigure(newColor)),
+        changeCurrentFontSize: (newFontState: string) => dispatcher(changeCurrentFontSize(newFontState)),
     }
 }
 

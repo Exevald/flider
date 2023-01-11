@@ -255,6 +255,13 @@ function paste() {
     }
 }
 
+function changeCurrentFontSize(newFontState: string) {
+    return {
+        type: Actions.CHANGE_CURRENT_FONT_SIZE,
+        newFontState: newFontState,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -289,4 +296,5 @@ export {
     deleteItems,
     copy,
     paste,
+    changeCurrentFontSize,
 }

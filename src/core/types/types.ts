@@ -129,6 +129,7 @@ enum Actions {
     DELETE_ITEM = "DELETE_ITEM",
     COPY = "COPY",
     PASTE = "PASTE",
+    CHANGE_CURRENT_FONT_SIZE = "CHANGE_CURRENT_FONT_SIZE",
 }
 
 enum SlideState {
