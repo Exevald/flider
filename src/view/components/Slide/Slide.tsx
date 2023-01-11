@@ -134,23 +134,12 @@ const Slide = ({
                          changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break;
                      }
-                     case SlideState.DRAW_TEXT: {
-                         addTextItem(
-                             'Inter',
-                             14,
-                             currentColor,
-                             'hello',
-                             {x: slideClientX, y: slideClientY});
-                         changeCurrentSlideState(SlideState.SELECT_ITEM);
-                         break
-                     }
                  }
              }}
              onMouseMove={(event) => {
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
-                 console.log(slideClientX, slideClientY)
                  if (!mouseUp) {
                      if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
                          const slide = document.getElementById(currentSlideId) as HTMLElement;
@@ -297,6 +286,16 @@ const Slide = ({
                                  deselectItems(slideItem.id);
                              }
                          }
+                         break;
+                     }
+                     case SlideState.DRAW_TEXT: {
+                         addTextItem(
+                             'Inter',
+                             14,
+                             currentColor,
+                             'hello',
+                             {x: slideClientX, y: slideClientY});
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break;
                      }
                      case SlideState.DRAW_FIGURE: {

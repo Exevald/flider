@@ -268,9 +268,9 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.ADD_IMAGE:
             return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as SlideType;
         case Actions.DRAW_TEXT:
-            return action.addTextParams !== undefined ?
+            return (action.addTextParams && action.clientX && action.clientY) ?
                 addTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
-                    action.addTextParams.fontColor, action.addTextParams.value, action.addTextParams.coordinates)
+                    action.addTextParams.fontColor, action.addTextParams.value, {x: action.clientX, y: action.clientY})
                 : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
