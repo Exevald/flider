@@ -27,7 +27,6 @@ const TextArea = ({
     }
     return (
         <input type="text"
-               value={value}
                style={style}
                placeholder={placeholder}
                className={textAreaStyle}

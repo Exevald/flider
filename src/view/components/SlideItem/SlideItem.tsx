@@ -93,22 +93,24 @@ const SlideItem = ({slideItem,changeTextItem, active, selectedItemsIds}: SlideIt
                         </div>
                     }
                     {
-                        (slideItem.textArea && slideItem.textArea.fontFamily && slideItem.textArea.fontSize
-                            && slideItem.textArea.fontColor) &&
+                        (slideItem.textArea) &&
                         <TextArea placeholder={slideItem.textArea.value} type={'slideItem'}
+                                  value={slideItem.textArea.value}
                                   style={{
                                       fontFamily: slideItem.textArea.fontFamily,
                                       fontSize: slideItem.textArea.fontSize,
                                       color: slideItem.textArea.fontColor,
                                   }}
                                   onKeyUp={(value) => {
-                                      /*changeTextItem(
-                                          slideItem.textArea.fontFamily,
-                                          slideItem.textArea.fontSize,
-                                          slideItem.textArea.fontColor,
-                                          value,
-                                          slideItem.coordinates
-                                      )*/
+                                      if (slideItem.textArea !== undefined) {
+                                          changeTextItem(
+                                              slideItem.textArea.fontFamily,
+                                              slideItem.textArea.fontSize,
+                                              slideItem.textArea.fontColor,
+                                              value,
+                                              slideItem.coordinates
+                                          )
+                                      }
                                       active = false
                                   }}
                         />

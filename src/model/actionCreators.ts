@@ -140,7 +140,6 @@ function addTextItem(fontFamily: string, fontSize: number,
                      fontColor: string,
                      value: string,
                      coordinates: PointType) {
-    console.log('hi')
     return {
         type: Actions.DRAW_TEXT,
         clientX: coordinates.x,

@@ -106,41 +106,6 @@ const Slide = ({
         <div className={styles.slide}
              style={{"background": background}}
              id={currentSlideId}
-             onClick={(event) => {
-                 const slide = document.getElementById(currentSlideId) as HTMLElement;
-                 const slideClientX = event.clientX - slide.offsetLeft;
-                 const slideClientY = event.clientY - slide.offsetTop;
-                 switch (currentSlideState) {
-                     case SlideState.DRAW_IMAGE: {
-                         const inputFile = document.createElement('input');
-                         inputFile.type = 'file';
-                         inputFile.style.display = 'none';
-                         inputFile.accept = 'image/*';
-                         inputFile.onchange = () => {
-                             if (inputFile.files) {
-                                 const urlImage = URL.createObjectURL(inputFile.files[0])
-                                 getBase64FromPicture(urlImage, {width: 500, height: 500}).then((newImageSrc) => {
-                                     addImageItem(newImageSrc, {x: slideClientX, y: slideClientY})
-                                 })
-                             }
-                         }
-                         inputFile.click();
-                         inputFile.remove();
-                         changeCurrentSlideState(SlideState.SELECT_ITEM);
-                         break;
-                     }
-                     case SlideState.DRAW_TEXT: {
-                         addTextItem(
-                             'Inter',
-                             14,
-                             currentColor,
-                             'hello',
-                             {x: slideClientX, y: slideClientY});
-                         changeCurrentSlideState(SlideState.SELECT_ITEM);
-                         break
-                     }
-                 }
-             }}
              onMouseMove={(event) => {
                 if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
                     const slide = document.getElementById(currentSlideId) as HTMLElement;
@@ -252,6 +217,16 @@ const Slide = ({
                 }
             }
             switch (currentSlideState) {
+                case SlideState.DRAW_TEXT: {
+                    addTextItem(
+                        'Inter',
+                        14,
+                        currentColor,
+                        'hello',
+                        {x: slideClientX, y: slideClientY});
+                    changeCurrentSlideState(SlideState.SELECT_ITEM);
+                    break
+                }
                 case SlideState.SELECT_ITEM: {
                     const slide = document.getElementById(currentSlideId) as HTMLElement;
                     const slideClientX = event.clientX - slide.offsetLeft;
