@@ -128,18 +128,18 @@ function addHotKeys() {
         const redoHotKey: boolean = (event.ctrlKey) && (event.code === "KeyY");
         const copyHotKey: boolean = (event.ctrlKey) && (event.code === "KeyC");
         const pasteHotKey: boolean = (event.ctrlKey) && (event.code === "KeyV");
-        const deleteHotKey: boolean = (event.code === "Delete");
-        const backspaceHotKey: boolean = (event.code === "Backspace");
+        const deleteSlideHotKey: boolean = (event.code === "Delete");
+        const deleteItemHotKey: boolean = (event.ctrlKey) && (event.code === "Delete");
         if (undoHotKey) {
             store.dispatch(undo())
         }
         if (redoHotKey) {
             store.dispatch(redo())
         }
-        if (deleteHotKey) {
+        if (deleteSlideHotKey) {
             store.dispatch(deleteSlides())
         }
-        if (backspaceHotKey) {
+        if (deleteItemHotKey) {
             store.dispatch(deleteItems())
         }
         if (copyHotKey) {
