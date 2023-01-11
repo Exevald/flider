@@ -142,12 +142,26 @@ function addTextItem(fontFamily: string, fontSize: number,
                      coordinates: PointType) {
     return {
         type: Actions.DRAW_TEXT,
+        clientX: coordinates.x,
+        clientY: coordinates.y,
         addTextParams: {
             fontFamily,
             fontSize,
             fontColor,
             value,
-            coordinates
+            coordinates,
+        }
+    }
+}
+function changeTextItem(fontFamily: string, fontSize: number, fontColor: string, value: string, coordinates: PointType) {
+    return {
+        type: Actions.CHANGE_TEXT,
+        addTextParams: {
+            fontFamily,
+            fontSize,
+            fontColor,
+            value,
+            coordinates,
         }
     }
 }
@@ -241,6 +255,13 @@ function paste() {
     }
 }
 
+function changeCurrentFontSize(newFontState: string) {
+    return {
+        type: Actions.CHANGE_CURRENT_FONT_SIZE,
+        newFontState: newFontState,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -264,6 +285,7 @@ export {
     changeCurrentFigureType,
     addImageItem,
     addTextItem,
+    changeTextItem,
     selectItem,
     selectManyItems,
     deselectItems,
@@ -274,4 +296,5 @@ export {
     deleteItems,
     copy,
     paste,
+    changeCurrentFontSize,
 }

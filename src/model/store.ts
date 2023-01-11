@@ -68,7 +68,7 @@ type ActionType = {
         fontSize: number,
         fontColor: string,
         value: string,
-        coordinates: PointType
+        coordinates: PointType,
     }
     moveItemCoordinates?: {
         shiftX: number,
@@ -97,6 +97,7 @@ type ActionType = {
     clientY?: number,
     newSlideState?: SlideState,
     newCurrentFigureType?: ShapeType,
+    newFontState?: string,
 }
 
 function loadPresentation() {

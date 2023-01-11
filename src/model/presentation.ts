@@ -24,7 +24,7 @@ function createSlideReducer(presentation: PresentationType): PresentationType {
     });
     return {
         ...newPresentation,
-        slides: newSlides
+        slides: newSlides,
     }
 }
 
@@ -60,7 +60,7 @@ function deselectReducer(presentation: PresentationType, slideId: string) {
     newSelectedSlidesIds.splice(deselectItem, 1);
     return {
         ...newPresentation,
-        selectedSlidesIds: newSelectedSlidesIds
+        selectedSlidesIds: newSelectedSlidesIds,
     }
 }
 
@@ -77,7 +77,7 @@ function selectManySlidesReducer(presentation: PresentationType, slideId: string
     }
     return {
         ...newPresentation,
-        selectedSlidesIds: newSelectedSlidesIds
+        selectedSlidesIds: newSelectedSlidesIds,
     }
 }
 
@@ -87,7 +87,7 @@ function switchSlideReducer(presentation: PresentationType, slideId: string): Pr
     newPresentation.slides[slideIndex].selectedItemsIds = [];
     return {
         ...newPresentation,
-        selectedSlidesIds: [slideId]
+        selectedSlidesIds: [slideId],
     }
 }
 
@@ -96,6 +96,21 @@ function changeSelectedColorReducer(presentation: PresentationType, newColor: st
     return {
         ...newPresentation,
         currentColor: newColor,
+    }
+}
+
+function changeCurrentFontSize(presentation: PresentationType, newFontState: string): PresentationType {
+    const newPresentation = deepClone(presentation) as PresentationType;
+    let newCurrentFontSize = newPresentation.currentFontSize;
+    if (newFontState === "plus") {
+        newCurrentFontSize++;
+    }
+    else if (newFontState === "minus" && newCurrentFontSize - 1 !== 1) {
+        newCurrentFontSize--;
+    }
+    return {
+        ...newPresentation,
+        currentFontSize: newCurrentFontSize,
     }
 }
 
@@ -117,6 +132,8 @@ function presentationReducer(state: PresentationType, action: ActionType): Prese
             return action.slideId !== undefined ? selectManySlidesReducer(state, action.slideId) : deepClone(state) as PresentationType;
         case Actions.SWITCH_SLIDE:
             return action.slideId !== undefined ? switchSlideReducer(state, action.slideId) : deepClone(state) as PresentationType;
+        case Actions.CHANGE_CURRENT_FONT_SIZE:
+            return action.newFontState !== undefined ? changeCurrentFontSize(state, action.newFontState) : deepClone(state) as PresentationType;
         default:
             return deepClone(state) as PresentationType
     }

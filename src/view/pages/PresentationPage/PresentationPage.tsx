@@ -47,10 +47,7 @@ const PresentationPage = (props: PresentationPageProps) => {
                     <Slide
                         slideItems=
                             {props.currentSlide.items.map((item) =>
-                                <li key={item.id}
-                                    className={styles.slideElement}>
-                                    <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={false}></SlideItem>
-                                </li>
+                                <SlideItem slideId={props.currentSlide.id} itemId={item.id} active={false}></SlideItem>
                             )}
                         background={props.currentSlideBgColor}></Slide>
                 </div>
