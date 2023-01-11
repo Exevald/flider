@@ -136,7 +136,6 @@ const Slide = ({
                  const slide = document.getElementById(currentSlideId) as HTMLElement;
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
-                 console.log(slide.offsetLeft, slide.offsetTop)
                  switch (currentSlideState) {
                      case SlideState.DRAW_IMAGE: {
                          const inputFile = document.createElement('input');
