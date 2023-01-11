@@ -137,9 +137,9 @@ function addImageItem(imageSrc: string, coordinates: PointType) {
 }
 
 function addTextItem(fontFamily: string, fontSize: number,
-                 fontColor: string,
-                 value: string,
-                 coordinates: PointType) {
+                     fontColor: string,
+                     value: string,
+                     coordinates: PointType) {
     return {
         type: Actions.DRAW_TEXT,
         addTextParams: {
@@ -209,6 +209,38 @@ function scaleItem(shiftX: number, shiftY: number, newWidth: number, newHeight: 
     }
 }
 
+function fillFigure(newColor: string) {
+    return {
+        type: Actions.FILL_FIGURE,
+        newColor: newColor,
+    }
+}
+
+function strokeFigure(newColor: string) {
+    return {
+        type: Actions.STROKE_FIGURE,
+        newColor: newColor,
+    }
+}
+
+function deleteItems() {
+    return {
+        type: Actions.DELETE_ITEM,
+    }
+}
+
+function copy() {
+    return {
+        type: Actions.COPY,
+    }
+}
+
+function paste() {
+    return {
+        type: Actions.PASTE,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -237,4 +269,9 @@ export {
     deselectItems,
     moveItem,
     scaleItem,
+    fillFigure,
+    strokeFigure,
+    deleteItems,
+    copy,
+    paste,
 }

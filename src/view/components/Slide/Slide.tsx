@@ -116,35 +116,6 @@ const Slide = ({
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
                  switch (currentSlideState) {
-                    //  case SlideState.DRAW_FIGURE: {
-                    //      switch (currentFigureType) {
-                    //          case ShapeType.Rectangle: {
-                    //              addFigureItem(ShapeType.Rectangle, currentColor, {
-                    //                  x: slideClientX,
-                    //                  y: slideClientY
-                    //              });
-                    //              changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    //              break;
-                    //          }
-                    //          case ShapeType.Triangle: {
-                    //              addFigureItem(ShapeType.Triangle, currentColor, {
-                    //                  x: slideClientX,
-                    //                  y: slideClientY
-                    //              });
-                    //              changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    //              break;
-                    //          }
-                    //          case ShapeType.Arc: {
-                    //              addFigureItem(ShapeType.Arc, currentColor, {
-                    //                  x: slideClientX,
-                    //                  y: slideClientY
-                    //              });
-                    //              changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    //              break;
-                    //          }
-                    //      }
-                    //      break;
-                    //  }
                      case SlideState.DRAW_IMAGE: {
                          const inputFile = document.createElement('input');
                          inputFile.type = 'file';
@@ -354,6 +325,14 @@ const Slide = ({
                         }
                     }
                     currentCorner = CornerType.None;
+                    break;
+                }
+            }
+        }}
+        onKeyDown={(event) => {
+            let CurrKey = event.key;
+            switch (CurrKey) {
+                case "PageUp": {
                     break;
                 }
             }

@@ -1,7 +1,7 @@
-import {EditorType, HistoryType, PresentationType} from "../core/types/types";
+import {EditorType, HistoryType, Item, PresentationType, SlideType} from "../core/types/types";
 import {ActionType, initialState} from "./store";
 import {deepClone} from "../core/functions/deepClone";
-import {MAX_HISTORY_SIZE} from "../core/functions/utility";
+import {getRandomId, MAX_HISTORY_SIZE} from "../core/functions/utility";
 import {Actions} from "../core/types/types";
 
 function addActionToHistoryReducer(editor: EditorType): HistoryType {
@@ -32,7 +32,6 @@ function swipeSlideShowSlideReducer(editor: EditorType, slideIndex: number, dire
             newSlideIndex = editor.presentation.slides.length - 1;
         }
     } else if (direction === "left") {
-        console.log("left")
         newSlideIndex--;
         if (newSlideIndex < 0) {
             newSlideIndex = 0;
@@ -85,7 +84,7 @@ function undoReducer(editor: EditorType): EditorType {
             presentation: newPresentation
         }
     }
-    return (newEditor)
+    return newEditor
 }
 
 function redoReducer(editor: EditorType): EditorType {
@@ -103,7 +102,7 @@ function redoReducer(editor: EditorType): EditorType {
     return newEditor
 }
 
-function setCurrentMouseCoordinatesReducer(editor: EditorType, clientX: number, clientY: number) {
+function setCurrentMouseCoordinatesReducer(editor: EditorType, clientX: number, clientY: number): EditorType {
     const newEditor = deepClone(editor) as EditorType;
     return {
         ...newEditor,
@@ -111,6 +110,58 @@ function setCurrentMouseCoordinatesReducer(editor: EditorType, clientX: number, 
         currentClientY: clientY,
     }
 }
+
+function copyReducer(editor: EditorType): EditorType {
+    const newEditor = deepClone(editor) as EditorType;
+    newEditor.buffers.slideBuffer = [];
+    newEditor.buffers.itemBuffer = [];
+    const slideIndex = newEditor.presentation.slides.findIndex(slide => slide.id === newEditor.presentation.selectedSlidesIds[0])
+    if (newEditor.presentation.slides[slideIndex].selectedItemsIds.length > 0) {
+        newEditor.presentation.slides[slideIndex].items.forEach(item => {
+            if (newEditor.presentation.slides[slideIndex].selectedItemsIds.includes(item.id)) {
+                const newElement = deepClone(item) as Item;
+                newEditor.buffers.itemBuffer.push(newElement)
+            }
+        })
+    } else {
+        newEditor.presentation.slides.forEach(slide => {
+            if (newEditor.presentation.selectedSlidesIds.includes(slide.id)) {
+                const newSlide = deepClone(slide) as SlideType;
+                newEditor.buffers.slideBuffer.push(newSlide)
+            }
+        })
+    }
+    return newEditor
+}
+
+function pasteReducer(editor: EditorType): EditorType {
+    const newEditor = deepClone(editor) as EditorType;
+    if (newEditor.buffers.itemBuffer.length > 0) {
+        const slideIndex = newEditor.presentation.slides.findIndex(slide => slide.id === newEditor.presentation.selectedSlidesIds[0])
+        newEditor.buffers.itemBuffer.forEach(item => {
+            const newElement = deepClone(item) as Item;
+            newElement.id = getRandomId()
+            newElement.coordinates = {
+                x: newElement.coordinates.x + 20,
+                y: newElement.coordinates.y + 20,
+            }
+            newEditor.presentation.slides[slideIndex].items.push(newElement);
+            item.coordinates = {
+                x: item.coordinates.x + 10,
+                y: item.coordinates.y + 10
+            }
+        })
+    } else {
+        newEditor.buffers.slideBuffer.forEach(slide => {
+            const newSlide = deepClone(slide) as SlideType;
+            newSlide.id = getRandomId();
+            newSlide.items.forEach(item => item.id = getRandomId())
+            newEditor.presentation.slides.push(newSlide)
+        })
+    }
+    return newEditor
+}
+
 
 function editorReducer(state: EditorType, action: ActionType): EditorType {
     switch (action.type) {
@@ -126,6 +177,10 @@ function editorReducer(state: EditorType, action: ActionType): EditorType {
             return undoReducer(state);
         case Actions.REDO:
             return redoReducer(state);
+        case Actions.COPY:
+            return copyReducer(state);
+        case Actions.PASTE:
+            return pasteReducer(state);
         case Actions.SET_CURRENT_CURSOR_POSITION:
             return action.clientX !== undefined && action.clientY !== undefined ? setCurrentMouseCoordinatesReducer(state, action.clientX, action.clientY) : deepClone(state) as EditorType;
         case Actions.SWIPE_SLIDE_SHOW_SLIDE:

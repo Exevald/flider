@@ -10,7 +10,7 @@ import {
     addFigureItem,
     changeCurrentColor,
     changeCurrentFigureType,
-    changeCurrentSlideState,
+    changeCurrentSlideState, fillFigure,
     savePresentation
 } from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
@@ -95,40 +95,6 @@ function handleClicks(e: MouseEvent) {
 
 }
 
-type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor' | 'addFigure'
-
-function mapStateToProps(state: EditorType) {
-    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
-    return {
-        currentSlide: state.presentation.slides[currentSlideIndex],
-        currentColor: state.presentation.currentColor,
-    }
-}
-
-function mapDispatchToProps(dispatcher: AppDispatcher) {
-    return {
-        action: (actionType: DropDownActionType, color?: string) => {
-            switch (actionType) {
-                case 'saveJSON': {
-                    dispatcher(savePresentation());
-                    break;
-                }
-                case "changeCurrentColor": {
-                    if (color) {
-                        dispatcher(changeCurrentColor(color))
-                    }
-                    break;
-                }
-                case "addFigure": {
-                    break;
-                }
-            }
-        },
-        changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
-        changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
-    }
-}
-
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type DropDownInitialProps = ConnectedProps<typeof connector>
 
@@ -199,7 +165,14 @@ const Stocks = () => {
     )
 }
 
-const DropDown = ({id, viewStyle, action, currentColor, changeCurrentSlideState, changeCurrentFigureType}: DropDownMergedProps) => {
+const DropDown = ({
+                      id,
+                      viewStyle,
+                      action,
+                      currentColor,
+                      changeCurrentSlideState,
+                      changeCurrentFigureType,
+                  }: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "figureShapes":
@@ -285,6 +258,37 @@ const DropDown = ({id, viewStyle, action, currentColor, changeCurrentSlideState,
     return (
         <p>Введено название рендеринга, которого нет</p>
     )
+}
+
+type DropDownActionType = 'saveJSON' | 'savePDF' | 'changeCurrentColor'
+
+function mapStateToProps(state: EditorType) {
+    const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === state.presentation.selectedSlidesIds[0]);
+    return {
+        currentSlide: state.presentation.slides[currentSlideIndex],
+        currentColor: state.presentation.currentColor,
+    }
+}
+
+function mapDispatchToProps(dispatcher: AppDispatcher) {
+    return {
+        action: (actionType: DropDownActionType, color?: string) => {
+            switch (actionType) {
+                case 'saveJSON': {
+                    dispatcher(savePresentation());
+                    break;
+                }
+                case "changeCurrentColor": {
+                    if (color) {
+                        dispatcher(changeCurrentColor(color))
+                    }
+                    break;
+                }
+            }
+        },
+        changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
+        changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropDown)
