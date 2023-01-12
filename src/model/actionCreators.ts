@@ -153,15 +153,33 @@ function addTextItem(fontFamily: string, fontSize: number,
         }
     }
 }
-function changeTextItem(fontFamily: string, fontSize: number, fontColor: string, value: string, coordinates: PointType) {
+function changeTextFont(newFontFamily: string) {
     return {
-        type: Actions.CHANGE_TEXT,
+        type: Actions.CHANGE_TEXT_FONT,
         addTextParams: {
-            fontFamily,
-            fontSize,
-            fontColor,
-            value,
-            coordinates,
+            fontFamily: newFontFamily
+        }
+    }
+}
+function changeTextColor(newColor: string) {
+    return {
+        type: Actions.CHANGE_TEXT_COLOR,
+        newColor: newColor
+    }
+}
+function changeTextSize(newSize: string) {
+    return {
+        type: Actions.CHANGE_TEXT_SIZE,
+        addTextParams: {
+            fontSize: newSize
+        }
+    }
+}
+function changeTextValue(newValue: string) {
+    return {
+        type: Actions.CHANGE_TEXT_SIZE,
+        addTextParams: {
+            value: newValue
         }
     }
 }
@@ -285,7 +303,10 @@ export {
     changeCurrentFigureType,
     addImageItem,
     addTextItem,
-    changeTextItem,
+    changeTextFont,
+    changeTextSize,
+    changeTextColor,
+    changeTextValue,
     selectItem,
     selectManyItems,
     deselectItems,

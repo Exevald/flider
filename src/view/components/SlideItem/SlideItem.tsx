@@ -4,7 +4,7 @@ import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
-import {changeCurrentFontSize, changeTextItem, selectItem} from "../../../model/actionCreators";
+import {changeCurrentFontSize, selectItem} from "../../../model/actionCreators";
 import TextArea from "../TextArea/TextArea";
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
@@ -20,8 +20,6 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
-        changeTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
-            dispatcher(changeTextItem(font, size, color, value, coordinates)),
         changeFontSize: (size: string) => dispatcher(changeCurrentFontSize(size))
     }
 }
@@ -29,7 +27,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type SlideItemProps = ConnectedProps<typeof connector>;
 
-const SlideItem = ({slideItem, changeTextItem, changeFontSize, currentFontSize, active, selectedItemsIds}: SlideItemProps) => {
+const SlideItem = ({slideItem, changeFontSize, currentFontSize, active, selectedItemsIds}: SlideItemProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
@@ -105,13 +103,6 @@ const SlideItem = ({slideItem, changeTextItem, changeFontSize, currentFontSize, 
                                   }}
                                   onKeyUp={(value) => {
                                       if (slideItem.textArea !== undefined) {
-                                          changeTextItem(
-                                              slideItem.textArea.fontFamily,
-                                              slideItem.textArea.fontSize,
-                                              slideItem.textArea.fontColor,
-                                              slideItem.textArea.value,
-                                              slideItem.coordinates
-                                          )
                                       }
                                       active = false
                                   }}

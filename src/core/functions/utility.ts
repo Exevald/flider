@@ -63,6 +63,13 @@ const DEFAULT_FIGURES = [
 let DEFAULT_FIGURES_STYLES = [figureStyles.shapeRectangle, figureStyles.shapeArc, figureStyles.shapeTriangle,
     figureStyles.shapesStar];
 
+const TEXTAREA_INITIAL_STATE = {
+    fontFamily: 'Inter',
+    fontSize: 14,
+    fontColor: 'black',
+    value: 'Введите что-нибудь'
+}
+
 const MAX_HISTORY_SIZE = 30;
 const MAX_TITLE_SIZE = 12;
 
@@ -124,6 +131,7 @@ export {
     COLOR_PICKER_COLORS,
     MAX_TITLE_SIZE,
     DROPDOWN_ANIMATION_TIME,
+    TEXTAREA_INITIAL_STATE,
     CANVAS_SETTINGS,
     DEFAULT_STOCKS,
     DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,

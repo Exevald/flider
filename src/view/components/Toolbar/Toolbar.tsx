@@ -9,12 +9,13 @@ import {
     redo,
     setBackgroundColor,
     changeCurrentSlideState,
-    fillFigure, strokeFigure, changeCurrentFontSize
+    fillFigure, strokeFigure, changeCurrentFontSize, changeTextColor
 } from "../../../model/actionCreators";
 import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
+import {text} from "stream/consumers";
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type ToolbarProps = ConnectedProps<typeof connector>
@@ -82,8 +83,10 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                 <ButtonIcon viewStyle={"filler"} onClick={() => {
                     if (!textSelected && !figureSelected) {
                         props.setBgColor(props.currentColor)
-                    } else {
+                    } else if(figureSelected) {
                         props.fillFigure(props.currentColor);
+                    } else if (textSelected) {
+                        props.fillText(props.currentColor)
                     }
                 }}/>
             }
@@ -142,6 +145,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         setBgColor: (color: string) => dispatcher(setBackgroundColor(color)),
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         fillFigure: (newColor: string) => dispatcher(fillFigure(newColor)),
+        fillText: (newColor: string) => dispatcher(changeTextColor(newColor)),
         strokeFigure: (newColor: string) => dispatcher(strokeFigure(newColor)),
         changeCurrentFontSize: (newFontState: string) => dispatcher(changeCurrentFontSize(newFontState)),
     }
