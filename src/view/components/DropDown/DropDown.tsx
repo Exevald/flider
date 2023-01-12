@@ -9,7 +9,7 @@ import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
     changeCurrentColor,
-    changeCurrentFigureType,
+    changeCurrentFigureType, changeCurrentFontFamily,
     changeCurrentSlideState, fillFigure,
     savePresentation
 } from "../../../model/actionCreators";
@@ -177,13 +177,16 @@ const DropDown = ({
                       action,
                       changeCurrentSlideState,
                       changeCurrentFigureType,
+                      changeCurrentFontFamily,
                   }: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "fonts":
                 let fonts = [];
                 for (let i = 0; i < DEFAULT_FONTS.length; i++) {
-                    fonts.push(<p style={{fontFamily: DEFAULT_FONTS[i]}}>
+                    fonts.push(<p
+                        style={{fontFamily: DEFAULT_FONTS[i]}} onClick={() => changeCurrentFontFamily(DEFAULT_FONTS[i])}
+                    >
                         {DEFAULT_FONTS[i]}
                     </p>);
                     fonts.push(<Separator/>)
@@ -307,6 +310,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         },
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
+        changeCurrentFontFamily: (newFontFamily: string) => dispatcher(changeCurrentFontFamily(newFontFamily)),
     }
 }
 

@@ -276,6 +276,13 @@ function changeCurrentFontSize(newFontState: string) {
     }
 }
 
+function changeCurrentFontFamily(newFontFamily: string) {
+    return {
+        type: Actions.CHANGE_CURRENT_FONT_FAMILY,
+        newFontFamily: newFontFamily,
+    }
+}
+
 export {
     createSlide,
     switchSlide,
@@ -314,4 +321,5 @@ export {
     copy,
     paste,
     changeCurrentFontSize,
+    changeCurrentFontFamily,
 }

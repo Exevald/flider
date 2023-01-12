@@ -104,13 +104,20 @@ function changeCurrentFontSize(presentation: PresentationType, newFontState: str
     let newCurrentFontSize = newPresentation.currentFontSize;
     if (newFontState === "plus") {
         newCurrentFontSize++;
-    }
-    else if (newFontState === "minus" && newCurrentFontSize - 1 !== 1) {
+    } else if (newFontState === "minus" && newCurrentFontSize - 1 !== 1) {
         newCurrentFontSize--;
     }
     return {
         ...newPresentation,
         currentFontSize: newCurrentFontSize,
+    }
+}
+
+function changeCurrentFontFamilyReducer(presentation: PresentationType, newFontFamily: string) {
+    const newPresentation = deepClone(presentation) as PresentationType;
+    return {
+        ...newPresentation,
+        currentFontFamily: newFontFamily,
     }
 }
 
@@ -134,6 +141,8 @@ function presentationReducer(state: PresentationType, action: ActionType): Prese
             return action.slideId !== undefined ? switchSlideReducer(state, action.slideId) : deepClone(state) as PresentationType;
         case Actions.CHANGE_CURRENT_FONT_SIZE:
             return action.newFontState !== undefined ? changeCurrentFontSize(state, action.newFontState) : deepClone(state) as PresentationType;
+        case Actions.CHANGE_CURRENT_FONT_FAMILY:
+            return action.newFontFamily !== undefined ? changeCurrentFontFamilyReducer(state, action.newFontFamily) : deepClone(state) as PresentationType
         default:
             return deepClone(state) as PresentationType
     }
