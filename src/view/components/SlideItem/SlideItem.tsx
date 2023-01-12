@@ -113,7 +113,45 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
                 </div>
             );
         case ItemType.Image:
-            return null;
+            if (slideItem.image) {
+                let scaleXCoefficient = 1;
+                let scaleYCoefficient = 1;
+                let slideMarginLeft = 0;
+                let slideMarginTop = 0;
+                return (
+                    <div
+                        ref={slideItemRef}
+                        id={slideItem.id}
+                        className={`${active ? styles.element_active : styles.element}`}
+                        style={{
+                            'top': slideItem.coordinates.y * scaleYCoefficient + slideMarginTop,
+                            'left': slideItem.coordinates.x * scaleXCoefficient + slideMarginLeft,
+                            'width': slideItem.space.width * scaleXCoefficient,
+                            'height': slideItem.space.height * scaleYCoefficient,
+                        }}
+                    >
+                        {
+                            active &&
+                            <div className={styles.points_container}>
+                                <div className={`${styles.point} ${styles.point_top_left}`} ref={topLeftRef}
+                                     id='top-left'></div>
+                                <div className={`${styles.point} ${styles.point_top_right}`} ref={topRightRef}
+                                     id='top-right'></div>
+                                <div className={`${styles.point} ${styles.point_bottom_left}`} ref={bottomLeftRef}
+                                     id='bottom-left'></div>
+                                <div className={`${styles.point} ${styles.point_bottom_right}`} ref={bottomRightRef}
+                                     id='bottom-right'></div>
+                            </div>
+                        }
+                        <img
+                        className={``}>
+
+                        </img>
+                    </div>
+                )
+            } else {
+                return null
+            }
         case ItemType.Figure: {
             if (slideItem.figure) {
                 let scaleXCoefficient = 1;
