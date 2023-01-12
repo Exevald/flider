@@ -31,6 +31,7 @@ let initialState: EditorType = {
         selectedSlidesIds: ["0"],
         currentColor: "black",
         currentFontSize: 14,
+        currentFontFamily: "Inter",
     },
     history: {
         undoStack: [],
@@ -100,6 +101,7 @@ type ActionType = {
     newFontState?: string,
     newFontSize?: string,
     newTextValue?: string,
+    newFontFamily?: string,
 }
 
 function loadPresentation() {

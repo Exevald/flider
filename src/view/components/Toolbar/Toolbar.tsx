@@ -9,7 +9,7 @@ import {
     redo,
     setBackgroundColor,
     changeCurrentSlideState,
-    fillFigure, strokeFigure, changeCurrentFontSize, changeTextColor, changeTextSize
+    fillFigure, strokeFigure, changeCurrentFontSize, changeTextColor, changeTextSize, changeCurrentFontFamily
 } from "../../../model/actionCreators";
 import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
@@ -104,7 +104,7 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                     <Button viewStyle={"fontArea"}
                             iconStyle={"right"}
                             iconSrc={SaveIcon}
-                            text={"Inter"}
+                            text={props.currentFontFamily}
                             id={'fontsButton'}
                             onClick={() => {
                                 showDropDownById('fontsButton', 'fonts')
@@ -144,6 +144,7 @@ function mapStateToProps(state: EditorType) {
         slides: state.presentation.slides,
         currentColor: state.presentation.currentColor,
         currentFontSize: state.presentation.currentFontSize,
+        currentFontFamily: state.presentation.currentFontFamily,
     }
 }
 
@@ -158,7 +159,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         fillText: (newColor: string) => dispatcher(changeTextColor(newColor)),
         strokeFigure: (newColor: string) => dispatcher(strokeFigure(newColor)),
         changeCurrentFontSize: (newFontState: string) => dispatcher(changeCurrentFontSize(newFontState)),
-        changeTextSize: (size: number) => dispatcher(changeTextSize(size.toString()))
+        changeTextSize: (size: number) => dispatcher(changeTextSize(size.toString())),
     }
 }
 

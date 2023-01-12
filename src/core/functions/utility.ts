@@ -11,7 +11,6 @@ const COLOR_PICKER_COLORS = [
     "plum", "violet", "magenta", "darkviolet", "purple"
 ];
 
-// надо менять ещё и в css стиле
 const DROPDOWN_ANIMATION_TIME = 220; //ms
 
 const DEFAULT_STOCKS = [
@@ -70,10 +69,11 @@ const TEXTAREA_INITIAL_STATE = {
     value: 'Введите что-нибудь'
 }
 const DEFAULT_FONTS = [
+    'Anton',
     'Arial',
-    'Calibry',
+    'Inter',
     'Roboto',
-    'Times New Roman'
+    'Times New Roman',
 ]
 const MAX_HISTORY_SIZE = 30;
 const MAX_TITLE_SIZE = 12;

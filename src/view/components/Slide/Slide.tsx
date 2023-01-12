@@ -30,6 +30,7 @@ function mapStateToProps(state: EditorType) {
         currentFontSize: state.presentation.currentFontSize,
         modelSlideItems: state.presentation.slides[currentSlideIndex].items,
         selectedItemsIds: state.presentation.slides[currentSlideIndex].selectedItemsIds,
+        currentFontFamily: state.presentation.currentFontFamily,
     }
 }
 
@@ -141,6 +142,7 @@ const Slide = ({
                    moveItems,
                    scaleItem,
                    addImageItem,
+                   currentFontFamily
                }: SlideMergedProps) => {
     return (
         <div className={styles.slide}
@@ -153,7 +155,7 @@ const Slide = ({
                  switch (currentSlideState) {
                      case SlideState.DRAW_TEXT: {
                          addTextItem(
-                             'Inter',
+                             currentFontFamily,
                              14,
                              currentColor,
                              'hello',

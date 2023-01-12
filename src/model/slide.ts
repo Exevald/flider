@@ -129,7 +129,7 @@ function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointT
 }
 
 function addTextReducer(slide: SlideType,
-                        font: string = TEXTAREA_INITIAL_STATE.fontFamily,
+                        font: string,
                         size: number = TEXTAREA_INITIAL_STATE.fontSize,
                         color: string = TEXTAREA_INITIAL_STATE.fontColor,
                         value: string = TEXTAREA_INITIAL_STATE.value,
@@ -350,7 +350,6 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
             return action.newFontSize ?
                 changeTextSizeReducer(state, action.newFontSize) : deepClone(state) as SlideType;
         case Actions.CHANGE_TEXT_VALUE:
-            if (action.newTextValue !== undefined) console.log('entering reducer')
             return action.newTextValue ?
                 changeTextValueReducer(state, action.newTextValue) : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:

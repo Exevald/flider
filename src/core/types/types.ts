@@ -36,6 +36,7 @@ type PresentationType = {
     selectedSlidesIds: Array<IdType>,
     currentColor: string,
     currentFontSize: number,
+    currentFontFamily: string,
 }
 
 type SlideType = {
@@ -133,6 +134,7 @@ enum Actions {
     COPY = "COPY",
     PASTE = "PASTE",
     CHANGE_CURRENT_FONT_SIZE = "CHANGE_CURRENT_FONT_SIZE",
+    CHANGE_CURRENT_FONT_FAMILY = "CHANGE_CURRENT_FONT_FAMILY",
 }
 
 enum SlideState {
