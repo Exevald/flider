@@ -1,5 +1,4 @@
 import {AreaType, IdType} from "../types/types";
-import styles from "../../view/components/DropDown/DropDown.module.css";
 import figureStyles from "./../../view/components/DropDown/DropDown.module.css"
 
 const COLOR_PICKER_COLORS = [

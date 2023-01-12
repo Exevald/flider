@@ -268,8 +268,6 @@ const DropDown = ({
                 return (
                     <div id={id} className={`${styles.dropDown} ${styles.saveAction}`}>
                         <div className={styles.dropDownContent}>
-                            <p>Сохранить PDF</p>
-                            <Separator/>
                             <p onClick={() => action('saveJSON')}>Сохранить JSON</p>
                         </div>
                     </div>
