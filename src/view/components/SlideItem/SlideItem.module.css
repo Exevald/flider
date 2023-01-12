@@ -3,6 +3,7 @@
     box-sizing: content-box;
     padding: 2px;
     transform-origin: center;
+    user-select: none;
 }
 
 .element_active {
