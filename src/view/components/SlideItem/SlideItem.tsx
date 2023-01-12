@@ -102,7 +102,6 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
                                       color: slideItem.textArea.fontColor,
                                   }}
                                   onChange={(e) => {
-                                      console.log(e.currentTarget.value)
                                       changeTextValue(e.currentTarget.value);
                                       changeCurrentSlideState(SlideState.SELECT_ITEM)
                                       active = false
@@ -144,8 +143,14 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
                             </div>
                         }
                         <img
-                        className={``}>
-
+                            className={styles.image_element}
+                            alt={"image"}
+                            src={slideItem.image.src}
+                            style={{
+                                'width': slideItem.space.width * scaleXCoefficient,
+                                'height': slideItem.space.height * scaleYCoefficient,
+                            }}
+                        >
                         </img>
                     </div>
                 )

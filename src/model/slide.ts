@@ -107,6 +107,7 @@ function deselectItemsReducer(slide: SlideType, itemId: IdType): SlideType {
 
 function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointType): SlideType {
     const newSlide = deepClone(slide) as SlideType;
+    console.log("reducer")
     const newItem: Item = {
         id: getRandomId(),
         coordinates: {
@@ -115,8 +116,8 @@ function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointT
         },
         element: ItemType.Image,
         space: {
-            width: 100,
-            height: 100,
+            width: 500,
+            height: 500,
         },
         layer: 1,
         image: {
@@ -156,6 +157,7 @@ function addTextReducer(slide: SlideType,
     newSlide.items.push(newTextItem);
     return newSlide
 }
+
 function fillTextReducer(slide: SlideType, newColor: string): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     const selectedItemsId = newSlide.selectedItemsIds.concat();
@@ -178,6 +180,7 @@ function fillTextReducer(slide: SlideType, newColor: string): SlideType {
     }
     return newSlide
 }
+
 function changeTextValueReducer(slide: SlideType, newValue: string): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     const selectedItemsId = newSlide.selectedItemsIds.concat();
@@ -200,6 +203,7 @@ function changeTextValueReducer(slide: SlideType, newValue: string): SlideType {
     }
     return newSlide
 }
+
 function changeTextSizeReducer(slide: SlideType, newSize: string): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     const selectedItemsId = newSlide.selectedItemsIds.concat();
@@ -346,8 +350,8 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
             return action.newFontSize ?
                 changeTextSizeReducer(state, action.newFontSize) : deepClone(state) as SlideType;
         case Actions.CHANGE_TEXT_VALUE:
-            if(action.newTextValue !== undefined) console.log('entering reducer')
-            return  action.newTextValue ?
+            if (action.newTextValue !== undefined) console.log('entering reducer')
+            return action.newTextValue ?
                 changeTextValueReducer(state, action.newTextValue) : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;

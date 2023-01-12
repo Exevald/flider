@@ -84,7 +84,6 @@ function onMouseMove(event: MouseEvent) {
     let currY = event.clientY - offsetTop;
     if (((currX < 0 || currX > slideArea.width) || (currY < 0 || currY > slideArea.height)) &&
         notDrawing()) {
-        console.log("damn")
         needToChange = true;
         ifPressed = false;
         beginMoving = false;
@@ -92,7 +91,7 @@ function onMouseMove(event: MouseEvent) {
     }
 }
 
-function  notDrawing(): boolean {
+function notDrawing(): boolean {
     return currState !== SlideState.DRAW_FIGURE && currState !== SlideState.DRAW_TEXT && currState !== SlideState.DRAW_IMAGE
 }
 
@@ -120,7 +119,7 @@ let startFigureWidth = 0;
 let startFigureHeight = 0;
 let currentCorner = CornerType.None;
 let mouseUp = true;
-let offsetTop: number; 
+let offsetTop: number;
 let offsetLeft: number;
 
 const Slide = ({
@@ -141,6 +140,7 @@ const Slide = ({
                    deselectItems,
                    moveItems,
                    scaleItem,
+                   addImageItem,
                }: SlideMergedProps) => {
     return (
         <div className={styles.slide}
@@ -151,24 +151,6 @@ const Slide = ({
                  const slideClientX = event.clientX - slide.offsetLeft;
                  const slideClientY = event.clientY - slide.offsetTop;
                  switch (currentSlideState) {
-                     case SlideState.DRAW_IMAGE: {
-                         const inputFile = document.createElement('input');
-                         inputFile.type = 'file';
-                         inputFile.style.display = 'none';
-                         inputFile.accept = 'image/*';
-                         inputFile.onchange = () => {
-                             if (inputFile.files) {
-                                 const urlImage = URL.createObjectURL(inputFile.files[0])
-                                 getBase64FromPicture(urlImage, {width: 500, height: 500}).then((newImageSrc) => {
-                                     addImageItem(newImageSrc, {x: slideClientX, y: slideClientY})
-                                 })
-                             }
-                         }
-                         inputFile.click();
-                         inputFile.remove();
-                         changeCurrentSlideState(SlideState.SELECT_ITEM);
-                         break;
-                     }
                      case SlideState.DRAW_TEXT: {
                          addTextItem(
                              'Inter',
@@ -183,7 +165,6 @@ const Slide = ({
              }}
              onMouseMove={(event) => {
                  currState = currentSlideState;
-                 console.log(currentSlideState);
                  if (!notDrawing()) {
                      for (let i = 0; i < modelSlideItems.length; i++) {
                          let slideItem = modelSlideItems[i];
@@ -194,8 +175,8 @@ const Slide = ({
                      }
                  }
                  if (needToChange && notDrawing() && currentSlideState !== SlideState.SCALE_ITEM) {
-                    changeCurrentSlideState(SlideState.SELECT_ITEM);
-                    needToChange = false;
+                     changeCurrentSlideState(SlideState.SELECT_ITEM);
+                     needToChange = false;
                  }
                  if (!mouseUp) {
                      if (!beginMoving && currentSlideState !== SlideState.SCALE_ITEM) {
@@ -314,6 +295,25 @@ const Slide = ({
                      }
                  }
                  switch (currentSlideState) {
+                     case SlideState.DRAW_IMAGE: {
+                         console.log('IMAGE')
+                         const inputFile = document.createElement('input');
+                         inputFile.type = 'file';
+                         inputFile.style.display = 'none';
+                         inputFile.accept = 'image/*';
+                         inputFile.onchange = () => {
+                             if (inputFile.files) {
+                                 const urlImage = URL.createObjectURL(inputFile.files[0])
+                                 getBase64FromPicture(urlImage, {width: 500, height: 500}).then((imageSrc) => {
+                                     addImageItem(imageSrc, {x: slideClientX, y: slideClientY})
+                                 })
+                             }
+                         }
+                         inputFile.click();
+                         inputFile.remove();
+                         changeCurrentSlideState(SlideState.SELECT_ITEM);
+                         break;
+                     }
                      case SlideState.DRAW_TEXT: {
                          addTextItem(
                              'Inter',
