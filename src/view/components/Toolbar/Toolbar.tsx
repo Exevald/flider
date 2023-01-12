@@ -95,12 +95,9 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
             }
             {
                 (status === 0 || status === 2) && <>
-                    <ButtonIcon viewStyle={"bold"} onClick={() => {
-                    }}/>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
-                    }}/>
-                    <ButtonIcon viewStyle={"underline"} onClick={() => {
-                    }}/>
+                    {/*<ButtonIcon viewStyle={"bold"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
+                    <ButtonIcon viewStyle={"underline"} onClick={() => {}}/>*/}
                     <Button viewStyle={"fontArea"}
                             iconStyle={"right"}
                             iconSrc={SaveIcon}
