@@ -10,12 +10,12 @@ import {
     addFigureItem,
     changeCurrentColor,
     changeCurrentFigureType, changeCurrentFontFamily,
-    changeCurrentSlideState, fillFigure,
+    changeCurrentSlideState, changeTextFont, fillFigure,
     savePresentation
 } from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
-import {EditorType, FigureType, ShapeType, SlideState} from "../../../core/types/types";
+import {EditorType, FigureType, ItemType, ShapeType, SlideState} from "../../../core/types/types";
 
 interface DropDownCustomProps {
     id: string;
@@ -175,17 +175,32 @@ const DropDown = ({
                       id,
                       viewStyle,
                       action,
+                      currentSlide,
+                      currentFontFamily,
                       changeCurrentSlideState,
                       changeCurrentFigureType,
                       changeCurrentFontFamily,
                   }: DropDownMergedProps) => {
+    let textSelected = false;
+    currentSlide.selectedItemsIds.forEach(id => {
+            if (currentSlide.items.find(item => item.id === id)?.element === ItemType.TextArea) {
+                textSelected = true;
+            }
+        }
+    )
     if (viewStyle !== null) {
         switch (viewStyle) {
             case "fonts":
                 let fonts = [];
                 for (let i = 0; i < DEFAULT_FONTS.length; i++) {
                     fonts.push(<p
-                        style={{fontFamily: DEFAULT_FONTS[i]}} onClick={() => changeCurrentFontFamily(DEFAULT_FONTS[i])}
+                        style={{fontFamily: DEFAULT_FONTS[i]}} onClick={() => {
+                            changeCurrentFontFamily(DEFAULT_FONTS[i]);
+                            if (textSelected) {
+                                changeTextFont(DEFAULT_FONTS[i])
+                            }
+                            removeOpenedDropDownById('fonts')
+                    }}
                     >
                         {DEFAULT_FONTS[i]}
                     </p>);
@@ -289,6 +304,7 @@ function mapStateToProps(state: EditorType) {
     return {
         currentSlide: state.presentation.slides[currentSlideIndex],
         currentColor: state.presentation.currentColor,
+        currentFontFamily: state.presentation.currentFontFamily
     }
 }
 
@@ -311,6 +327,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         changeCurrentFigureType: (newCurrentFigureType: ShapeType) => dispatcher(changeCurrentFigureType(newCurrentFigureType)),
         changeCurrentFontFamily: (newFontFamily: string) => dispatcher(changeCurrentFontFamily(newFontFamily)),
+        changeTextFont: (newFont: string) => dispatcher(changeTextFont(newFont)),
     }
 }
 

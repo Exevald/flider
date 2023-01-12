@@ -156,9 +156,7 @@ function addTextItem(fontFamily: string, fontSize: number,
 function changeTextFont(newFontFamily: string) {
     return {
         type: Actions.CHANGE_TEXT_FONT,
-        addTextParams: {
-            fontFamily: newFontFamily
-        }
+        newFontFamily: newFontFamily
     }
 }
 function changeTextColor(newColor: string) {
@@ -177,6 +175,12 @@ function changeTextValue(newValue: string) {
     return {
         type: Actions.CHANGE_TEXT_VALUE,
         newTextValue: newValue
+    }
+}
+function changeFontFamily(fontFamily: string) {
+    return {
+        type: Actions.CHANGE_TEXT_FONT,
+        newFontFamily: fontFamily,
     }
 }
 
@@ -310,6 +314,7 @@ export {
     changeTextSize,
     changeTextColor,
     changeTextValue,
+    changeFontFamily,
     selectItem,
     selectManyItems,
     deselectItems,

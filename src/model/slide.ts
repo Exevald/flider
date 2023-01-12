@@ -226,6 +226,28 @@ function changeTextSizeReducer(slide: SlideType, newSize: string): SlideType {
     }
     return newSlide
 }
+function changeTextFontFamily(slide: SlideType, newFamily: string): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    const selectedItemsId = newSlide.selectedItemsIds.concat();
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (selectedItemsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.TextArea)) {
+            if (slideItem.textArea) {
+                const newSlideItem: Item = {
+                    ...slideItem,
+                    textArea: {
+                        fontFamily: newFamily,
+                        fontSize: slideItem.textArea.fontSize,
+                        fontColor: slideItem.textArea.fontColor,
+                        value: slideItem.textArea.value
+                    }
+                }
+                newSlide.items.splice(i, 1, newSlideItem);
+            }
+        }
+    }
+    return newSlide
+}
 
 function moveItemReducer(slide: SlideType, shiftX: number, shiftY: number): SlideType {
     const newSlide = deepClone(slide) as SlideType;
@@ -352,6 +374,9 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.CHANGE_TEXT_VALUE:
             return action.newTextValue ?
                 changeTextValueReducer(state, action.newTextValue) : deepClone(state) as SlideType;
+            case Actions.CHANGE_TEXT_FONT:
+            return action.newFontFamily ?
+                changeTextFontFamily(state, action.newFontFamily) : deepClone(state) as SlideType;
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
         case Actions.SELECT_MANY_ITEMS:
