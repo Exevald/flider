@@ -177,10 +177,8 @@ function changeTextSize(newSize: string) {
 }
 function changeTextValue(newValue: string) {
     return {
-        type: Actions.CHANGE_TEXT_SIZE,
-        addTextParams: {
-            value: newValue
-        }
+        type: Actions.CHANGE_TEXT_VALUE,
+        newTextValue: newValue
     }
 }
 

@@ -1,11 +1,11 @@
-import {EditorType, IdType, Item, ItemType, PointType, ShapeType, SlideItemSpaceType} from "../../../core/types/types";
+import {EditorType, IdType, ItemType, SlideState} from "../../../core/types/types";
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
-import {changeCurrentFontSize, selectItem} from "../../../model/actionCreators";
-import TextArea from "../TextArea/TextArea";
+import {changeCurrentSlideState, changeTextValue, selectItem} from "../../../model/actionCreators";
+import {TEXTAREA_INITIAL_STATE} from "../../../core/functions/utility";
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
     const currentSlideIndex: number = state.presentation.slides.findIndex(slide => slide.id === customProps.slideId);
@@ -20,14 +20,14 @@ function mapStateToProps(state: EditorType, customProps: { slideId: string, item
 function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
-        changeFontSize: (size: string) => dispatcher(changeCurrentFontSize(size))
+        changeTextValue: (value: string) => dispatcher(changeTextValue(value))
     }
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type SlideItemProps = ConnectedProps<typeof connector>;
 
-const SlideItem = ({slideItem, changeFontSize, currentFontSize, active, selectedItemsIds}: SlideItemProps) => {
+const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selectedItemsIds}: SlideItemProps) => {
     const slideItemRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedItemsIds.find(id => slideItem?.id === id);
     if (isSelected) {
@@ -93,21 +93,21 @@ const SlideItem = ({slideItem, changeFontSize, currentFontSize, active, selected
                         </div>
                     }
                     {
-                        (slideItem.textArea) &&
-                        <textarea placeholder={slideItem.textArea.value}
+                        slideItem.textArea &&
+                        <textarea placeholder={TEXTAREA_INITIAL_STATE.value}
                                   className={styles.textArea}
                                   style={{
                                       fontFamily: slideItem.textArea.fontFamily,
                                       fontSize: slideItem.textArea.fontSize,
                                       color: slideItem.textArea.fontColor,
                                   }}
-                                  onKeyUp={(value) => {
-                                      if (slideItem.textArea !== undefined) {
-                                      }
+                                  onChange={(e) => {
+                                      changeTextValue(e.currentTarget.value);
+                                      changeCurrentSlideState(SlideState.SELECT_ITEM)
                                       active = false
                                   }}
                                   autoCorrect={'on'}
-                        />
+                        >{slideItem.textArea.value}</textarea>
                     }
                 </div>
             );

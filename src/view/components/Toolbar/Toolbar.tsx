@@ -37,9 +37,9 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
     let figureSelected = false;
     props.currentSlide.selectedItemsIds.forEach(id => {
             if (props.currentSlide.items.find(item => item.id === id)?.element === ItemType.Figure) {
-                textSelected = true;
-            } else if (props.currentSlide.items.find(item => item.id === id)?.element === ItemType.TextArea) {
                 figureSelected = true;
+            } else if (props.currentSlide.items.find(item => item.id === id)?.element === ItemType.TextArea) {
+                textSelected = true;
             }
         }
     )
