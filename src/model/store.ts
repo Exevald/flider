@@ -98,6 +98,7 @@ type ActionType = {
     newSlideState?: SlideState,
     newCurrentFigureType?: ShapeType,
     newFontState?: string,
+    newFontSize?: string,
     newTextValue?: string,
 }
 

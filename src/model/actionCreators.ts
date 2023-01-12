@@ -170,9 +170,7 @@ function changeTextColor(newColor: string) {
 function changeTextSize(newSize: string) {
     return {
         type: Actions.CHANGE_TEXT_SIZE,
-        addTextParams: {
-            fontSize: newSize
-        }
+        newFontSize: newSize
     }
 }
 function changeTextValue(newValue: string) {

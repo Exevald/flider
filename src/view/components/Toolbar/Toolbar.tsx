@@ -9,13 +9,12 @@ import {
     redo,
     setBackgroundColor,
     changeCurrentSlideState,
-    fillFigure, strokeFigure, changeCurrentFontSize, changeTextColor
+    fillFigure, strokeFigure, changeCurrentFontSize, changeTextColor, changeTextSize
 } from "../../../model/actionCreators";
 import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
 import {showDropDownById} from "../DropDown/DropDown";
 import DropDown from "../DropDown/DropDown";
-import {text} from "stream/consumers";
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type ToolbarProps = ConnectedProps<typeof connector>
@@ -114,12 +113,20 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
             {
                 status !== 1 &&
                 <div className={styles.fontSizeArea}>
-                    <div className={styles.sizeAdjuster} onClick={() => props.changeCurrentFontSize("minus")}>–
+                    <div className={styles.sizeAdjuster} onClick={() => {
+                        props.changeCurrentFontSize("minus");
+                        props.changeTextSize(props.currentFontSize)
+                    }}>–
                     </div>
                     <div className={styles.vertSeparator}></div>
                     <div className={styles.fontAdjuster}>{props.currentFontSize}</div>
                     <div className={styles.vertSeparator}></div>
-                    <div className={styles.sizeAdjuster} onClick={() => props.changeCurrentFontSize("plus")}>+
+                    <div className={styles.sizeAdjuster} onClick={() => {
+                        props.changeCurrentFontSize("plus");
+                        if (textSelected) {
+                            props.changeTextSize(props.currentFontSize)
+                        }
+                    }}>+
                     </div>
                 </div>
             }
@@ -148,6 +155,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         fillText: (newColor: string) => dispatcher(changeTextColor(newColor)),
         strokeFigure: (newColor: string) => dispatcher(strokeFigure(newColor)),
         changeCurrentFontSize: (newFontState: string) => dispatcher(changeCurrentFontSize(newFontState)),
+        changeTextSize: (size: number) => dispatcher(changeTextSize(size.toString()))
     }
 }
 

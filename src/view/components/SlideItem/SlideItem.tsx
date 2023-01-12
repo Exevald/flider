@@ -102,6 +102,7 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
                                       color: slideItem.textArea.fontColor,
                                   }}
                                   onChange={(e) => {
+                                      console.log(e.currentTarget.value)
                                       changeTextValue(e.currentTarget.value);
                                       changeCurrentSlideState(SlideState.SELECT_ITEM)
                                       active = false

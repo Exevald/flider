@@ -200,6 +200,28 @@ function changeTextValueReducer(slide: SlideType, newValue: string): SlideType {
     }
     return newSlide
 }
+function changeTextSizeReducer(slide: SlideType, newSize: string): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    const selectedItemsId = newSlide.selectedItemsIds.concat();
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (selectedItemsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.TextArea)) {
+            if (slideItem.textArea) {
+                const newSlideItem: Item = {
+                    ...slideItem,
+                    textArea: {
+                        fontFamily: slideItem.textArea.fontFamily,
+                        fontSize: parseInt(newSize),
+                        fontColor: slideItem.textArea.fontColor,
+                        value: slideItem.textArea.value
+                    }
+                }
+                newSlide.items.splice(i, 1, newSlideItem);
+            }
+        }
+    }
+    return newSlide
+}
 
 function moveItemReducer(slide: SlideType, shiftX: number, shiftY: number): SlideType {
     const newSlide = deepClone(slide) as SlideType;
@@ -301,7 +323,6 @@ function strokeFigureReducer(slide: SlideType, newColor: string): SlideType {
 }
 
 function slideReducer(state: SlideType, action: ActionType): SlideType {
-    console.log(state.currentState, action.type, action.newSlideState)
     switch (action.type) {
         case Actions.CHANGE_CURRENT_SLIDE_STATE:
             return action.newSlideState !== undefined ? changeCurrentSlideStateReducer(state, action.newSlideState) : deepClone(state) as SlideType;
@@ -321,6 +342,9 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.CHANGE_TEXT_COLOR:
             return action.newColor ?
                 fillTextReducer(state, action.newColor) : deepClone(state) as SlideType;
+        case Actions.CHANGE_TEXT_SIZE:
+            return action.newFontSize ?
+                changeTextSizeReducer(state, action.newFontSize) : deepClone(state) as SlideType;
         case Actions.CHANGE_TEXT_VALUE:
             if(action.newTextValue !== undefined) console.log('entering reducer')
             return  action.newTextValue ?
