@@ -4,11 +4,16 @@ import {EditorType, IdType, Item, PointType, ShapeType, SlideState} from "../../
 import {AppDispatcher} from "../../../model/store";
 import {
     addFigureItem,
-    addImageItem, addTextItem,
-    changeCurrentSlideState, deselectItems, moveItem, scaleItem, selectItem, selectManyItems
+    addImageItem,
+    addTextItem,
+    changeCurrentSlideState,
+    deselectItems,
+    moveItem,
+    scaleItem,
+    selectItem,
+    selectManyItems
 } from "../../../model/actionCreators";
 import {getBase64FromPicture} from "../../../core/functions/utility";
-import SlideItem from "../SlideItem/SlideItem";
 
 interface SlideInitialProps {
     slideItems: Array<JSX.Element>;
@@ -77,12 +82,18 @@ function initEventsListeners(): void {
 function onMouseMove(event: MouseEvent) {
     let currX = event.clientX - offsetLeft;
     let currY = event.clientY - offsetTop;
-    if ((currX < 0 || currX > slideArea.width) || (currY < 0 || currY > slideArea.height)) {
+    if (((currX < 0 || currX > slideArea.width) || (currY < 0 || currY > slideArea.height)) &&
+        notDrawing()) {
+        console.log("damn")
         needToChange = true;
         ifPressed = false;
         beginMoving = false;
         mouseUp = true;
     }
+}
+
+function  notDrawing(): boolean {
+    return currState !== SlideState.DRAW_FIGURE && currState !== SlideState.DRAW_TEXT && currState !== SlideState.DRAW_IMAGE
 }
 
 initEventsListeners();
@@ -95,6 +106,7 @@ type SlideMergedProps = SlideInitialProps & SlideCustomProps;
 let ifPressed = false;
 let beginMoving = false;
 let needToChange = false;
+let currState = SlideState.NO_ACTION;
 let slideArea = {
     width: 1280,
     height: 720,
@@ -170,10 +182,18 @@ const Slide = ({
                  }
              }}
              onMouseMove={(event) => {
-                 const slide = document.getElementById(currentSlideId) as HTMLElement;
-                 const slideClientX = event.clientX - slide.offsetLeft;
-                 const slideClientY = event.clientY - slide.offsetTop;
-                 if (needToChange) {
+                 currState = currentSlideState;
+                 console.log(currentSlideState);
+                 if (!notDrawing()) {
+                     for (let i = 0; i < modelSlideItems.length; i++) {
+                         let slideItem = modelSlideItems[i];
+                         let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
+                         if (isSelected) {
+                             deselectItems(slideItem.id)
+                         }
+                     }
+                 }
+                 if (needToChange && notDrawing() && currentSlideState !== SlideState.SCALE_ITEM) {
                     changeCurrentSlideState(SlideState.SELECT_ITEM);
                     needToChange = false;
                  }
@@ -186,6 +206,7 @@ const Slide = ({
                              let slideItem = modelSlideItems[i];
                              let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
                              if (isSelected) {
+                                 console.log(slideItem.element);
                                  startFigureX = slideItem.coordinates.x;
                                  startFigureY = slideItem.coordinates.y;
                              }
