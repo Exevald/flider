@@ -17,6 +17,17 @@
 }
 
 /* все типы */
+.fonts {
+    min-width: 200px;
+    border-color: var(--gendo-default)!important;
+}
+.fonts > p {;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .saveAction {
     max-width: 150px;
 }

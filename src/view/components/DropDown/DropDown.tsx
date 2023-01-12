@@ -1,7 +1,7 @@
 import styles from "./DropDown.module.css"
 import {
     COLOR_PICKER_COLORS,
-    DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,
+    DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES, DEFAULT_FONTS,
     DEFAULT_STOCKS,
     DROPDOWN_ANIMATION_TIME
 } from "../../../core/functions/utility";
@@ -20,7 +20,7 @@ import {EditorType, FigureType, ShapeType, SlideState} from "../../../core/types
 interface DropDownCustomProps {
     id: string;
     viewStyle: 'createSlide' | 'undo' | 'redo' | 'selectArea' | 'selectArrow' | 'textArea' | 'imageSelector'
-        | 'line' | 'palette' | 'saveAction' | 'figureShapes';
+        | 'line' | 'palette' | 'saveAction' | 'figureShapes' | 'fonts';
 }
 
 function hideDropDownKeyboardPressed(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -69,10 +69,12 @@ function handleClicks(e: MouseEvent) {
     const selectorButton = document.getElementById('SelectorButton');
     const figure = document.getElementById('FigureButton');
     const shapes = document.getElementById('shapes');
+    const fonts = document.getElementById('fonts');
+    const fontsButton = document.getElementById('fontsButton');
 
     if (path !== null && saveAction !== null && colorPicker !== null && imageSelector !== null
         && saveButton !== null && selectorButton !== null && pickerButton !== null && figure !== null
-        && shapes !== null) {
+        && shapes !== null && fonts !== null && fontsButton !== null) {
 
         if (saveAction.classList.contains(styles.dropDownShow) && !path.includes(saveAction)
             && !path.includes(saveButton)) {
@@ -89,6 +91,10 @@ function handleClicks(e: MouseEvent) {
         if (shapes.classList.contains(styles.dropDownShow) && !path.includes(shapes)
             && !path.includes(figure)) {
             removeOpenedDropDownById('shapes');
+        }
+        if (fonts.classList.contains(styles.dropDownShow) && !path.includes(fonts)
+            && !path.includes(fontsButton)) {
+            removeOpenedDropDownById('fonts');
         }
 
     }
@@ -169,12 +175,27 @@ const DropDown = ({
                       id,
                       viewStyle,
                       action,
-                      currentColor,
                       changeCurrentSlideState,
                       changeCurrentFigureType,
                   }: DropDownMergedProps) => {
     if (viewStyle !== null) {
         switch (viewStyle) {
+            case "fonts":
+                let fonts = [];
+                for (let i = 0; i < DEFAULT_FONTS.length; i++) {
+                    fonts.push(<p style={{fontFamily: DEFAULT_FONTS[i]}}>
+                        {DEFAULT_FONTS[i]}
+                    </p>);
+                    fonts.push(<Separator/>)
+                }
+                fonts.pop()
+                return (
+                    <div id={id} className={styles.dropDown}>
+                        <div className={`${styles.dropDownContent} ${styles.fonts}`}>
+                            {fonts}
+                        </div>
+                    </div>
+                )
             case "figureShapes":
                 let figures = [];
                 for (let i = 0; i < DEFAULT_FIGURES.length; i++) {

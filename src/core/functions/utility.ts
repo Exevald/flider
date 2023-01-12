@@ -69,7 +69,12 @@ const TEXTAREA_INITIAL_STATE = {
     fontColor: 'black',
     value: 'Введите что-нибудь'
 }
-
+const DEFAULT_FONTS = [
+    'Arial',
+    'Calibry',
+    'Roboto',
+    'Times New Roman'
+]
 const MAX_HISTORY_SIZE = 30;
 const MAX_TITLE_SIZE = 12;
 
@@ -132,6 +137,7 @@ export {
     MAX_TITLE_SIZE,
     DROPDOWN_ANIMATION_TIME,
     TEXTAREA_INITIAL_STATE,
+    DEFAULT_FONTS,
     CANVAS_SETTINGS,
     DEFAULT_STOCKS,
     DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,

@@ -105,9 +105,12 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                             iconStyle={"right"}
                             iconSrc={SaveIcon}
                             text={"Inter"}
+                            id={'fontsButton'}
                             onClick={() => {
+                                showDropDownById('fontsButton', 'fonts')
                             }}
                     />
+                <DropDown id={'fonts'} viewStyle={'fonts'} />
                 </>
             }
             {
