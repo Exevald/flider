@@ -39,8 +39,9 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         addFigureItem: (shape: ShapeType, color: string, coordinates: PointType) => dispatcher(addFigureItem(shape, color, coordinates)),
         changeCurrentSlideState: (newSlideState: SlideState) => dispatcher(changeCurrentSlideState(newSlideState)),
         addImageItem: (imageSrc: string, coordinates: PointType) => dispatcher(addImageItem(imageSrc, coordinates)),
-        addTextItem: (font: string, size: number, color: string, value: string, coordinates: PointType) =>
-            dispatcher(addTextItem(font, size, color, value, coordinates)),
+        addTextItem: (font: string, size: number, color: string, value: string, fatness: string,
+                      isCursive: boolean, isUnderlined: boolean, coordinates: PointType) =>
+            dispatcher(addTextItem(font, size, color, value, fatness, isCursive, isUnderlined, coordinates)),
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         selectManyItems: (itemId: IdType) => dispatcher(selectManyItems(itemId)),
         deselectItems: (itemId: IdType) => dispatcher(deselectItems(itemId)),
@@ -148,23 +149,6 @@ const Slide = ({
         <div className={styles.slide}
              style={{"background": background}}
              id={currentSlideId}
-             onClick={(event) => {
-                 const slide = document.getElementById(currentSlideId) as HTMLElement;
-                 const slideClientX = event.clientX - slide.offsetLeft;
-                 const slideClientY = event.clientY - slide.offsetTop;
-                 switch (currentSlideState) {
-                     case SlideState.DRAW_TEXT: {
-                         addTextItem(
-                             currentFontFamily,
-                             14,
-                             currentColor,
-                             'hello',
-                             {x: slideClientX, y: slideClientY});
-                         changeCurrentSlideState(SlideState.SELECT_ITEM);
-                         break
-                     }
-                 }
-             }}
              onMouseMove={(event) => {
                  currState = currentSlideState;
                  if (!notDrawing()) {
@@ -208,7 +192,7 @@ const Slide = ({
                      switch (currentSlideState) {
                          case SlideState.SCALE_ITEM: {
                              const slide = document.getElementById(currentSlideId) as HTMLElement;
-                             if (currentCorner == CornerType.None) {
+                             if (currentCorner === CornerType.None) {
                                  let maxLayer = -1;
                                  let newFigure = modelSlideItems[0];
                                  for (let i = 0; i < modelSlideItems.length; i++) {
@@ -318,10 +302,13 @@ const Slide = ({
                      }
                      case SlideState.DRAW_TEXT: {
                          addTextItem(
-                             'Inter',
+                             currentFontFamily,
                              currentFontSize,
                              currentColor,
                              'Введите что-нибудь',
+                             'normal',
+                             false,
+                             false,
                              {x: slideClientX, y: slideClientY});
                          changeCurrentSlideState(SlideState.SELECT_ITEM);
                          break

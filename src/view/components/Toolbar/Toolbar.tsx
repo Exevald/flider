@@ -13,7 +13,7 @@ import {
     changeCurrentFontSize,
     changeTextColor,
     changeTextSize,
-    changeTextFontFamily
+    changeTextFontFamily, changeTextFatness, toggleTextCursive, toggleTextUnderline
 } from "../../../model/actionCreators";
 import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
@@ -84,12 +84,12 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
             {
                 status !== 4 &&
                 <ButtonIcon viewStyle={"filler"} onClick={() => {
-                    if (!textSelected && !figureSelected) {
-                        props.setBgColor(props.currentColor)
-                    } else if(figureSelected) {
+                    if(figureSelected) {
                         props.fillFigure(props.currentColor);
                     } else if (textSelected) {
                         props.fillText(props.currentColor)
+                    } else {
+                        props.setBgColor(props.currentColor)
                     }
                 }}/>
             }
@@ -99,9 +99,21 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
             }
             {
                 (status === 0 || status === 2) && <>
-                    {/*<ButtonIcon viewStyle={"bold"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"cursive"} onClick={() => {}}/>
-                    <ButtonIcon viewStyle={"underline"} onClick={() => {}}/>*/}
+                    <ButtonIcon viewStyle={"bold"} onClick={() => {
+                        if (textSelected) {
+                            props.changeTextFatness()
+                        }
+                    }}/>
+                    <ButtonIcon viewStyle={"cursive"} onClick={() => {
+                        if (textSelected) {
+                            props.toggleTextCursive()
+                        }
+                    }}/>
+                    <ButtonIcon viewStyle={"underline"} onClick={() => {
+                        if (textSelected) {
+                            props.toggleTextUnderline()
+                        }
+                    }}/>
                     <Button viewStyle={"fontArea"}
                             iconStyle={"right"}
                             iconSrc={SaveIcon}
@@ -162,6 +174,9 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         changeCurrentFontSize: (newFontState: string) => dispatcher(changeCurrentFontSize(newFontState)),
         changeTextSize: (size: number) => dispatcher(changeTextSize(size.toString())),
         changeTextFont: (font: string) => dispatcher(changeTextFontFamily(font)),
+        changeTextFatness: () => dispatcher(changeTextFatness()),
+        toggleTextCursive: () => dispatcher(toggleTextCursive()),
+        toggleTextUnderline: () => dispatcher(toggleTextUnderline())
     }
 }
 

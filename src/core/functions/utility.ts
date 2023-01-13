@@ -96,7 +96,10 @@ const TEXTAREA_INITIAL_STATE = {
     fontFamily: 'Inter',
     fontSize: 14,
     fontColor: 'black',
-    value: 'Введите что-нибудь'
+    value: 'Введите что-нибудь',
+    fatness: 'normal',
+    isCursive: false,
+    isUnderlined: false
 }
 const DEFAULT_FONTS = [
     'Anton',

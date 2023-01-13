@@ -35,24 +35,11 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
     if (isSelected) {
         active = true;
     }
-    type CornersType = {
-        topLeft: React.RefObject<HTMLDivElement>,
-        topRight: React.RefObject<HTMLDivElement>,
-        bottomLeft: React.RefObject<HTMLDivElement>,
-        bottomRight: React.RefObject<HTMLDivElement>
-    }
 
     const topLeftRef = useRef<HTMLDivElement>(null);
     const topRightRef = useRef<HTMLDivElement>(null);
     const bottomLeftRef = useRef<HTMLDivElement>(null);
     const bottomRightRef = useRef<HTMLDivElement>(null);
-
-    const corners: CornersType = {
-        topLeft: topLeftRef,
-        topRight: topRightRef,
-        bottomLeft: bottomLeftRef,
-        bottomRight: bottomRightRef
-    }
 
     const [itemWidth, setItemWidth] = useState(slideItem?.space.width);
     const [itemHeight, setItemHeight] = useState(slideItem?.space.height);
@@ -71,6 +58,10 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
     }
     switch (slideItem.element) {
         case ItemType.TextArea:
+            let decoration = '';
+            slideItem.textArea?.isUnderlined ? decoration = 'underline' : decoration = 'none';
+            let fontStyle = '';
+            slideItem.textArea?.isCursive ? fontStyle = 'italic' : fontStyle = 'normal';
             return (
                 <div
                     ref={slideItemRef}
@@ -102,14 +93,17 @@ const SlideItem = ({slideItem, currentFontSize, changeTextValue, active, selecte
                                       fontFamily: slideItem.textArea.fontFamily,
                                       fontSize: slideItem.textArea.fontSize,
                                       color: slideItem.textArea.fontColor,
+                                      fontWeight: slideItem.textArea.fatness,
+                                      textDecoration: decoration,
+                                      fontStyle: fontStyle
                                   }}
                                   onChange={(e) => {
                                       changeTextValue(e.currentTarget.value);
                                       changeCurrentSlideState(SlideState.SELECT_ITEM)
-                                      active = false
                                   }}
                                   autoCorrect={'on'}
-                        >{slideItem.textArea.value}</textarea>
+                                  value={slideItem.textArea.value}
+                        />
                     }
                 </div>
             );

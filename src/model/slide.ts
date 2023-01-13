@@ -1,8 +1,17 @@
-import {Actions, IdType, Item, ItemType, PointType, ShapeType, SlideState, SlideType} from "../core/types/types";
-import {getRandomId, setNewLayer, TEXTAREA_INITIAL_STATE} from "../core/functions/utility";
+import {
+    Actions,
+    IdType,
+    Item,
+    ItemType,
+    PointType,
+    ShapeType,
+    SlideState,
+    SlideType,
+    TextAreaType,
+} from "../core/types/types";
+import {getRandomId, setNewLayer} from "../core/functions/utility";
 import {deepClone} from "../core/functions/deepClone";
 import {ActionType} from "./store";
-import textArea from "../view/components/TextArea/TextArea";
 
 function setBackgroundColorReducer(slide: SlideType, backgroundColor: string): SlideType {
     const newSlide = deepClone(slide) as SlideType;
@@ -129,10 +138,7 @@ function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointT
 }
 
 function addTextReducer(slide: SlideType,
-                        font: string,
-                        size: number = TEXTAREA_INITIAL_STATE.fontSize,
-                        color: string = TEXTAREA_INITIAL_STATE.fontColor,
-                        value: string = TEXTAREA_INITIAL_STATE.value,
+                        textParams: TextAreaType,
                         coordinates: PointType): SlideType {
     const newSlide = deepClone(slide) as SlideType;
     const newTextItem: Item = {
@@ -143,13 +149,10 @@ function addTextReducer(slide: SlideType,
         },
         element: ItemType.TextArea,
         textArea: {
-            fontFamily: font,
-            fontSize: size,
-            fontColor: color,
-            value: value
+            ...textParams
         },
         space: {
-            width: 100,
+            width: 200,
             height: 100,
         },
         layer: 1
@@ -168,10 +171,8 @@ function fillTextReducer(slide: SlideType, newColor: string): SlideType {
                 const newSlideItem: Item = {
                     ...slideItem,
                     textArea: {
-                        fontFamily: slideItem.textArea.fontFamily,
-                        fontSize: slideItem.textArea.fontSize,
-                        fontColor: newColor,
-                        value: slideItem.textArea.value
+                        ...slideItem.textArea,
+                        fontColor: newColor
                     }
                 }
                 newSlide.items.splice(i, 1, newSlideItem);
@@ -191,10 +192,8 @@ function changeTextValueReducer(slide: SlideType, newValue: string): SlideType {
                 const newSlideItem: Item = {
                     ...slideItem,
                     textArea: {
-                        fontFamily: slideItem.textArea.fontFamily,
-                        fontSize: slideItem.textArea.fontSize,
-                        fontColor: slideItem.textArea.fontColor,
-                        value: newValue
+                        ...slideItem.textArea,
+                        value: newValue,
                     }
                 }
                 newSlide.items.splice(i, 1, newSlideItem);
@@ -214,10 +213,8 @@ function changeTextSizeReducer(slide: SlideType, newSize: string): SlideType {
                 const newSlideItem: Item = {
                     ...slideItem,
                     textArea: {
-                        fontFamily: slideItem.textArea.fontFamily,
-                        fontSize: parseInt(newSize),
-                        fontColor: slideItem.textArea.fontColor,
-                        value: slideItem.textArea.value
+                        ...slideItem.textArea,
+                        fontSize: parseInt(newSize)
                     }
                 }
                 newSlide.items.splice(i, 1, newSlideItem);
@@ -236,10 +233,102 @@ function changeTextFontFamily(slide: SlideType, newFamily: string): SlideType {
                 const newSlideItem: Item = {
                     ...slideItem,
                     textArea: {
-                        fontFamily: newFamily,
-                        fontSize: slideItem.textArea.fontSize,
-                        fontColor: slideItem.textArea.fontColor,
-                        value: slideItem.textArea.value
+                        ...slideItem.textArea,
+                        fontFamily: newFamily
+
+                    }
+                }
+                newSlide.items.splice(i, 1, newSlideItem);
+            }
+        }
+    }
+    return newSlide
+}
+function changeTextFatnessReducer(slide: SlideType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    let newFatness = '';
+    let isOnlySelected = true;
+    const selectedItemsId = newSlide.selectedItemsIds.concat();
+    if (selectedItemsId.length > 1) {
+        isOnlySelected = false;
+    }
+
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (selectedItemsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.TextArea)) {
+            if (slideItem.textArea) {
+                if (isOnlySelected) {
+                    slideItem.textArea.fatness === 'normal' ? newFatness = 'bold' : newFatness = 'normal';
+                } else {
+                    newFatness = 'bold'
+                }
+                const newSlideItem: Item = {
+                    ...slideItem,
+                    textArea: {
+                        ...slideItem.textArea,
+                        fatness: newFatness
+                    }
+                }
+                newSlide.items.splice(i, 1, newSlideItem);
+            }
+        }
+    }
+    return newSlide
+}
+function changeTextCursiveReducer(slide: SlideType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    let newCursive = false;
+    let isOnlySelected = true;
+    const selectedItemsId = newSlide.selectedItemsIds.concat();
+    if (selectedItemsId.length > 1) {
+        isOnlySelected = false;
+    }
+
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (selectedItemsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.TextArea)) {
+            if (slideItem.textArea) {
+                if (isOnlySelected) {
+                    !slideItem.textArea.isCursive ? newCursive = true : newCursive = false;
+                } else {
+                    newCursive = true
+                }
+                const newSlideItem: Item = {
+                    ...slideItem,
+                    textArea: {
+                        ...slideItem.textArea,
+                        isCursive: newCursive
+                    }
+                }
+                newSlide.items.splice(i, 1, newSlideItem);
+            }
+        }
+    }
+    return newSlide
+}
+function changeTextUnderlineReducer(slide: SlideType): SlideType {
+    const newSlide = deepClone(slide) as SlideType;
+    let newUnderline = false;
+    let isOnlySelected = true;
+    const selectedItemsId = newSlide.selectedItemsIds.concat();
+    if (selectedItemsId.length > 1) {
+        isOnlySelected = false;
+    }
+
+    for (let i = 0; i < newSlide.items.length; i++) {
+        const slideItem = newSlide.items[i];
+        if (selectedItemsId.includes(newSlide.items[i].id) && (newSlide.items[i].element === ItemType.TextArea)) {
+            if (slideItem.textArea) {
+                if (isOnlySelected) {
+                    !slideItem.textArea.isUnderlined ? newUnderline = true : newUnderline = false;
+                } else {
+                    newUnderline = true
+                }
+                const newSlideItem: Item = {
+                    ...slideItem,
+                    textArea: {
+                        ...slideItem.textArea,
+                        isUnderlined: newUnderline
                     }
                 }
                 newSlide.items.splice(i, 1, newSlideItem);
@@ -362,8 +451,8 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
             return action.addImageParams !== undefined ? addImageReducer(state, action.addImageParams.imageSrc, action.addImageParams.coordinates) : deepClone(state) as SlideType;
         case Actions.DRAW_TEXT:
             return (action.addTextParams && action.clientX && action.clientY) ?
-                addTextReducer(state, action.addTextParams.fontFamily, action.addTextParams.fontSize,
-                    action.addTextParams.fontColor, action.addTextParams.value, {x: action.clientX, y: action.clientY})
+                addTextReducer(state, action.addTextParams,
+                    {x: action.clientX, y: action.clientY})
                 : deepClone(state) as SlideType;
         case Actions.CHANGE_TEXT_COLOR:
             return action.newColor ?
@@ -374,9 +463,15 @@ function slideReducer(state: SlideType, action: ActionType): SlideType {
         case Actions.CHANGE_TEXT_VALUE:
             return action.newTextValue ?
                 changeTextValueReducer(state, action.newTextValue) : deepClone(state) as SlideType;
-            case Actions.CHANGE_TEXT_FONT:
+        case Actions.CHANGE_TEXT_FONT:
             return action.newFontFamily ?
                 changeTextFontFamily(state, action.newFontFamily) : deepClone(state) as SlideType;
+        case Actions.CHANGE_TEXT_FATNESS:
+            return changeTextFatnessReducer(state);
+        case Actions.TOGGLE_TEXT_CURSIVE:
+            return changeTextCursiveReducer(state);
+        case Actions.TOGGLE_TEXT_UNDERLINE:
+            return changeTextUnderlineReducer(state);
         case Actions.SELECT_ITEM:
             return action.itemId !== undefined ? selectItemReducer(state, action.itemId) : deepClone(state) as SlideType;
         case Actions.SELECT_MANY_ITEMS:
