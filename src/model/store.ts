@@ -1,12 +1,9 @@
 import {
     Actions,
-    AreaType,
     EditorType,
-    ItemType,
     PointType,
     ShapeType,
-    SlideState,
-    TextAreaType
+    SlideState
 } from "../core/types/types";
 import {presentationReducer} from "./presentation";
 import {addActionToHistoryReducer, editorReducer} from "./editor";
@@ -14,38 +11,8 @@ import {legacy_createStore as createStore} from 'redux'
 import {copy, deleteItems, deleteSlides, openPresentation, paste, redo, undo} from "./actionCreators";
 import {deepClone} from "../core/functions/deepClone";
 import {slideReducer} from "./slide";
+import {INITIAL_STATE} from "../core/functions/utility";
 
-let initialState: EditorType = {
-    presentation: {
-        title: "Имя презентации",
-        slides: [
-            {
-                id: "0",
-                items: [],
-                bgColor: "white",
-                selectedItemsIds: ["0"],
-                currentState: SlideState.SELECT_ITEM,
-                currentFigureType: ShapeType.NoShape,
-            },
-        ],
-        selectedSlidesIds: ["0"],
-        currentColor: "black",
-        currentFontSize: 14,
-        currentFontFamily: "Inter",
-    },
-    history: {
-        undoStack: [],
-        redoStack: []
-    },
-    buffers: {
-        slideBuffer: [],
-        itemBuffer: []
-    },
-    slideShowStatus: false,
-    slideShowCurrentSlideIndex: 0,
-    currentClientX: 0,
-    currentClientY: 0,
-}
 
 type ActionType = {
     type: string,
@@ -155,7 +122,7 @@ function addHotKeys() {
     })
 }
 
-function mainReducer(state: EditorType = initialState, action: ActionType) {
+function mainReducer(state: EditorType = INITIAL_STATE, action: ActionType) {
     const savePresentation: boolean = action.type !== Actions.SAVE_PRESENTATION
     const actionUndo: boolean = action.type !== Actions.UNDO;
     const actionRedo: boolean = action.type !== Actions.REDO;
@@ -173,9 +140,9 @@ function mainReducer(state: EditorType = initialState, action: ActionType) {
     return newState
 }
 
-const store = createStore(mainReducer, initialState)
+const store = createStore(mainReducer, INITIAL_STATE)
 
 export type AppDispatcher = typeof store.dispatch
 
-export {store, addHotKeys, initialState, loadPresentation}
+export {store, addHotKeys, loadPresentation}
 export type {ActionType}

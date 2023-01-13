@@ -5,7 +5,6 @@ import {EditorType} from "../../../core/types/types";
 import {AppDispatcher} from "../../../model/store";
 import {swipeSlideShowSlide, switchSlide} from "../../../model/actionCreators";
 import {Button} from "../../components/Button/Button";
-import {CANVAS_SETTINGS} from "../../../core/functions/utility";
 import {useEffect} from "react";
 import SlideItem from "../../components/SlideItem/SlideItem";
 import Slide from "../../components/Slide/Slide";

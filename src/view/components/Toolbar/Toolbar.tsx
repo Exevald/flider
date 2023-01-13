@@ -1,5 +1,4 @@
 import styles from "./Toolbar.module.css"
-
 import {Button, ButtonIcon} from "../Button/Button";
 import SaveIcon from "../Button/ButtonIcons/SaveDropDownIcon.svg";
 import {AppDispatcher} from "../../../model/store";
@@ -9,7 +8,12 @@ import {
     redo,
     setBackgroundColor,
     changeCurrentSlideState,
-    fillFigure, strokeFigure, changeCurrentFontSize, changeTextColor, changeTextSize, changeCurrentFontFamily
+    fillFigure,
+    strokeFigure,
+    changeCurrentFontSize,
+    changeTextColor,
+    changeTextSize,
+    changeTextFontFamily
 } from "../../../model/actionCreators";
 import {EditorType, ItemType, SlideState} from "../../../core/types/types";
 import {connect, ConnectedProps} from "react-redux";
@@ -104,7 +108,7 @@ const Toolbar = (props: ToolbarProps, {status = 0}: StatusProps) => {
                             text={props.currentFontFamily}
                             id={'fontsButton'}
                             onClick={() => {
-                                showDropDownById('fontsButton', 'fonts')
+                                showDropDownById('fontsButton', 'fonts');
                             }}
                     />
                 <DropDown id={'fonts'} viewStyle={'fonts'} />
@@ -157,6 +161,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
         strokeFigure: (newColor: string) => dispatcher(strokeFigure(newColor)),
         changeCurrentFontSize: (newFontState: string) => dispatcher(changeCurrentFontSize(newFontState)),
         changeTextSize: (size: number) => dispatcher(changeTextSize(size.toString())),
+        changeTextFont: (font: string) => dispatcher(changeTextFontFamily(font)),
     }
 }
 

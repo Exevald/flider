@@ -4,7 +4,7 @@ import styles from "./SlideItem.module.css"
 import Figure from "./Figure/Figure";
 import {connect, ConnectedProps} from "react-redux";
 import {AppDispatcher} from "../../../model/store";
-import {changeCurrentSlideState, changeFontFamily, changeTextValue, selectItem} from "../../../model/actionCreators";
+import {changeCurrentSlideState, changeTextFontFamily, changeTextValue, selectItem} from "../../../model/actionCreators";
 import {TEXTAREA_INITIAL_STATE} from "../../../core/functions/utility";
 
 function mapStateToProps(state: EditorType, customProps: { slideId: string, itemId: string, active: boolean }) {
@@ -22,7 +22,7 @@ function mapDispatchToProps(dispatcher: AppDispatcher) {
     return {
         selectItem: (itemId: IdType) => dispatcher(selectItem(itemId)),
         changeTextValue: (value: string) => dispatcher(changeTextValue(value)),
-        changeFontFamily: (family: string) => dispatcher(changeFontFamily(family))
+        changeFontFamily: (family: string) => dispatcher(changeTextFontFamily(family))
     }
 }
 

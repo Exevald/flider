@@ -1,6 +1,37 @@
-import {AreaType, IdType} from "../types/types";
+import {AreaType, EditorType, IdType, ShapeType, SlideState} from "../types/types";
 import figureStyles from "./../../view/components/DropDown/DropDown.module.css"
 
+let INITIAL_STATE: EditorType = {
+    presentation: {
+        title: "Имя презентации",
+        slides: [
+            {
+                id: "0",
+                items: [],
+                bgColor: "white",
+                selectedItemsIds: ["0"],
+                currentState: SlideState.SELECT_ITEM,
+                currentFigureType: ShapeType.NoShape,
+            },
+        ],
+        selectedSlidesIds: ["0"],
+        currentColor: "black",
+        currentFontSize: 14,
+        currentFontFamily: "Inter",
+    },
+    history: {
+        undoStack: [],
+        redoStack: []
+    },
+    buffers: {
+        slideBuffer: [],
+        itemBuffer: []
+    },
+    slideShowStatus: false,
+    slideShowCurrentSlideIndex: 0,
+    currentClientX: 0,
+    currentClientY: 0,
+}
 const COLOR_PICKER_COLORS = [
     "white", "whitesmoke", "darkgray", "gray", "black",
     "yellow", "orange", "darkorange", "crimson", "red",
@@ -53,10 +84,10 @@ const DEFAULT_FIGURES = [
         name: 'Triangle',
         modelId: 2
     },
-    {
+    /*{
         name: 'Star',
         modelId: 3
-    },
+    },*/
 ];
 let DEFAULT_FIGURES_STYLES = [figureStyles.shapeRectangle, figureStyles.shapeArc, figureStyles.shapeTriangle,
     figureStyles.shapesStar];
@@ -76,16 +107,6 @@ const DEFAULT_FONTS = [
 ]
 const MAX_HISTORY_SIZE = 30;
 const MAX_TITLE_SIZE = 12;
-
-const CANVAS_SETTINGS = {
-    width: 1280,
-    height: 720,
-}
-
-const SIDEBAR_SETTINGS = {
-    width: 180,
-    height: 111,
-}
 
 function getRandomId(): IdType {
     let id: IdType = '';
@@ -131,15 +152,15 @@ function getBase64FromPicture(src: string, size: AreaType): Promise<string> {
 }
 
 export {
+    INITIAL_STATE,
     MAX_HISTORY_SIZE,
     COLOR_PICKER_COLORS,
     MAX_TITLE_SIZE,
     DROPDOWN_ANIMATION_TIME,
     TEXTAREA_INITIAL_STATE,
     DEFAULT_FONTS,
-    CANVAS_SETTINGS,
     DEFAULT_STOCKS,
-    DEFAULT_FIGURES, DEFAULT_FIGURES_STYLES,
-    SIDEBAR_SETTINGS
+    DEFAULT_FIGURES,
+    DEFAULT_FIGURES_STYLES
 };
 export {getRandomId, min, max, getBase64FromPicture, setNewLayer};

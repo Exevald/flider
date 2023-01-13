@@ -177,7 +177,6 @@ const DropDown = ({
                       action,
                       changeTextFont,
                       currentSlide,
-                      currentFontFamily,
                       changeCurrentSlideState,
                       changeCurrentFigureType,
                       changeCurrentFontFamily,

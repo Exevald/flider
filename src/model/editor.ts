@@ -1,7 +1,7 @@
 import {EditorType, HistoryType, Item, PresentationType, SlideType} from "../core/types/types";
-import {ActionType, initialState} from "./store";
+import {ActionType} from "./store";
 import {deepClone} from "../core/functions/deepClone";
-import {getRandomId, MAX_HISTORY_SIZE} from "../core/functions/utility";
+import {getRandomId, MAX_HISTORY_SIZE, INITIAL_STATE} from "../core/functions/utility";
 import {Actions} from "../core/types/types";
 
 function addActionToHistoryReducer(editor: EditorType): HistoryType {
@@ -19,7 +19,7 @@ function addActionToHistoryReducer(editor: EditorType): HistoryType {
 
 function createPresentationReducer(): EditorType {
     return {
-        ...(initialState)
+        ...(INITIAL_STATE)
     }
 }
 
