@@ -175,6 +175,7 @@ const DropDown = ({
                       id,
                       viewStyle,
                       action,
+                      changeTextFont,
                       currentSlide,
                       currentFontFamily,
                       changeCurrentSlideState,
@@ -196,11 +197,13 @@ const DropDown = ({
                     fonts.push(<p
                         style={{fontFamily: DEFAULT_FONTS[i]}} onClick={() => {
                             changeCurrentFontFamily(DEFAULT_FONTS[i]);
-                            if (textSelected) {
-                                changeTextFont(DEFAULT_FONTS[i])
-                            }
                             removeOpenedDropDownById('fonts')
                     }}
+                        onMouseEnter={() => {
+                            if(textSelected) {
+                                changeTextFont(DEFAULT_FONTS[i])
+                            }
+                        }}
                     >
                         {DEFAULT_FONTS[i]}
                     </p>);

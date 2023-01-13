@@ -177,7 +177,7 @@ function changeTextValue(newValue: string) {
         newTextValue: newValue
     }
 }
-function changeFontFamily(fontFamily: string) {
+function changeTextFontFamily(fontFamily: string) {
     return {
         type: Actions.CHANGE_TEXT_FONT,
         newFontFamily: fontFamily,
@@ -314,7 +314,7 @@ export {
     changeTextSize,
     changeTextColor,
     changeTextValue,
-    changeFontFamily,
+    changeTextFontFamily,
     selectItem,
     selectManyItems,
     deselectItems,
