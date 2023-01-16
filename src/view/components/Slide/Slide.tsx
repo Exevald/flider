@@ -189,7 +189,6 @@ const Slide = ({
                              let slideItem = modelSlideItems[i];
                              let isSelected = selectedItemsIds.find(itemId => itemId === slideItem.id);
                              if (isSelected) {
-                                 console.log(slideItem.element);
                                  startFigureX = slideItem.coordinates.x;
                                  startFigureY = slideItem.coordinates.y;
                              }
@@ -298,7 +297,6 @@ const Slide = ({
                  }
                  switch (currentSlideState) {
                      case SlideState.DRAW_IMAGE: {
-                         console.log('IMAGE')
                          const inputFile = document.createElement('input');
                          inputFile.type = 'file';
                          inputFile.style.display = 'none';

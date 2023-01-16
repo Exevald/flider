@@ -107,7 +107,6 @@ function deselectItemsReducer(slide: SlideType, itemId: IdType): SlideType {
 
 function addImageReducer(slide: SlideType, imageSrc: string, coordinates: PointType): SlideType {
     const newSlide = deepClone(slide) as SlideType;
-    console.log("reducer")
     const newItem: Item = {
         id: getRandomId(),
         coordinates: {
