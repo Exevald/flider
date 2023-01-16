@@ -7,15 +7,14 @@ import {
 } from "../../../core/functions/utility";
 import {AppDispatcher} from "../../../model/store";
 import {
-    addFigureItem,
     changeCurrentColor,
     changeCurrentFigureType, changeCurrentFontFamily,
-    changeCurrentSlideState, changeTextFont, fillFigure,
+    changeCurrentSlideState, changeTextFont,
     savePresentation
 } from "../../../model/actionCreators";
 import {connect, ConnectedProps} from "react-redux";
 import React from "react";
-import {EditorType, FigureType, ItemType, ShapeType, SlideState} from "../../../core/types/types";
+import {EditorType, ItemType, ShapeType, SlideState} from "../../../core/types/types";
 
 interface DropDownCustomProps {
     id: string;

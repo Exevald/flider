@@ -36,7 +36,10 @@ type ActionType = {
         fontSize: number,
         fontColor: string,
         value: string,
-        coordinates: PointType,
+        fatness: string,
+        isCursive: boolean,
+        isUnderlined: boolean,
+        coordinates: PointType
     }
     moveItemCoordinates?: {
         shiftX: number,

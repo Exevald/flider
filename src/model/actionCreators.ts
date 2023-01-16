@@ -1,4 +1,4 @@
-import {EditorType, IdType, ItemType, PointType, ShapeType, SlideState} from "../core/types/types";
+import {EditorType, IdType, PointType, ShapeType, SlideState} from "../core/types/types";
 import {Actions} from "../core/types/types";
 
 function createPresentation() {
@@ -139,6 +139,9 @@ function addImageItem(imageSrc: string, coordinates: PointType) {
 function addTextItem(fontFamily: string, fontSize: number,
                      fontColor: string,
                      value: string,
+                     fatness: string,
+                     isCursive: boolean,
+                     isUnderlined: boolean,
                      coordinates: PointType) {
     return {
         type: Actions.DRAW_TEXT,
@@ -149,6 +152,9 @@ function addTextItem(fontFamily: string, fontSize: number,
             fontSize,
             fontColor,
             value,
+            fatness,
+            isCursive,
+            isUnderlined,
             coordinates,
         }
     }
@@ -181,6 +187,22 @@ function changeTextFontFamily(fontFamily: string) {
     return {
         type: Actions.CHANGE_TEXT_FONT,
         newFontFamily: fontFamily,
+    }
+}
+
+function changeTextFatness() {
+    return {
+        type: Actions.CHANGE_TEXT_FATNESS
+    }
+}
+function toggleTextCursive() {
+    return {
+        type: Actions.TOGGLE_TEXT_CURSIVE
+    }
+}
+function toggleTextUnderline() {
+    return {
+        type: Actions.TOGGLE_TEXT_UNDERLINE
     }
 }
 
@@ -327,4 +349,7 @@ export {
     paste,
     changeCurrentFontSize,
     changeCurrentFontFamily,
+    changeTextFatness,
+    toggleTextCursive,
+    toggleTextUnderline
 }

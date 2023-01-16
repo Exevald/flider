@@ -90,6 +90,9 @@ type TextAreaType = {
     fontSize: number,
     fontColor: string,
     value: string,
+    fatness: string,
+    isCursive: boolean,
+    isUnderlined: boolean,
 }
 
 type ImageType = {
@@ -135,6 +138,9 @@ enum Actions {
     PASTE = "PASTE",
     CHANGE_CURRENT_FONT_SIZE = "CHANGE_CURRENT_FONT_SIZE",
     CHANGE_CURRENT_FONT_FAMILY = "CHANGE_CURRENT_FONT_FAMILY",
+    CHANGE_TEXT_FATNESS = "CHANGE_TEXT_FATNESS",
+    TOGGLE_TEXT_CURSIVE = "TOGGLE_TEXT_CURSIVE",
+    TOGGLE_TEXT_UNDERLINE = "TOGGLE_TEXT_UNDERLINE"
 }
 
 enum SlideState {
