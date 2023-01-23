@@ -35,3 +35,21 @@
     display: flex;
     flex-direction: column;
 }
+
+.popupTitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+}
+
+.popupText, .popupList {
+    margin-top: 10px;
+}
+
+.popupList li {
+    margin-top: 5px;
+}
+
+.popupEnd {
+    margin-top: 25px;
+    text-align: center;
+}

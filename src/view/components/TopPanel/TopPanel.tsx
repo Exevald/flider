@@ -15,6 +15,7 @@ import {setTitle} from "../../../model/actionCreators";
 import {Link} from "react-router-dom";
 
 import {useState} from "react";
+import Popup from 'react-animated-popup'
 
 const LogoArea = () => {
     return (
@@ -48,6 +49,7 @@ type TopPanelProps = ConnectedProps<typeof connector>
 
 const TopPanel = (props: TopPanelProps) => {
     const [rename, setRename] = useState(false);
+    const [visible, setVisible] = useState(false);
 
     return (
         <div className={styles.topPanel}>
@@ -68,21 +70,38 @@ const TopPanel = (props: TopPanelProps) => {
                         : <p className={styles.name}>{props.title}</p>
                 }
             </div>
-            <Button viewStyle={"open"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
-
+            <Button viewStyle={"rename"} onClick={() => setRename(!rename)} text={"Переименовать"} iconStyle={"none"}/>
+            <Button viewStyle={"instruction"} onClick={() => setVisible(true)} text={"Инструкция"}
+                    iconStyle={"none"}></Button>
+            <Popup visible={visible} onClose={() => setVisible(false)} animationDuration={150}>
+                <div className={styles.popup}>
+                    <h1 className={styles.popupTitle}>Добро пожаловать во Flider!</h1>
+                    <p className={styles.popupText}>Список горячих клавиш:</p>
+                    <ol className={styles.popupList}>
+                        <li>CTRL+C - Копировать</li>
+                        <li>CTRL+V - Вставить</li>
+                        <li>Delete - Удалить слайд</li>
+                        <li>CTRL+Z - Undo</li>
+                        <li>CTRL+Y - Redo</li>
+                    </ol>
+                    <p className={styles.popupEnd}>Приятного использования!</p>
+                </div>
+            </Popup>
             <div className={styles.dropDownArea}>
                 <Button viewStyle={"save"} id={"SavePresentationButton"}
                         onClick={() => {
-                            showDropDownById('SavePresentationButton','saveActionDropDown');
+                            showDropDownById('SavePresentationButton', 'saveActionDropDown');
                         }}
                         text={"Сохранить"} iconStyle={"right"} iconSrc={SaveIcon}/>
                 <DropDown id={'saveActionDropDown'} viewStyle={'saveAction'}/>
             </div>
             <Button viewStyle={"watch"} iconStyle={"left"} text={"Просмотр"} iconSrc={WatchIcon}
                     to={"/presentation/watch"}
-                    onClick={() => {}}
+                    onClick={() => {
+                    }}
             />
         </div>
     )
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(TopPanel)

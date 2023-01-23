@@ -51,7 +51,7 @@
     background-color: var(--ayanami-20);
 }
 
-.buttonOpen {
+.buttonOpen, .buttonRename, .buttonInstruction {
     background-color: var(--shinji);
     color: var(--gendo-default);
     border: 1px solid var(--kaoru-60);
@@ -68,7 +68,7 @@
     border: 1px solid var(--kaoru-60);
 }
 
-.buttonOpen:hover {
+.buttonOpen:hover, .buttonRename:hover, .buttonInstruction:hover {
     cursor: pointer;
     border-color: var(--kaoru-default);
     color: var(--gendo-default);
