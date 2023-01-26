@@ -106,6 +106,7 @@ const DEFAULT_FONTS = [
     'Arial',
     'Inter',
     'Roboto',
+    'Source Sans Pro',
     'Times New Roman',
 ]
 const MAX_HISTORY_SIZE = 30;

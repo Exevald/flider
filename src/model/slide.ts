@@ -151,7 +151,7 @@ function addTextReducer(slide: SlideType,
             ...textParams
         },
         space: {
-            width: 200,
+            width: 100,
             height: 100,
         },
         layer: 1
